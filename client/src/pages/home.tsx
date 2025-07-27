@@ -136,15 +136,16 @@ const Header = ({ onNavigate }: { onNavigate: (selector: string) => void }) => {
   };
 
   return (
-    <header className="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-lg shadow-cyan-500/10">
+    <header className="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-lg shadow-cyan-500/10" role="banner">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a 
           href="#home" 
           onClick={(e) => handleLinkClick(e, '#home')} 
           className="flex items-center space-x-2"
           data-testid="logo-link"
+          aria-label="Ethos Digital - Go to homepage"
         >
-          <Handshake className="w-8 h-8 text-cyan-400" />
+          <Handshake className="w-8 h-8 text-cyan-400" aria-hidden="true" />
           <span className="text-xl font-bold text-white tracking-wider">Ethos Digital</span>
         </a>
         <div>
@@ -153,14 +154,16 @@ const Header = ({ onNavigate }: { onNavigate: (selector: string) => void }) => {
             size="sm" 
             onClick={() => setIsOpen(!isOpen)}
             data-testid="menu-toggle"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? <X size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
           </Button>
         </div>
       </div>
       {isOpen && (
         <div className="bg-gray-900 border-t border-gray-700">
-          <nav className="flex flex-col items-center space-y-4 py-4">
+          <nav className="flex flex-col items-center space-y-4 py-4" role="navigation" aria-label="Main navigation">
             {navLinks.map(link => (
               <a 
                 key={link.href} 
@@ -235,7 +238,7 @@ const HeroSection = ({ onNavigate }: { onNavigate: (selector: string) => void })
 
       <div className="container mx-auto px-6 text-center relative z-10 pt-24 pb-12">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-          Marketing with Integrity, Strategies for Growth
+          Digital Marketing with Integrity, Strategies for Growth
         </h1>
         <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
           We build lasting partnerships through loyalty and transparency, delivering data-driven marketing solutions that fuel sustainable growth for our clients.
