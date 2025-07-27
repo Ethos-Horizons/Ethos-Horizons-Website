@@ -5,7 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Search, Megaphone, Mail, Users, Bot, Target, FileText, BrainCircuit, LineChart,
   MessageSquare, TestTube, Phone, MapPin, Code, TrendingUp, ShieldCheck, Layers, Package,
-  Clock, ArrowRight, Menu, X, Paintbrush, Handshake, Star, Lightbulb, Zap, Award } from 'lucide-react';
+  Clock, ArrowRight, Menu, X, Paintbrush, Handshake, Star, Lightbulb, Zap, Award, ExternalLink } from 'lucide-react';
+import { SiLinkedin, SiX, SiGithub, SiFacebook } from 'react-icons/si';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -684,16 +685,23 @@ const ContactSection = () => {
     <section id="contact" className="py-20 bg-gray-900">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Partner with Us for Principled Growth</h2>
-          <p className="text-lg text-gray-400 mt-2">Ready to grow with a team you can trust? Reach out and let's discuss your project.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to Launch Your Digital Growth?</h2>
+          <p className="text-lg text-gray-400 mt-2">Let's start a conversation about your business goals. We're excited to be part of your success story.</p>
           <div className="mt-4 h-1 w-24 bg-cyan-500 mx-auto rounded"></div>
         </div>
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 bg-gray-800 p-8 rounded-xl shadow-2xl">
           <div className="text-white">
             <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
             <p className="text-gray-300 mb-6">
-              Have a question or want to work together? Fill out the form or contact us directly. We're excited to hear from you.
+              Ready to transform your digital presence? Fill out the form below and we'll get back to you within 24 hours with a personalized strategy discussion.
             </p>
+            <div className="bg-cyan-500/10 p-4 rounded-lg border border-cyan-500/30 mb-6">
+              <div className="flex items-center space-x-2 mb-2">
+                <Clock className="w-4 h-4 text-cyan-400" />
+                <span className="text-cyan-400 font-semibold text-sm">Quick Response Promise</span>
+              </div>
+              <p className="text-gray-300 text-sm">We respond to all inquiries within 24 hours. For urgent matters, call us directly.</p>
+            </div>
             <div className="space-y-4">
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-cyan-400 mr-4" />
@@ -827,14 +835,109 @@ const ContactSection = () => {
   );
 };
 
-const Footer = () => (
-  <footer className="bg-gray-900 border-t border-gray-800">
-    <div className="container mx-auto px-6 py-6 text-center text-gray-500">
-      <p>&copy; {new Date().getFullYear()} Ethos Digital Partners. All Rights Reserved.</p>
-      <p className="text-sm mt-1">Your Trusted Partner in Digital Growth.</p>
-    </div>
-  </footer>
-);
+const Footer = () => {
+  const socialLinks = [
+    {
+      name: 'LinkedIn',
+      icon: <SiLinkedin className="w-5 h-5" />,
+      url: 'https://linkedin.com/company/ethos-digital',
+      color: 'hover:text-blue-500'
+    },
+    {
+      name: 'X (Twitter)',
+      icon: <SiX className="w-5 h-5" />,
+      url: 'https://twitter.com/ethosdigital',
+      color: 'hover:text-gray-300'
+    },
+    {
+      name: 'GitHub',
+      icon: <SiGithub className="w-5 h-5" />,
+      url: 'https://github.com/chrisMac93',
+      color: 'hover:text-gray-300'
+    },
+    {
+      name: 'Facebook',
+      icon: <SiFacebook className="w-5 h-5" />,
+      url: 'https://facebook.com/ethosdigital',
+      color: 'hover:text-blue-600'
+    }
+  ];
+
+  return (
+    <footer className="bg-gray-900 border-t border-gray-800" role="contentinfo">
+      <div className="container mx-auto px-6 py-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-6">
+          {/* Company Info */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <Handshake className="w-6 h-6 text-cyan-400" />
+              <span className="text-lg font-bold text-white">Ethos Digital</span>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Professional digital marketing agency specializing in SEO, PPC, web development, and AI-powered strategies for sustainable business growth.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Services</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#services" className="text-gray-400 hover:text-cyan-400 transition-colors">SEO Services</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-cyan-400 transition-colors">PPC Advertising</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-cyan-400 transition-colors">Web Development</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-cyan-400 transition-colors">Content Marketing</a></li>
+            </ul>
+          </div>
+
+          {/* Contact & Social */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Connect With Us</h3>
+            <div className="space-y-2 text-sm text-gray-400 mb-4">
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-cyan-400" />
+                <span>hello@ethosdigitalpartners.com</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-cyan-400" />
+                <span>(812) 555-0123</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-4 h-4 text-cyan-400" />
+                <span>Evansville, IN</span>
+              </div>
+            </div>
+            
+            {/* Social Media Links */}
+            <div className="flex space-x-4">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-gray-400 ${social.color} transition-colors duration-300`}
+                  aria-label={`Follow us on ${social.name}`}
+                  data-testid={`social-${social.name.toLowerCase()}`}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+          <p>&copy; {new Date().getFullYear()} Ethos Digital. All Rights Reserved.</p>
+          <div className="flex space-x-4 mt-4 md:mt-0">
+            <a href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
