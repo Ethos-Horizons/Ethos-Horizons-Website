@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Search, Megaphone, Mail, Users, Bot, Target, FileText, BrainCircuit, LineChart,
   MessageSquare, TestTube, Phone, MapPin, Code, TrendingUp, ShieldCheck, Layers, Package,
-  Clock, ArrowRight, Menu, X, Paintbrush, Handshake, Star } from 'lucide-react';
+  Clock, ArrowRight, Menu, X, Paintbrush, Handshake, Star, Lightbulb, Zap, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -112,26 +112,7 @@ const teamMembers = [
   }
 ];
 
-const testimonials = [
-  {
-    quote: "Working with Ethos Digital has been a game-changer. Their commitment to our growth felt like a true partnership, not just a service. The results speak for themselves, and their integrity is unmatched.",
-    name: "Sarah Johnson",
-    company: "Founder, Growth Co.",
-    rating: 5,
-  },
-  {
-    quote: "The level of transparency and loyalty from this team is incredible. They took the time to understand our vision and delivered a strategy that has driven real, sustainable growth. We finally feel like we have a partner we can trust.",
-    name: "Michael Chen",
-    company: "CEO, Innovate Solutions",
-    rating: 5,
-  },
-  {
-    quote: "I've worked with many agencies, but Ethos Digital Partners is different. Their dedication to serving our needs and their ethical approach to marketing have built a foundation of trust and loyalty that is hard to find.",
-    name: "Emily Rodriguez",
-    company: "Marketing Director, Connective Tech",
-    rating: 5,
-  }
-];
+
 
 // Components
 const Header = ({ onNavigate }: { onNavigate: (selector: string) => void }) => {
@@ -143,7 +124,8 @@ const Header = ({ onNavigate }: { onNavigate: (selector: string) => void }) => {
     { href: '#ai-advantage', label: 'AI Advantage' },
     { href: '#pricing', label: 'Pricing' },
     { href: '#about', label: 'About Us' },
-    { href: '#testimonials', label: 'Testimonials' },
+    { href: '#capabilities', label: 'Our Work' },
+    { href: '#why-choose-us', label: 'Why Choose Us' },
     { href: '#contact', label: 'Contact' },
   ];
 
@@ -488,37 +470,171 @@ const AboutUsSection = () => (
   </section>
 );
 
-const TestimonialsSection = () => (
-  <section id="testimonials" className="py-20 bg-gray-800">
-    <div className="container mx-auto px-6">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-white">What Our Partners Say</h2>
-        <p className="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">We're proud to build loyal partnerships that drive real growth.</p>
-        <div className="mt-4 h-1 w-24 bg-cyan-500 mx-auto rounded"></div>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial, index) => (
-          <div 
-            key={index} 
-            className="bg-gray-900 p-8 rounded-xl shadow-lg flex flex-col"
-            data-testid={`testimonial-${index}`}
-          >
-            <div className="flex text-yellow-400 mb-4">
-              {[...Array(testimonial.rating)].map((_, i) => 
-                <Star key={i} className="w-5 h-5 fill-current" />
-              )}
+const CapabilitiesShowcaseSection = () => {
+  const capabilities = [
+    {
+      title: "Complete Website Development",
+      description: "This very website demonstrates our full-stack development capabilities - from animated backgrounds to responsive design and working contact forms.",
+      tech: ["React", "TypeScript", "Tailwind CSS", "Express.js", "PostgreSQL"],
+      icon: <Code className="w-8 h-8 text-cyan-400" />
+    },
+    {
+      title: "SEO-Optimized Architecture", 
+      description: "Built with search engine optimization in mind - semantic HTML, fast loading times, mobile-first design, and meta tag optimization.",
+      tech: ["Performance", "Mobile-First", "Semantic HTML", "Meta Tags"],
+      icon: <Search className="w-8 h-8 text-cyan-400" />
+    },
+    {
+      title: "Interactive User Experience",
+      description: "Smooth animations, parallax effects, intuitive navigation, and engaging visual elements that keep visitors interested.",
+      tech: ["CSS Animations", "Parallax Effects", "UI/UX Design", "Accessibility"],
+      icon: <Target className="w-8 h-8 text-cyan-400" />
+    },
+    {
+      title: "Data-Driven Contact System",
+      description: "Fully functional contact form with validation, API integration, and database storage - ready for lead capture and management.",
+      tech: ["Form Validation", "API Integration", "Database", "Lead Management"],
+      icon: <Bot className="w-8 h-8 text-cyan-400" />
+    }
+  ];
+
+  return (
+    <section id="capabilities" className="py-20 bg-gray-900">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Our Capabilities in Action</h2>
+          <p className="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">This website itself showcases our technical expertise and attention to detail. Every element demonstrates what we can build for your business.</p>
+          <div className="mt-4 h-1 w-24 bg-cyan-500 mx-auto rounded"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {capabilities.map((capability, index) => (
+            <div 
+              key={index} 
+              className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all duration-300"
+              data-testid={`capability-${capability.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+            >
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 mt-1">{capability.icon}</div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-3">{capability.title}</h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed">{capability.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {capability.tech.map((tech, techIndex) => (
+                      <span 
+                        key={techIndex}
+                        className="px-3 py-1 bg-gray-700 text-cyan-400 text-sm rounded-full border border-cyan-500/30"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-gray-300 mb-6 flex-grow">"{testimonial.quote}"</p>
+          ))}
+        </div>
+        <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">See Our Work Live</h3>
+          <p className="text-gray-300 mb-6">
+            Every animation, every interaction, every line of code on this website was crafted by our team. 
+            This is the quality and attention to detail we bring to every client project.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-              <p className="font-bold text-white">{testimonial.name}</p>
-              <p className="text-cyan-400 text-sm">{testimonial.company}</p>
+              <div className="text-2xl font-bold text-cyan-400">100%</div>
+              <div className="text-gray-400 text-sm">Custom Built</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cyan-400">Mobile</div>
+              <div className="text-gray-400 text-sm">Responsive</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cyan-400">Fast</div>
+              <div className="text-gray-400 text-sm">Loading</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cyan-400">SEO</div>
+              <div className="text-gray-400 text-sm">Optimized</div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+
+const WhyChooseUsSection = () => {
+  const differentiators = [
+    {
+      icon: <Lightbulb className="w-12 h-12 text-cyan-400" />,
+      title: "Fresh Perspective",
+      description: "As a new agency, we bring innovative approaches without outdated practices. Every strategy is crafted with the latest industry insights and cutting-edge techniques."
+    },
+    {
+      icon: <Users className="w-12 h-12 text-cyan-400" />,
+      title: "Personal Attention",
+      description: "You'll work directly with our founders. No account managers or middlemen - just dedicated experts who understand your business and care about your success."
+    },
+    {
+      icon: <ShieldCheck className="w-12 h-12 text-cyan-400" />,
+      title: "Transparent Process",
+      description: "Complete visibility into our work. You'll see exactly what we're doing, why we're doing it, and how it impacts your business growth."
+    },
+    {
+      icon: <Target className="w-12 h-12 text-cyan-400" />,
+      title: "Results-Driven",
+      description: "We measure success by your growth. Every campaign, every strategy, every decision is focused on delivering measurable results for your business."
+    },
+    {
+      icon: <Zap className="w-12 h-12 text-cyan-400" />,
+      title: "Agile & Responsive",
+      description: "Quick pivots, rapid testing, and immediate optimizations. Our lean structure means faster implementation and better responsiveness to market changes."
+    },
+    {
+      icon: <Award className="w-12 h-12 text-cyan-400" />,
+      title: "Proven Expertise",
+      description: "Years of experience in digital marketing, now combined in a partnership dedicated to ethical, effective strategies that build lasting business value."
+    }
+  ];
+
+  return (
+    <section id="why-choose-us" className="py-20 bg-gray-800">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Why Choose Ethos Digital</h2>
+          <p className="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">We're a new agency with experienced founders, bringing fresh energy and proven expertise to your digital growth.</p>
+          <div className="mt-4 h-1 w-24 bg-cyan-500 mx-auto rounded"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {differentiators.map((item, index) => (
+            <div 
+              key={index} 
+              className="bg-gray-900 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-cyan-500"
+              data-testid={`differentiator-${item.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+            >
+              <div className="mb-6">{item.icon}</div>
+              <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+              <p className="text-gray-300 leading-relaxed">{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-16 bg-gray-900 p-8 rounded-xl border border-gray-700 max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">Ready to Be Our First Success Story?</h3>
+          <p className="text-gray-300 mb-6">
+            We're launching with the energy of a startup and the expertise of seasoned professionals. 
+            Join us as we build something exceptional together - your success will be our foundation.
+          </p>
+          <Button 
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg transition duration-300"
+            data-testid="button-get-started"
+          >
+            Let's Get Started
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -800,7 +916,8 @@ export default function Home() {
         <AiAdvantageSection />
         <PricingSection />
         <AboutUsSection />
-        <TestimonialsSection />
+        <CapabilitiesShowcaseSection />
+        <WhyChooseUsSection />
         <ContactSection />
       </main>
       <Footer />
