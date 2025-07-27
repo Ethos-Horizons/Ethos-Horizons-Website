@@ -122,10 +122,10 @@ const Header = ({ onNavigate }: { onNavigate: (selector: string) => void }) => {
     { href: '#home', label: 'Home' },
     { href: '#services', label: 'Services' },
     { href: '#ai-advantage', label: 'AI Advantage' },
-    { href: '#pricing', label: 'Pricing' },
     { href: '#about', label: 'About Us' },
-    { href: '#capabilities', label: 'Our Work' },
+    { href: '#capabilities', label: 'Our Process' },
     { href: '#why-choose-us', label: 'Why Choose Us' },
+    { href: '#pricing', label: 'Pricing' },
     { href: '#contact', label: 'Contact' },
   ];
 
@@ -471,30 +471,34 @@ const AboutUsSection = () => (
 );
 
 const CapabilitiesShowcaseSection = () => {
-  const capabilities = [
+  const processSteps = [
     {
-      title: "Complete Website Development",
-      description: "This very website demonstrates our full-stack development capabilities - from animated backgrounds to responsive design and working contact forms.",
-      tech: ["React", "TypeScript", "Tailwind CSS", "Express.js", "PostgreSQL"],
-      icon: <Code className="w-8 h-8 text-cyan-400" />
-    },
-    {
-      title: "SEO-Optimized Architecture", 
-      description: "Built with search engine optimization in mind - semantic HTML, fast loading times, mobile-first design, and meta tag optimization.",
-      tech: ["Performance", "Mobile-First", "Semantic HTML", "Meta Tags"],
+      step: "01",
+      title: "Discovery & Strategy",
+      description: "We dive deep into your business goals, target audience, and competitive landscape using AI-powered research tools.",
+      outcome: "Comprehensive strategy document with actionable insights",
       icon: <Search className="w-8 h-8 text-cyan-400" />
     },
     {
-      title: "Interactive User Experience",
-      description: "Smooth animations, parallax effects, intuitive navigation, and engaging visual elements that keep visitors interested.",
-      tech: ["CSS Animations", "Parallax Effects", "UI/UX Design", "Accessibility"],
-      icon: <Target className="w-8 h-8 text-cyan-400" />
+      step: "02", 
+      title: "Creative Development",
+      description: "Our team crafts compelling content, designs, and campaigns that resonate with your audience while staying true to your brand.",
+      outcome: "Custom content calendar and creative assets",
+      icon: <Paintbrush className="w-8 h-8 text-cyan-400" />
     },
     {
-      title: "Data-Driven Contact System",
-      description: "Fully functional contact form with validation, API integration, and database storage - ready for lead capture and management.",
-      tech: ["Form Validation", "API Integration", "Database", "Lead Management"],
-      icon: <Bot className="w-8 h-8 text-cyan-400" />
+      step: "03",
+      title: "Technical Implementation", 
+      description: "From websites to automation systems, we build the technical foundation that powers your digital presence.",
+      outcome: "Live, optimized systems ready for growth",
+      icon: <Code className="w-8 h-8 text-cyan-400" />
+    },
+    {
+      step: "04",
+      title: "Launch & Optimization",
+      description: "We monitor performance, gather data, and continuously refine strategies to maximize your ROI and growth potential.",
+      outcome: "Ongoing optimization and detailed reporting",
+      icon: <TrendingUp className="w-8 h-8 text-cyan-400" />
     }
   ];
 
@@ -502,59 +506,57 @@ const CapabilitiesShowcaseSection = () => {
     <section id="capabilities" className="py-20 bg-gray-900">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Our Capabilities in Action</h2>
-          <p className="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">This website itself showcases our technical expertise and attention to detail. Every element demonstrates what we can build for your business.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Our Proven Process</h2>
+          <p className="text-lg text-gray-400 mt-2 max-w-3xl mx-auto">From strategy to execution, we follow a systematic approach that delivers measurable results for every project.</p>
           <div className="mt-4 h-1 w-24 bg-cyan-500 mx-auto rounded"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {capabilities.map((capability, index) => (
+          {processSteps.map((step, index) => (
             <div 
               key={index} 
-              className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all duration-300"
-              data-testid={`capability-${capability.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+              className="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all duration-300 relative overflow-hidden"
+              data-testid={`process-step-${step.step}`}
             >
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 mt-1">{capability.icon}</div>
+              <div className="absolute top-4 right-4 text-6xl font-bold text-cyan-400/10">{step.step}</div>
+              <div className="flex items-start space-x-4 relative z-10">
+                <div className="flex-shrink-0 mt-1">{step.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-3">{capability.title}</h3>
-                  <p className="text-gray-300 mb-4 leading-relaxed">{capability.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {capability.tech.map((tech, techIndex) => (
-                      <span 
-                        key={techIndex}
-                        className="px-3 py-1 bg-gray-700 text-cyan-400 text-sm rounded-full border border-cyan-500/30"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  <div className="flex items-center space-x-3 mb-3">
+                    <span className="text-cyan-400 font-bold text-sm">STEP {step.step}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
+                  <p className="text-gray-300 mb-4 leading-relaxed">{step.description}</p>
+                  <div className="bg-gray-700/50 p-3 rounded-lg border-l-4 border-cyan-500">
+                    <p className="text-cyan-400 text-sm font-semibold">Deliverable:</p>
+                    <p className="text-gray-300 text-sm">{step.outcome}</p>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">See Our Work Live</h3>
+        <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 rounded-xl border border-gray-600 max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">This Website: Our Process in Action</h3>
           <p className="text-gray-300 mb-6">
-            Every animation, every interaction, every line of code on this website was crafted by our team. 
-            This is the quality and attention to detail we bring to every client project.
+            We followed this exact process to build this website - from researching the digital marketing landscape 
+            to implementing advanced animations and optimizing for performance. The result speaks for itself.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
+              <div className="text-2xl font-bold text-cyan-400">4 Week</div>
+              <div className="text-gray-400 text-sm">Development</div>
+            </div>
+            <div>
               <div className="text-2xl font-bold text-cyan-400">100%</div>
-              <div className="text-gray-400 text-sm">Custom Built</div>
+              <div className="text-gray-400 text-sm">Custom Code</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-cyan-400">Mobile</div>
-              <div className="text-gray-400 text-sm">Responsive</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-cyan-400">Fast</div>
-              <div className="text-gray-400 text-sm">Loading</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-cyan-400">SEO</div>
               <div className="text-gray-400 text-sm">Optimized</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cyan-400">Ready</div>
+              <div className="text-gray-400 text-sm">To Scale</div>
             </div>
           </div>
         </div>
@@ -914,10 +916,10 @@ export default function Home() {
         <HeroSection onNavigate={handleNavigate} />
         <ServicesSection />
         <AiAdvantageSection />
-        <PricingSection />
         <AboutUsSection />
         <CapabilitiesShowcaseSection />
         <WhyChooseUsSection />
+        <PricingSection />
         <ContactSection />
       </main>
       <Footer />
