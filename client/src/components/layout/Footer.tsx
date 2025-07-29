@@ -1,5 +1,5 @@
 import { Handshake } from 'lucide-react';
-import { SiLinkedin, SiX, SiGithub, SiFacebook } from 'react-icons/si';
+import { SiLinkedin, SiX, SiFacebook, SiInstagram, SiYoutube } from 'react-icons/si';
 
 export const Footer = () => {
   return (
@@ -32,7 +32,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Connect</h3>
             <div className="space-y-2 text-sm mb-4">
-              <p className="text-gray-400">hello@ethosdigitalpartners.com</p>
+              <p className="text-gray-400">support@ethosdigital.com</p>
               <p className="text-gray-400">+1 (812) 555-0123</p>
               <p className="text-gray-400">Evansville, IN</p>
             </div>
@@ -56,15 +56,6 @@ export const Footer = () => {
                 <SiX className="w-5 h-5" />
               </a>
               <a 
-                href="https://github.com/ethosdigital" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
-                aria-label="GitHub"
-              >
-                <SiGithub className="w-5 h-5" />
-              </a>
-              <a 
                 href="https://facebook.com/ethosdigital" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -72,6 +63,24 @@ export const Footer = () => {
                 aria-label="Facebook"
               >
                 <SiFacebook className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://instagram.com/ethosdigital" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                aria-label="Instagram"
+              >
+                <SiInstagram className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://youtube.com/@ethosdigital" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-cyan-400 transition-colors"
+                aria-label="YouTube"
+              >
+                <SiYoutube className="w-5 h-5" />
               </a>
             </div>
           </div>

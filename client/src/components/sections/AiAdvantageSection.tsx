@@ -47,18 +47,43 @@ export const AiAdvantageSection = () => {
 
   return (
     <section id="ai-advantage" className="py-20 bg-gray-900 relative overflow-hidden">
-      {/* Animated hexagonal background */}
+      {/* Enhanced AI Data Flow Animation - Centered and More Prominent */}
       <div 
-        className="absolute inset-0 opacity-10"
-        style={{ transform: `translateY(${scrollY * 0.2}px)` }}
+        className="absolute inset-0 opacity-40 flex items-center justify-center"
+        style={{ transform: `translateY(${scrollY * 0.1}px)` }}
       >
-        <div className="hexagonal-grid">
-          <div className="hexagon"></div>
-          <div className="hexagon"></div>
-          <div className="hexagon"></div>
-          <div className="hexagon"></div>
-          <div className="hexagon"></div>
-          <div className="hexagon"></div>
+        <div className="ai-data-flow">
+          {/* Data nodes */}
+          <div className="data-node node-1"></div>
+          <div className="data-node node-2"></div>
+          <div className="data-node node-3"></div>
+          <div className="data-node node-4"></div>
+          <div className="data-node node-5"></div>
+          <div className="data-node node-6"></div>
+          
+          {/* Connecting lines */}
+          <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
+            <defs>
+              <linearGradient id="dataGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+                <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+            <line x1="20%" y1="30%" x2="40%" y2="50%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-1" />
+            <line x1="40%" y1="50%" x2="60%" y2="40%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-2" />
+            <line x1="60%" y1="40%" x2="80%" y2="60%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-3" />
+            <line x1="30%" y1="70%" x2="50%" y2="50%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-4" />
+            <line x1="50%" y1="50%" x2="70%" y2="70%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-5" />
+            <line x1="70%" y1="70%" x2="90%" y2="40%" stroke="url(#dataGradient)" strokeWidth="2" className="data-line line-6" />
+          </svg>
+          
+          {/* Floating data particles */}
+          <div className="data-particle particle-1"></div>
+          <div className="data-particle particle-2"></div>
+          <div className="data-particle particle-3"></div>
+          <div className="data-particle particle-4"></div>
+          <div className="data-particle particle-5"></div>
         </div>
       </div>
 
@@ -113,27 +138,88 @@ export const AiAdvantageSection = () => {
 
       <style dangerouslySetInnerHTML={{
         __html: `
-          .hexagonal-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 2rem;
-            padding: 2rem;
+          .ai-data-flow {
+            position: relative;
+            width: 100%;
+            height: 100%;
           }
-          .hexagon {
-            width: 100px;
-            height: 115px;
+          
+          .data-node {
+            position: absolute;
+            width: 16px;
+            height: 16px;
             background: linear-gradient(45deg, #06b6d4, #3b82f6);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            animation: float 6s ease-in-out infinite;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+            animation: nodePulse 3s ease-in-out infinite;
           }
-          .hexagon:nth-child(2) { animation-delay: -1s; }
-          .hexagon:nth-child(3) { animation-delay: -2s; }
-          .hexagon:nth-child(4) { animation-delay: -3s; }
-          .hexagon:nth-child(5) { animation-delay: -4s; }
-          .hexagon:nth-child(6) { animation-delay: -5s; }
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+          
+          .node-1 { top: 25%; left: 25%; animation-delay: 0s; }
+          .node-2 { top: 45%; left: 45%; animation-delay: -0.5s; }
+          .node-3 { top: 35%; left: 65%; animation-delay: -1s; }
+          .node-4 { top: 65%; left: 35%; animation-delay: -1.5s; }
+          .node-5 { top: 55%; left: 75%; animation-delay: -2s; }
+          .node-6 { top: 75%; left: 55%; animation-delay: -2.5s; }
+          
+          .data-line {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            stroke-width: 3;
+            animation: dataFlow 2s linear infinite;
+          }
+          
+          .line-1 { animation-delay: 0s; }
+          .line-2 { animation-delay: -0.5s; }
+          .line-3 { animation-delay: -1s; }
+          .line-4 { animation-delay: -1.5s; }
+          .line-5 { animation-delay: -2s; }
+          .line-6 { animation-delay: -2.5s; }
+          
+          .data-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #06b6d4;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.9);
+            animation: particleFlow 4s linear infinite;
+          }
+          
+          .particle-1 { top: 25%; left: 25%; animation-delay: 0s; }
+          .particle-2 { top: 45%; left: 45%; animation-delay: -1s; }
+          .particle-3 { top: 35%; left: 65%; animation-delay: -2s; }
+          .particle-4 { top: 65%; left: 35%; animation-delay: -3s; }
+          .particle-5 { top: 55%; left: 75%; animation-delay: -4s; }
+          
+          @keyframes nodePulse {
+            0%, 100% { 
+              transform: scale(1); 
+              opacity: 0.7; 
+              box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+            }
+            50% { 
+              transform: scale(1.4); 
+              opacity: 1; 
+              box-shadow: 0 0 40px rgba(6, 182, 212, 1);
+            }
+          }
+          
+          @keyframes dataFlow {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+          }
+          
+          @keyframes particleFlow {
+            0% { 
+              transform: translateX(0) translateY(0);
+              opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+              transform: translateX(100px) translateY(-50px);
+              opacity: 0;
+            }
           }
         `
       }} />

@@ -4,50 +4,59 @@ import { Button } from '@/components/ui/button';
 export const PricingSection = () => {
   const plans = [
     {
-      name: "Starter",
-      price: "$1,500",
-      period: "/month",
-      description: "Perfect for small businesses getting started with digital marketing.",
+      name: "Online Presence Setup",
+      price: "$2,500",
+      period: "one-time",
+      description: "Complete digital foundation for businesses with little to no online presence.",
       features: [
-        "SEO Optimization",
+        "Professional Website (5-8 pages)",
+        "Google Business Profile Setup & Optimization",
+        "Social Media Profile Creation (3 platforms)",
+        "Basic SEO Implementation",
+        "Content Creation (About, Services, Contact)",
+        "Google Analytics Setup",
+        "Business Consultation Session",
+        "30-day Support"
+      ],
+      popular: false,
+      type: "setup"
+    },
+    {
+      name: "Growth Retainer",
+      price: "$1,200",
+      period: "/month",
+      description: "Ongoing digital marketing to drive traffic and generate leads.",
+      features: [
+        "Monthly SEO Optimization",
+        "Social Media Management (3 platforms)",
+        "Content Creation (8 posts/month)",
         "Google Ads Management",
-        "Monthly Reporting",
-        "Email Support",
-        "Basic Analytics"
+        "Monthly Performance Reports",
+        "Email Marketing Campaigns",
+        "Competitor Analysis",
+        "Priority Support"
       ],
-      popular: false
+      popular: true,
+      type: "retainer"
     },
     {
-      name: "Professional",
-      price: "$3,500",
+      name: "Premium Retainer",
+      price: "$2,500",
       period: "/month",
-      description: "Comprehensive digital marketing for growing businesses.",
+      description: "Comprehensive digital marketing with advanced AI automation.",
       features: [
-        "Everything in Starter",
-        "Content Marketing",
-        "Social Media Management",
-        "Advanced Analytics",
-        "Priority Support",
-        "A/B Testing",
-        "Competitor Analysis"
-      ],
-      popular: true
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
-      description: "Tailored solutions for large organizations with complex needs.",
-      features: [
-        "Everything in Professional",
-        "Custom Strategy Development",
+        "Everything in Growth Retainer",
+        "AI-Powered Content Generation",
+        "Advanced Analytics & Reporting",
+        "Video Marketing (Shorts/Ads)",
+        "Podcast Production Support",
+        "Advanced SEO Strategies",
+        "Custom AI Agent Setup",
         "Dedicated Account Manager",
-        "Advanced AI Implementation",
-        "Custom Reporting",
-        "24/7 Support",
-        "White-label Options"
+        "Weekly Strategy Calls"
       ],
-      popular: false
+      popular: false,
+      type: "retainer"
     }
   ];
 
@@ -56,11 +65,11 @@ export const PricingSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Transparent <span className="text-cyan-400">Pricing</span>
+            Flexible <span className="text-cyan-400">Pricing</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Choose the plan that best fits your business needs. All plans include our proven process 
-            and commitment to delivering measurable results.
+            Start with a complete online presence setup, then scale with ongoing marketing services. 
+            Perfect for businesses ready to grow their digital footprint.
           </p>
         </div>
 
@@ -90,6 +99,13 @@ export const PricingSection = () => {
                   <span className="text-gray-400 ml-1">{plan.period}</span>
                 </div>
                 <p className="text-gray-300">{plan.description}</p>
+                {plan.type === "setup" && (
+                  <div className="mt-4">
+                    <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
+                      One-Time Investment
+                    </span>
+                  </div>
+                )}
               </div>
 
               <ul className="space-y-4 mb-8">
@@ -108,7 +124,7 @@ export const PricingSection = () => {
                     : 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600'
                 }`}
               >
-                {plan.name === "Enterprise" ? "Contact Us" : "Get Started"}
+                {plan.type === "setup" ? "Get Started" : "Start Retainer"}
               </Button>
             </div>
           ))}
@@ -116,13 +132,13 @@ export const PricingSection = () => {
 
         <div className="text-center mt-16">
           <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">Need a Custom Solution?</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Ready to Transform Your Business?</h3>
             <p className="text-gray-300 mb-6">
-              We understand that every business is unique. Let's discuss your specific needs 
-              and create a custom plan that fits your budget and goals.
+              Whether you need a complete online presence or ongoing marketing support, 
+              let's discuss how we can help your business thrive in the digital landscape.
             </p>
             <Button className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 font-semibold">
-              Schedule a Consultation
+              Get Started Today
             </Button>
           </div>
         </div>
