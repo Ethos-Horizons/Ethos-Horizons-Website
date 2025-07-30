@@ -12,7 +12,7 @@ export const PortfolioSection = () => {
       category: "web-development",
       client: "Personal Project (6+ Years)",
       description: "Complete website redesign and development for a long-running technology podcast, featuring modern design, improved SEO, and enhanced user experience.",
-      image: "/api/placeholder/600/400",
+      image: "https://picsum.photos/600/400?random=1",
       technologies: ["React", "Next.js", "Tailwind CSS", "SEO Optimization", "Podcast Integration"],
       results: {
         trafficIncrease: "340%",
@@ -43,7 +43,7 @@ export const PortfolioSection = () => {
       category: "digital-marketing",
       client: "Local Business",
       description: "Complete digital transformation for a local restaurant, including website, Google Business Profile optimization, and social media setup.",
-      image: "/api/placeholder/600/400",
+      image: "https://picsum.photos/600/400?random=2",
       technologies: ["WordPress", "Google Business Profile", "Social Media", "Local SEO", "Content Creation"],
       results: {
         trafficIncrease: "280%",
@@ -74,7 +74,7 @@ export const PortfolioSection = () => {
       category: "seo",
       client: "Online Retailer",
       description: "Comprehensive SEO campaign for an e-commerce store, focusing on product page optimization and content marketing.",
-      image: "/api/placeholder/600/400",
+      image: "https://picsum.photos/600/400?random=3",
       technologies: ["Technical SEO", "Content Marketing", "Keyword Research", "Analytics", "A/B Testing"],
       results: {
         trafficIncrease: "420%",
@@ -170,11 +170,13 @@ export const PortfolioSection = () => {
           {filteredItems.map((item) => (
             <div key={item.id} className="bg-gray-700 rounded-xl overflow-hidden hover:bg-gray-600 transition-all duration-300">
               {/* Project Image */}
-              <div className="relative h-64 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
-                <div className="text-center">
-                  <Code className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
-                  <p className="text-gray-300">Project Screenshot</p>
-                </div>
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src={item.image} 
+                  alt={`${item.title} project screenshot`}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               </div>
 
               {/* Project Content */}

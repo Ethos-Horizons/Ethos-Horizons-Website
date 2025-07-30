@@ -14,7 +14,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "January 15, 2024",
       readTime: "8 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=4",
       tags: ["Local SEO", "Google Business Profile", "Keyword Research"],
       featured: true
     },
@@ -26,7 +26,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "January 10, 2024",
       readTime: "12 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=5",
       tags: ["AI Marketing", "Automation", "Small Business"],
       featured: false
     },
@@ -38,7 +38,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "January 8, 2024",
       readTime: "15 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=6",
       tags: ["Podcast", "Web Development", "Content Strategy"],
       featured: false
     },
@@ -50,7 +50,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "January 5, 2024",
       readTime: "10 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=7",
       tags: ["Google Business Profile", "Local Marketing", "SEO"],
       featured: false
     },
@@ -62,7 +62,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "January 3, 2024",
       readTime: "11 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=8",
       tags: ["Content Marketing", "Strategy", "ROI"],
       featured: false
     },
@@ -74,7 +74,7 @@ export const BlogSection = () => {
       author: "Ethos Digital Team",
       date: "December 28, 2023",
       readTime: "9 min read",
-      image: "/api/placeholder/400/250",
+      image: "https://picsum.photos/400/250?random=9",
       tags: ["Social Media", "Local Business", "Community"],
       featured: false
     }
@@ -169,11 +169,13 @@ export const BlogSection = () => {
             <h3 className="text-2xl font-bold text-white mb-8 text-center">Featured Article</h3>
             <div className="bg-gray-800 rounded-xl overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="h-64 lg:h-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <FileText className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
-                    <p className="text-gray-300">Featured Article Image</p>
-                  </div>
+                <div className="h-64 lg:h-full overflow-hidden">
+                  <img 
+                    src={featuredPost.image} 
+                    alt={`${featuredPost.title} featured image`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-4 mb-4">
@@ -232,11 +234,13 @@ export const BlogSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredPosts.filter(post => !post.featured).map((post) => (
             <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300">
-              <div className="h-48 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
-                <div className="text-center">
-                  <FileText className="w-12 h-12 text-cyan-400 mx-auto mb-2" />
-                  <p className="text-gray-300 text-sm">Article Image</p>
-                </div>
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={`${post.title} article image`}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-3">
