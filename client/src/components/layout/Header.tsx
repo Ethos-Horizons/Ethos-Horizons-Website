@@ -16,6 +16,8 @@ export const Header = ({ onNavigate }: HeaderProps) => {
     { href: '#about', label: 'About Us' },
     { href: '#capabilities', label: 'Our Process' },
     { href: '#why-choose-us', label: 'Why Choose Us' },
+    { href: '#portfolio', label: 'Our Work' },
+    { href: '#blog', label: 'Resources & Insights' },
     { href: '#pricing', label: 'Pricing' },
     { href: '#contact', label: 'Contact' },
   ];

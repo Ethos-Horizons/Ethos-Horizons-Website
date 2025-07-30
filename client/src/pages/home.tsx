@@ -6,6 +6,8 @@ import {
   AboutUsSection,
   CapabilitiesSection,
   WhyChooseUsSection,
+  PortfolioSection,
+  BlogSection,
   PricingSection,
   ContactSection,
   Footer,
@@ -36,6 +38,8 @@ export default function Home() {
         <AboutUsSection />
         <CapabilitiesSection />
         <WhyChooseUsSection />
+        <PortfolioSection />
+        <BlogSection />
         <PricingSection />
         <ContactSection />
       </main>
