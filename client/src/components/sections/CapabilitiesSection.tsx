@@ -31,13 +31,20 @@ export const CapabilitiesSection = () => {
       icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
       features: ["Campaign Setup", "Content Creation", "Technical Optimization", "Launch Management"]
     },
-    {
-      number: "04",
-      title: "Optimization & Growth",
-      description: "Continuous monitoring and optimization ensure your campaigns perform at their peak and drive sustainable growth.",
-      icon: <CheckCircle className="w-8 h-8 text-cyan-400" />,
-      features: ["Performance Monitoring", "A/B Testing", "Strategy Refinement", "ROI Optimization"]
-    }
+         {
+       number: "04",
+       title: "Optimization & Growth",
+       description: "Continuous monitoring and optimization ensure your campaigns perform at their peak and drive sustainable growth.",
+       icon: <CheckCircle className="w-8 h-8 text-cyan-400" />,
+       features: ["Performance Monitoring", "A/B Testing", "Strategy Refinement", "ROI Optimization"]
+     },
+     {
+       number: "05",
+       title: "Scaling & Expansion",
+       description: "Once we've achieved your initial goals, we help you scale successful strategies and expand into new opportunities.",
+       icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
+       features: ["Strategy Scaling", "New Market Entry", "Advanced Analytics", "Long-term Planning"]
+     }
   ];
 
   return (
@@ -57,11 +64,12 @@ export const CapabilitiesSection = () => {
           <div className="process-particle particle-7"></div>
           <div className="process-particle particle-8"></div>
           
-          {/* Process step numbers floating in background */}
-          <div className="floating-number number-1">01</div>
-          <div className="floating-number number-2">02</div>
-          <div className="floating-number number-3">03</div>
-          <div className="floating-number number-4">04</div>
+                     {/* Process step numbers floating in background */}
+           <div className="floating-number number-1">01</div>
+           <div className="floating-number number-2">02</div>
+           <div className="floating-number number-3">03</div>
+           <div className="floating-number number-4">04</div>
+           <div className="floating-number number-5">05</div>
         </div>
       </div>
 
@@ -76,7 +84,7 @@ export const CapabilitiesSection = () => {
           </p>
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-12 max-w-7xl mx-auto">
           {processSteps.map((step, index) => (
             <div key={index} className="relative">
               {/* Connection line */}
@@ -172,10 +180,11 @@ export const CapabilitiesSection = () => {
             animation: numberFloat 12s ease-in-out infinite;
           }
           
-          .number-1 { top: 20%; left: 20%; animation-delay: 0s; }
-          .number-2 { top: 40%; left: 80%; animation-delay: -3s; }
-          .number-3 { top: 60%; left: 15%; animation-delay: -6s; }
-          .number-4 { top: 80%; left: 75%; animation-delay: -9s; }
+                     .number-1 { top: 20%; left: 20%; animation-delay: 0s; }
+           .number-2 { top: 40%; left: 80%; animation-delay: -3s; }
+           .number-3 { top: 60%; left: 15%; animation-delay: -6s; }
+           .number-4 { top: 80%; left: 75%; animation-delay: -9s; }
+           .number-5 { top: 50%; left: 50%; animation-delay: -12s; }
           
           @keyframes processFloat {
             0%, 100% { 

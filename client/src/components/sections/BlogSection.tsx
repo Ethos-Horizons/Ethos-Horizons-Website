@@ -66,18 +66,30 @@ export const BlogSection = () => {
       tags: ["Content Marketing", "Strategy", "ROI"],
       featured: false
     },
-    {
-      id: 6,
-      title: "Social Media Marketing for Local Businesses: Best Practices",
-      excerpt: "Effective social media strategies specifically designed for local businesses to build community and drive foot traffic.",
-      category: "social-media",
-      author: "Ethos Digital Team",
-      date: "December 28, 2023",
-      readTime: "9 min read",
-      image: "https://picsum.photos/400/250?random=9",
-      tags: ["Social Media", "Local Business", "Community"],
-      featured: false
-    }
+         {
+       id: 6,
+       title: "Social Media Marketing for Local Businesses: Best Practices",
+       excerpt: "Effective social media strategies specifically designed for local businesses to build community and drive foot traffic.",
+       category: "social-media",
+       author: "Ethos Digital Team",
+       date: "December 28, 2023",
+       readTime: "9 min read",
+       image: "https://picsum.photos/400/250?random=9",
+       tags: ["Social Media", "Local Business", "Community"],
+       featured: false
+     },
+     {
+       id: 7,
+       title: "Video Marketing Strategies for Small Business Growth",
+       excerpt: "Learn how to leverage video content to increase engagement, build trust, and drive conversions for your business.",
+       category: "video-marketing",
+       author: "Ethos Digital Team",
+       date: "December 25, 2023",
+       readTime: "14 min read",
+       image: "https://picsum.photos/400/250?random=10",
+       tags: ["Video Marketing", "Content Creation", "Engagement"],
+       featured: false
+     }
   ];
 
   const resources = [
@@ -115,15 +127,16 @@ export const BlogSection = () => {
     }
   ];
 
-  const categories = [
-    { id: 'all', label: 'All Articles' },
-    { id: 'seo', label: 'SEO' },
-    { id: 'ai-marketing', label: 'AI Marketing' },
-    { id: 'web-development', label: 'Web Development' },
-    { id: 'local-marketing', label: 'Local Marketing' },
-    { id: 'content-marketing', label: 'Content Marketing' },
-    { id: 'social-media', label: 'Social Media' }
-  ];
+     const categories = [
+     { id: 'all', label: 'All Articles' },
+     { id: 'seo', label: 'SEO' },
+     { id: 'ai-marketing', label: 'AI Marketing' },
+     { id: 'web-development', label: 'Web Development' },
+     { id: 'local-marketing', label: 'Local Marketing' },
+     { id: 'content-marketing', label: 'Content Marketing' },
+     { id: 'social-media', label: 'Social Media' },
+     { id: 'video-marketing', label: 'Video Marketing' }
+   ];
 
   const filteredPosts = activeCategory === 'all' 
     ? blogPosts 
@@ -169,14 +182,14 @@ export const BlogSection = () => {
             <h3 className="text-2xl font-bold text-white mb-8 text-center">Featured Article</h3>
             <div className="bg-gray-800 rounded-xl overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="h-64 lg:h-full overflow-hidden">
-                  <img 
-                    src={featuredPost.image} 
-                    alt={`${featuredPost.title} featured image`}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                </div>
+                                 <div className="h-64 lg:h-full overflow-hidden relative">
+                   <img 
+                     src={featuredPost.image} 
+                     alt={`${featuredPost.title} featured image`}
+                     className="w-full h-full object-cover"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-4 mb-4">
                     <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
@@ -230,18 +243,18 @@ export const BlogSection = () => {
           ))}
         </div>
 
-        {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                 {/* Blog Posts Grid */}
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
           {filteredPosts.filter(post => !post.featured).map((post) => (
             <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300">
-              <div className="h-48 overflow-hidden">
-                <img 
-                  src={post.image} 
-                  alt={`${post.title} article image`}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
+                             <div className="h-48 overflow-hidden relative">
+                 <img 
+                   src={post.image} 
+                   alt={`${post.title} article image`}
+                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+               </div>
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-3">
                   <div className="flex items-center text-gray-400 text-sm">
@@ -274,8 +287,8 @@ export const BlogSection = () => {
           ))}
         </div>
 
-        {/* Free Resources */}
-        <div className="bg-gray-800 rounded-xl p-8">
+                 {/* Free Resources */}
+         <div className="bg-gray-800 rounded-xl p-8 max-w-6xl mx-auto">
           <h3 className="text-2xl font-bold text-white mb-8 text-center">Free Resources & Templates</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resources.map((resource) => (
