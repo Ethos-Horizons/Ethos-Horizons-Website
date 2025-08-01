@@ -1,8 +1,64 @@
 import { Check, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
+import { apiRequest } from '@/lib/queryClient';
+
+interface PricingPlan {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  popular: boolean;
+  type: string;
+}
+
+interface PricingData {
+  setup: PricingPlan;
+  growth: PricingPlan;
+  premium: PricingPlan;
+}
 
 export const PricingSection = () => {
-  const plans = [
+  const [pricingData, setPricingData] = useState<PricingData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadPricingData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await apiRequest('GET', '/api/cms/content/pricing');
+        const data = await response.json();
+        
+        if (data && Array.isArray(data)) {
+          // Convert array of content items to pricing data structure
+          const pricingMap: any = {};
+          data.forEach((item: any) => {
+            pricingMap[item.content_key] = item.content_value;
+          });
+          
+          if (pricingMap.setup && pricingMap.growth && pricingMap.premium) {
+            setPricingData(pricingMap);
+          }
+        } else {
+          setError('Failed to load pricing data');
+        }
+      } catch (err: any) {
+        console.error('Error loading pricing data:', err);
+        setError('Failed to load pricing data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPricingData();
+  }, []);
+
+  // Fallback to hardcoded data if CMS data is not available
+  const fallbackPlans = [
     {
       name: "Online Presence Setup",
       price: "$2,500",
@@ -59,6 +115,86 @@ export const PricingSection = () => {
       type: "retainer"
     }
   ];
+
+  // Use CMS data if available, otherwise fallback
+  const plans = pricingData ? [
+    {
+      name: pricingData.setup.title || "Online Presence Setup",
+      price: `$${pricingData.setup.price?.toLocaleString() || "2,500"}`,
+      period: "one-time",
+      description: pricingData.setup.description || "Complete digital foundation for businesses with little to no online presence.",
+      features: [
+        "Professional Website (5-8 pages)",
+        "Google Business Profile Setup & Optimization",
+        "Social Media Profile Creation (3 platforms)",
+        "Basic SEO Implementation",
+        "Content Creation (About, Services, Contact)",
+        "Google Analytics Setup",
+        "Business Consultation Session",
+        "30-day Support"
+      ],
+      popular: false,
+      type: "setup"
+    },
+    {
+      name: pricingData.growth.title || "Growth Retainer",
+      price: `$${pricingData.growth.price?.toLocaleString() || "1,200"}`,
+      period: "/month",
+      description: pricingData.growth.description || "Ongoing digital marketing to drive traffic and generate leads.",
+      features: [
+        "Monthly SEO Optimization",
+        "Social Media Management (3 platforms)",
+        "Content Creation (8 posts/month)",
+        "Google Ads Management",
+        "Monthly Performance Reports",
+        "Email Marketing Campaigns",
+        "Competitor Analysis",
+        "Priority Support"
+      ],
+      popular: true,
+      type: "retainer"
+    },
+    {
+      name: pricingData.premium.title || "Premium Retainer",
+      price: `$${pricingData.premium.price?.toLocaleString() || "2,500"}`,
+      period: "/month",
+      description: pricingData.premium.description || "Comprehensive digital marketing with advanced AI automation.",
+      features: [
+        "Everything in Growth Retainer",
+        "AI-Powered Content Generation",
+        "Advanced Analytics & Reporting",
+        "Video Marketing (Shorts/Ads)",
+        "Podcast Production Support",
+        "Advanced SEO Strategies",
+        "Custom AI Agent Setup",
+        "Dedicated Account Manager",
+        "Weekly Strategy Calls"
+      ],
+      popular: false,
+      type: "retainer"
+    }
+  ] : fallbackPlans;
+
+  if (loading) {
+    return (
+      <section id="pricing" className="py-20 bg-gray-900">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Flexible <span className="text-cyan-400">Pricing</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Start with a complete online presence setup, then scale with ongoing marketing services. 
+              Perfect for businesses ready to grow their digital footprint.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <div className="text-white text-xl">Loading pricing...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="pricing" className="py-20 bg-gray-900">

@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
+import cmsRoutes from "./routes/cms";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission endpoint
@@ -49,6 +50,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+
+  // CMS Routes
+  app.use("/api/cms", cmsRoutes);
 
   const httpServer = createServer(app);
   return httpServer;

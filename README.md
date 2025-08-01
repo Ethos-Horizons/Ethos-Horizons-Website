@@ -109,8 +109,22 @@ npm run build
 
 ### Environment Variables
 For production deployment, you'll need:
-- `DATABASE_URL` - PostgreSQL connection string
+
+**Backend (.env in root):**
+- `SUPABASE_URL` - Your Supabase project URL
+- `SUPABASE_ANON_KEY` - Your Supabase anonymous key
+- `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
 - `PORT` - Server port (defaults to 3000)
+
+**Frontend (.env.local in root):**
+- `VITE_SUPABASE_URL` - Your Supabase project URL
+- `VITE_SUPABASE_ANON_KEY` - Your Supabase anonymous key
+
+### CMS Setup
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Run the SQL commands from the setup instructions to create tables
+3. Add your environment variables
+4. Access the CMS at `/admin` route
 
 ## 📧 Contact
 
