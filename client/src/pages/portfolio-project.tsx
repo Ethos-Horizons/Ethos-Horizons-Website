@@ -4,19 +4,7 @@ import { ArrowLeft, Calendar, ExternalLink, Code, TrendingUp } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { apiRequest } from '@/lib/queryClient';
-
-interface PortfolioProject {
-  id: string;
-  title: string;
-  description: string;
-  image_url?: string;
-  technologies: string[];
-  results: string;
-  featured: boolean;
-  created_at: string;
-  updated_at: string;
-}
+import { findPortfolioProjectBySlug, type PortfolioProject } from '@/lib/mockData';
 
 export default function PortfolioProjectPage() {
   const [, setLocation] = useLocation();
@@ -28,18 +16,12 @@ export default function PortfolioProjectPage() {
   const slug = window.location.pathname.split('/portfolio/')[1];
 
   useEffect(() => {
-    const fetchProject = async () => {
+    const fetchProject = () => {
       try {
         setLoading(true);
-        // For now, we'll fetch all projects and find by slug
-        // In production, you'd have a dedicated endpoint for this
-        const response = await apiRequest('GET', '/api/cms/portfolio');
-        const projects = await response.json();
         
-        // Find project by slug (you might want to add a slug field to your database)
-        const foundProject = projects.find((p: PortfolioProject) => 
-          p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug
-        );
+        // Find project by slug using mock data
+        const foundProject = findPortfolioProjectBySlug(slug);
 
         if (foundProject) {
           setProject(foundProject);

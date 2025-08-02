@@ -4,21 +4,7 @@ import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { apiRequest } from '@/lib/queryClient';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  category: string;
-  tags: string[];
-  image_url?: string;
-  published: boolean;
-  created_at: string;
-  updated_at: string;
-}
+import { findBlogPostBySlug, type BlogPost } from '@/lib/mockData';
 
 export default function BlogPostPage() {
   const [, setLocation] = useLocation();
@@ -30,18 +16,12 @@ export default function BlogPostPage() {
   const slug = window.location.pathname.split('/blog/')[1];
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchPost = () => {
       try {
         setLoading(true);
-        // For now, we'll fetch all posts and find by slug
-        // In production, you'd have a dedicated endpoint for this
-        const response = await apiRequest('GET', '/api/cms/blog');
-        const posts = await response.json();
         
-        // Find post by slug (you might want to add a slug field to your database)
-        const foundPost = posts.find((p: BlogPost) => 
-          p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug
-        );
+        // Find post by slug using mock data
+        const foundPost = findBlogPostBySlug(slug);
 
         if (foundPost) {
           setPost(foundPost);
