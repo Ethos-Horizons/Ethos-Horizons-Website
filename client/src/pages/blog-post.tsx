@@ -4,7 +4,22 @@ import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { findBlogPostBySlug, type BlogPost } from '@/lib/mockData';
+import { apiRequest } from '@/lib/queryClient';
+
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  category: string;
+  tags: string[];
+  image_url?: string;
+  published: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function BlogPostPage() {
   const [, setLocation] = useLocation();
@@ -16,12 +31,14 @@ export default function BlogPostPage() {
   const slug = window.location.pathname.split('/blog/')[1];
 
   useEffect(() => {
-    const fetchPost = () => {
+    const fetchPost = async () => {
       try {
         setLoading(true);
         
-        // Find post by slug using mock data
-        const foundPost = findBlogPostBySlug(slug);
+        // Fetch all blog posts and find the one with matching slug
+        const response = await apiRequest('GET', '/api/cms/blog');
+        const posts = await response.json();
+        const foundPost = posts.find((p: BlogPost) => p.slug === slug && p.published);
 
         if (foundPost) {
           setPost(foundPost);

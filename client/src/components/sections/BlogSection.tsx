@@ -1,13 +1,82 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Calendar, Clock, User, ArrowRight, BookOpen, Video, FileText, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { apiRequest } from '@/lib/queryClient';
+
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  category: string;
+  tags: string[];
+  image_url?: string;
+  published: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface MockBlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+  tags: string[];
+  featured: boolean;
+}
 
 export const BlogSection = () => {
   const [, setLocation] = useLocation();
   const [activeCategory, setActiveCategory] = useState('all');
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const blogPosts = [
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
+  const fetchBlogPosts = async () => {
+    try {
+      const response = await apiRequest('GET', '/api/cms/blog');
+      const data = await response.json();
+      // Only show published posts
+      const publishedPosts = data.filter((post: BlogPost) => post.published);
+      setBlogPosts(publishedPosts);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      // Fallback to mock data if API fails
+      setBlogPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  // Helper function to estimate read time
+  const estimateReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(' ').length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return `${minutes} min read`;
+  };
+
+  // Fallback mock data if no posts are available
+  const fallbackPosts: MockBlogPost[] = [
     {
       id: 1,
       title: "5 Essential SEO Strategies for Local Businesses in 2024",
@@ -98,8 +167,8 @@ export const BlogSection = () => {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   };
 
-  const handleBlogClick = (post: any) => {
-    const slug = generateSlug(post.title);
+  const handleBlogClick = (post: BlogPost) => {
+    const slug = post.slug || generateSlug(post.title);
     setLocation(`/blog/${slug}`);
   };
 
@@ -153,7 +222,7 @@ export const BlogSection = () => {
     ? blogPosts 
     : blogPosts.filter(post => post.category === activeCategory);
 
-  const featuredPost = blogPosts.find(post => post.featured);
+
 
   return (
     <section id="blog" className="py-20 bg-gradient-to-br from-gray-900 via-slate-900 to-blue-900 relative overflow-hidden">
@@ -188,37 +257,37 @@ export const BlogSection = () => {
         </div>
 
         {/* Featured Post */}
-        {featuredPost && (
+        {blogPosts.length > 0 && (
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Featured Article</h3>
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">Latest Articles</h3>
             <div className="bg-gray-800 rounded-xl overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                                 <div className="h-64 lg:h-full overflow-hidden relative">
-                   <img 
-                     src={featuredPost.image} 
-                     alt={`${featuredPost.title} featured image`}
-                     className="w-full h-full object-cover"
-                   />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                 </div>
+                <div className="h-64 lg:h-full overflow-hidden relative">
+                  <img 
+                    src={blogPosts[0].image_url || "https://picsum.photos/400/250?random=1"} 
+                    alt={`${blogPosts[0].title} featured image`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
                 <div className="p-8">
                   <div className="flex items-center gap-4 mb-4">
                     <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
-                      Featured
+                      Latest
                     </span>
                     <div className="flex items-center text-gray-400 text-sm">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {featuredPost.date}
+                      {formatDate(blogPosts[0].created_at)}
                     </div>
                     <div className="flex items-center text-gray-400 text-sm">
                       <Clock className="w-4 h-4 mr-1" />
-                      {featuredPost.readTime}
+                      {estimateReadTime(blogPosts[0].content)}
                     </div>
                   </div>
-                  <h4 className="text-2xl font-bold text-white mb-4">{featuredPost.title}</h4>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{featuredPost.excerpt}</p>
+                  <h4 className="text-2xl font-bold text-white mb-4">{blogPosts[0].title}</h4>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{blogPosts[0].excerpt}</p>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {featuredPost.tags.map((tag, index) => (
+                    {blogPosts[0].tags.map((tag, index) => (
                       <span 
                         key={index}
                         className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
@@ -228,7 +297,7 @@ export const BlogSection = () => {
                     ))}
                   </div>
                   <Button 
-                    onClick={() => handleBlogClick(featuredPost)}
+                    onClick={() => handleBlogClick(blogPosts[0])}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white"
                   >
                     Read Full Article
@@ -259,25 +328,25 @@ export const BlogSection = () => {
 
                  {/* Blog Posts Grid */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
-          {filteredPosts.filter(post => !post.featured).map((post) => (
+          {blogPosts.slice(1).map((post) => (
             <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300">
-                             <div className="h-48 overflow-hidden relative">
-                 <img 
-                   src={post.image} 
-                   alt={`${post.title} article image`}
-                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-               </div>
+              <div className="h-48 overflow-hidden relative">
+                <img 
+                  src={post.image_url || "https://picsum.photos/400/250?random=1"} 
+                  alt={`${post.title} article image`}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-3">
                   <div className="flex items-center text-gray-400 text-sm">
                     <Calendar className="w-4 h-4 mr-1" />
-                    {post.date}
+                    {formatDate(post.created_at)}
                   </div>
                   <div className="flex items-center text-gray-400 text-sm">
                     <Clock className="w-4 h-4 mr-1" />
-                    {post.readTime}
+                    {estimateReadTime(post.content)}
                   </div>
                 </div>
                 <h4 className="text-xl font-bold text-white mb-3">{post.title}</h4>

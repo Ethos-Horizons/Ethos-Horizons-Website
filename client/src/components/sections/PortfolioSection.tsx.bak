@@ -1,22 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { ExternalLink, Github, TrendingUp, Users, Clock, Code, Camera, Mic, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { apiRequest } from '@/lib/queryClient';
+
+interface PortfolioProject {
+  id: string;
+  title: string;
+  description: string;
+  image_url?: string;
+  technologies: string[];
+  results: string;
+  featured: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export const PortfolioSection = () => {
   const [, setLocation] = useLocation();
   const [activeFilter, setActiveFilter] = useState('all');
+  const [portfolioItems, setPortfolioItems] = useState<PortfolioProject[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPortfolioItems();
+  }, []);
+
+  const fetchPortfolioItems = async () => {
+    try {
+      const response = await apiRequest('GET', '/api/cms/portfolio');
+      const data = await response.json();
+      setPortfolioItems(data);
+    } catch (error) {
+      console.error('Error fetching portfolio items:', error);
+      setPortfolioItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateSlug = (title: string) => {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   };
 
-  const handlePortfolioClick = (item: any) => {
-    const slug = generateSlug(item.title);
+  const handlePortfolioClick = (item: PortfolioProject) => {
+    const slug = item.slug || generateSlug(item.title);
     setLocation(`/portfolio/${slug}`);
   };
 
-  const portfolioItems = [
+  // Fallback mock data if no items are available
+  const fallbackItems = [
     {
       id: 1,
       title: "TechTalk Podcast Website",

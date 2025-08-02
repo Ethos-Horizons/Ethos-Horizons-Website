@@ -70,9 +70,9 @@ router.put('/content/:type/:key', async (req: AuthenticatedRequest, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error updating content:', error);
-    console.error('Request params:', { type, key });
+    console.error('Request params:', { type: req.params.type, key: req.params.key });
     console.error('Request body:', req.body);
-    res.status(500).json({ error: 'Failed to update content', details: error.message });
+    res.status(500).json({ error: 'Failed to update content', details: error instanceof Error ? error.message : 'Unknown error' });
   }
 });
 
@@ -98,7 +98,9 @@ router.get('/blog', async (req: AuthenticatedRequest, res) => {
 // Create blog post
 router.post('/blog', async (req: AuthenticatedRequest, res) => {
   try {
-    const { title, excerpt, content, category, author, image_url, tags, published } = req.body;
+    const { title, excerpt, content, category, author, image_url, tags, published, slug } = req.body;
+    
+    console.log('Creating blog post with data:', { title, excerpt, content, category, author, image_url, tags, published, slug });
     
     const { data, error } = await supabase
       .from('blog_posts')
@@ -111,17 +113,22 @@ router.post('/blog', async (req: AuthenticatedRequest, res) => {
         image_url,
         tags,
         published,
+        slug,
         created_by: req.user!.id
       })
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
+    }
     
+    console.log('Blog post created successfully:', data);
     res.status(201).json(data);
   } catch (error) {
     console.error('Error creating blog post:', error);
-    res.status(500).json({ error: 'Failed to create blog post' });
+    res.status(500).json({ error: 'Failed to create blog post', details: error instanceof Error ? error.message : 'Unknown error' });
   }
 });
 
@@ -129,7 +136,7 @@ router.post('/blog', async (req: AuthenticatedRequest, res) => {
 router.put('/blog/:id', async (req: AuthenticatedRequest, res) => {
   try {
     const { id } = req.params;
-    const { title, excerpt, content, category, author, image_url, tags, published } = req.body;
+    const { title, excerpt, content, category, author, image_url, tags, published, slug } = req.body;
     
     const { data, error } = await supabase
       .from('blog_posts')
@@ -142,6 +149,7 @@ router.put('/blog/:id', async (req: AuthenticatedRequest, res) => {
         image_url,
         tags,
         published,
+        slug,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
@@ -198,7 +206,7 @@ router.get('/portfolio', async (req: AuthenticatedRequest, res) => {
 // Create portfolio item
 router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
   try {
-    const { title, description, image_url, technologies, results, featured } = req.body;
+    const { title, description, image_url, technologies, results, featured, slug } = req.body;
     
     const { data, error } = await supabase
       .from('portfolio_items')
@@ -208,7 +216,8 @@ router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
         image_url,
         technologies,
         results,
-        featured
+        featured,
+        slug
       })
       .select()
       .single();
@@ -226,7 +235,7 @@ router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
 router.put('/portfolio/:id', async (req: AuthenticatedRequest, res) => {
   try {
     const { id } = req.params;
-    const { title, description, image_url, technologies, results, featured } = req.body;
+    const { title, description, image_url, technologies, results, featured, slug } = req.body;
     
     const { data, error } = await supabase
       .from('portfolio_items')
@@ -237,6 +246,7 @@ router.put('/portfolio/:id', async (req: AuthenticatedRequest, res) => {
         technologies,
         results,
         featured,
+        slug,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)

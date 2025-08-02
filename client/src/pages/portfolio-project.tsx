@@ -4,7 +4,20 @@ import { ArrowLeft, Calendar, ExternalLink, Code, TrendingUp } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { findPortfolioProjectBySlug, type PortfolioProject } from '@/lib/mockData';
+import { apiRequest } from '@/lib/queryClient';
+
+interface PortfolioProject {
+  id: string;
+  title: string;
+  description: string;
+  image_url?: string;
+  technologies: string[];
+  results: string;
+  featured: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function PortfolioProjectPage() {
   const [, setLocation] = useLocation();
@@ -16,12 +29,14 @@ export default function PortfolioProjectPage() {
   const slug = window.location.pathname.split('/portfolio/')[1];
 
   useEffect(() => {
-    const fetchProject = () => {
+    const fetchProject = async () => {
       try {
         setLoading(true);
         
-        // Find project by slug using mock data
-        const foundProject = findPortfolioProjectBySlug(slug);
+        // Fetch all portfolio projects and find the one with matching slug
+        const response = await apiRequest('GET', '/api/cms/portfolio');
+        const projects = await response.json();
+        const foundProject = projects.find((p: PortfolioProject) => p.slug === slug);
 
         if (foundProject) {
           setProject(foundProject);
