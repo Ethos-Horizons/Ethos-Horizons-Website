@@ -1,9 +1,20 @@
 import { useState } from 'react';
-import { ExternalLink, Github, TrendingUp, Users, Clock, Code, Camera, Mic } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { ExternalLink, Github, TrendingUp, Users, Clock, Code, Camera, Mic, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const PortfolioSection = () => {
+  const [, setLocation] = useLocation();
   const [activeFilter, setActiveFilter] = useState('all');
+
+  const generateSlug = (title: string) => {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  };
+
+  const handlePortfolioClick = (item: any) => {
+    const slug = generateSlug(item.title);
+    setLocation(`/portfolio/${slug}`);
+  };
 
   const portfolioItems = [
     {
@@ -252,7 +263,7 @@ export const PortfolioSection = () => {
                 </div>
 
                 {/* Features */}
-                <div>
+                <div className="mb-6">
                   <h4 className="text-lg font-semibold text-white mb-3">Key Features</h4>
                   <ul className="space-y-2">
                     {item.features.map((feature, index) => (
@@ -263,6 +274,15 @@ export const PortfolioSection = () => {
                     ))}
                   </ul>
                 </div>
+
+                {/* View Details Button */}
+                <Button 
+                  onClick={() => handlePortfolioClick(item)}
+                  className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
+                >
+                  View Project Details
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
               </div>
             </div>
           ))}

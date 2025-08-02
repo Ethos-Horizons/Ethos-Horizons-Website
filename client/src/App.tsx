@@ -5,12 +5,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import AdminPage from "@/pages/admin";
+import BlogPostPage from "@/pages/blog-post";
+import PortfolioProjectPage from "@/pages/portfolio-project";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/admin" component={AdminPage} />
+      <Route path="/blog/:slug" component={BlogPostPage} />
+      <Route path="/portfolio/:slug" component={PortfolioProjectPage} />
       <Route path="*" component={Home} />
     </Switch>
   );

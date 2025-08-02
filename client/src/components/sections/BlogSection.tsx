@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 import { Calendar, Clock, User, ArrowRight, BookOpen, Video, FileText, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const BlogSection = () => {
+  const [, setLocation] = useLocation();
   const [activeCategory, setActiveCategory] = useState('all');
 
   const blogPosts = [
@@ -91,6 +93,15 @@ export const BlogSection = () => {
        featured: false
      }
   ];
+
+  const generateSlug = (title: string) => {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  };
+
+  const handleBlogClick = (post: any) => {
+    const slug = generateSlug(post.title);
+    setLocation(`/blog/${slug}`);
+  };
 
   const resources = [
     {
@@ -216,7 +227,10 @@ export const BlogSection = () => {
                       </span>
                     ))}
                   </div>
-                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white">
+                  <Button 
+                    onClick={() => handleBlogClick(featuredPost)}
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white"
+                  >
                     Read Full Article
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -278,7 +292,11 @@ export const BlogSection = () => {
                     </span>
                   ))}
                 </div>
-                <Button variant="outline" className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white">
+                <Button 
+                  onClick={() => handleBlogClick(post)}
+                  variant="outline" 
+                  className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white"
+                >
                   Read More
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>

@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Settings, FileText, Image, MessageSquare, DollarSign } from 'lucide-react';
-import { ContentManager } from './ContentManager';
+import { LogOut, FileText, Image } from 'lucide-react';
 import { BlogManager } from './BlogManager';
 import { PortfolioManager } from './PortfolioManager';
-import { ChatbotManager } from './ChatbotManager';
 
 interface AdminDashboardProps {
   user: any;
@@ -14,7 +12,7 @@ interface AdminDashboardProps {
 }
 
 export const AdminDashboard = ({ user, onLogout }: AdminDashboardProps) => {
-  const [activeTab, setActiveTab] = useState('content');
+  const [activeTab, setActiveTab] = useState('blog');
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -44,14 +42,7 @@ export const AdminDashboard = ({ user, onLogout }: AdminDashboardProps) => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-800 border border-gray-700">
-            <TabsTrigger 
-              value="content" 
-              className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
-            >
-              <DollarSign className="w-4 h-4 mr-2" />
-              Content
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-gray-800 border border-gray-700">
             <TabsTrigger 
               value="blog" 
               className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
@@ -66,28 +57,7 @@ export const AdminDashboard = ({ user, onLogout }: AdminDashboardProps) => {
               <Image className="w-4 h-4 mr-2" />
               Portfolio
             </TabsTrigger>
-            <TabsTrigger 
-              value="chatbot" 
-              className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Chatbot
-            </TabsTrigger>
           </TabsList>
-
-          <TabsContent value="content" className="space-y-6">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <DollarSign className="w-5 h-5 mr-2" />
-                  Content Management
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ContentManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           <TabsContent value="blog" className="space-y-6">
             <Card className="bg-gray-800 border-gray-700">
@@ -113,20 +83,6 @@ export const AdminDashboard = ({ user, onLogout }: AdminDashboardProps) => {
               </CardHeader>
               <CardContent>
                 <PortfolioManager />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="chatbot" className="space-y-6">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <MessageSquare className="w-5 h-5 mr-2" />
-                  Chatbot Management
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ChatbotManager />
               </CardContent>
             </Card>
           </TabsContent>

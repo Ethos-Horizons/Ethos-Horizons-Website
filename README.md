@@ -2,6 +2,25 @@
 
 A modern, responsive website for Ethos Digital, featuring advanced React frontend with animated parallax backgrounds and professional design. Built with a full-stack architecture using React, Express.js, and PostgreSQL.
 
+## 🏗️ System Architecture
+
+This project is part of a larger ecosystem of applications:
+
+### **1. Frontend Website (Current Project)**
+- **Purpose:** Lead generation and initial impression
+- **Features:** Marketing content, portfolio, blog, contact forms
+- **CMS:** Blog posts and portfolio management only
+
+### **2. Admin/Client Portal (Separate Application)**
+- **Purpose:** Complete business management system
+- **Features:** Client onboarding, project management, analytics, billing
+- **Status:** Planned - see `ADMIN_PORTAL_PROMPT.md`
+
+### **3. AI Agent Dashboard (Separate Application)**
+- **Purpose:** AI agent management and automation
+- **Features:** Agent creation, task automation, performance monitoring
+- **Status:** Planned - see `AI_AGENT_DASHBOARD_PROMPT.md`
+
 ## 🚀 Live Demo
 
 Visit the live website: [Coming Soon]
@@ -125,6 +144,8 @@ For production deployment, you'll need:
 2. Run the SQL commands from the setup instructions to create tables
 3. Add your environment variables
 4. Access the CMS at `/admin` route
+
+**Note:** The CMS currently manages blog posts and portfolio items only. Pricing and chatbot management have been removed as they will be handled in separate applications.
 
 ## 📧 Contact
 

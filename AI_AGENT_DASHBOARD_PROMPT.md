@@ -1,290 +1,268 @@
-# AI Agent Dashboard - Detailed Development Prompt
+# AI Agent Dashboard Application - Development Prompt
 
-## Project Overview
-Create an advanced AI agent management and automation dashboard for Ethos Digital Partners. This system will manage custom AI agents that handle various digital marketing tasks, providing automation and intelligence to improve client results and agency efficiency.
+## 🤖 **Project Overview**
+Create a comprehensive AI agent management system that serves as the "brain" of our automated services. This platform will manage, deploy, and monitor AI agents that can be called upon by the Admin/Client Portal to perform various business tasks, from content creation to analytics analysis.
 
-## Business Context
-- **Agency**: Ethos Digital Partners (startup digital marketing agency)
-- **Goal**: Automate repetitive marketing tasks using AI agents
-- **Target Users**: Agency team members managing client campaigns
-- **Services**: SEO, PPC, Content Marketing, Social Media, Analytics
-- **Vision**: Build custom AI agents for each client's specific business needs
+## 🎯 **Core Purpose**
+- **Agent Management:** Create, train, deploy, and monitor AI agents
+- **Task Automation:** Handle routine business tasks automatically
+- **Integration Hub:** Connect agents to Admin Portal and external services
+- **Performance Monitoring:** Track agent effectiveness and optimize performance
+- **Scalability:** Support multiple agents working simultaneously across different clients
 
-## Core Requirements
+## 🏗️ **Architecture**
 
-### 1. AI Agent Management System
-- **Agent Creation & Configuration**:
-  - Custom agent templates for different business types
-  - Business-specific training and configuration
-  - Agent personality and tone settings
-  - Task-specific agent specialization
-- **Agent Lifecycle Management**:
-  - Agent deployment and monitoring
-  - Performance tracking and optimization
-  - Version control and updates
-  - Agent retirement and archiving
+### **Technology Stack**
+- **Frontend:** React 18 + TypeScript + Vite + Tailwind CSS
+- **Backend:** Node.js + Express + TypeScript
+- **Database:** PostgreSQL (Supabase)
+- **AI/ML:** OpenAI API, Anthropic Claude, Custom fine-tuned models
+- **Queue System:** Redis for task queuing and processing
+- **Real-time:** WebSocket for live agent status updates
+- **File Storage:** Supabase Storage for training data and outputs
+- **Monitoring:** Custom analytics + third-party monitoring tools
 
-### 2. Task Automation Engine
-- **Content Generation**:
-  - Blog post creation and optimization
-  - Social media post generation
-  - Email newsletter content
-  - Ad copy creation and testing
-- **SEO Automation**:
-  - Keyword research and analysis
-  - Content optimization suggestions
-  - Technical SEO monitoring
-  - Competitor analysis
-- **Social Media Management**:
-  - Post scheduling and publishing
-  - Engagement monitoring and responses
-  - Hashtag optimization
-  - Trend analysis and recommendations
-- **PPC Campaign Management**:
-  - Bid optimization
-  - Ad performance analysis
-  - Budget allocation
-  - A/B testing automation
+### **Key Features**
 
-### 3. Client-Specific AI Agents
-- **Restaurant Agents**:
-  - Menu promotion content
-  - Local event marketing
-  - Customer review management
-  - Special offer campaigns
-- **Retail Agents**:
-  - Product promotion content
-  - Inventory-based marketing
-  - Seasonal campaign automation
-  - Customer loyalty programs
-- **Service Business Agents**:
-  - Service promotion content
-  - Appointment booking optimization
-  - Testimonial collection
-  - Educational content creation
+#### **1. Agent Creation & Management**
+- **Agent Builder:** Visual interface for creating new agents
+- **Template Library:** Pre-built agent templates for common tasks
+- **Custom Training:** Upload training data and fine-tune agents
+- **Agent Marketplace:** Browse and deploy community-created agents
+- **Version Control:** Track agent versions and rollback capabilities
 
-### 4. Dashboard & Analytics
-- **Agent Performance Dashboard**:
-  - Task completion rates
-  - Content quality scores
-  - Time savings metrics
-  - ROI calculations
-- **Client Results Tracking**:
-  - Campaign performance
-  - Content engagement
-  - Traffic and conversion metrics
-  - Competitive analysis
-- **System Health Monitoring**:
-  - Agent uptime and reliability
-  - API usage and costs
-  - Error tracking and alerts
-  - Performance optimization suggestions
+#### **2. Agent Types & Capabilities**
 
-### 5. Content Management & Approval
-- **Content Workflow**:
-  - AI-generated content review
-  - Human approval process
-  - Content scheduling
-  - Multi-platform publishing
-- **Quality Control**:
-  - Content quality scoring
-  - Brand voice consistency
-  - Grammar and style checking
-  - Plagiarism detection
-- **Content Library**:
-  - Approved content storage
-  - Reusable templates
-  - Brand guidelines integration
-  - Content performance tracking
+##### **Content Creation Agents**
+- **Blog Writer:** Generate blog posts based on topics and keywords
+- **Social Media Manager:** Create posts, captions, and content calendars
+- **Email Marketer:** Write email campaigns and newsletters
+- **SEO Optimizer:** Optimize content for search engines
+- **Copywriter:** Create marketing copy and advertisements
 
-### 6. Integration Hub
-- **Marketing Platform APIs**:
-  - Google Ads API
-  - Facebook/Instagram API
-  - Twitter API
-  - LinkedIn API
-  - Google Analytics API
-- **Content Management Systems**:
-  - WordPress integration
-  - Shopify integration
-  - Custom website APIs
-- **Communication Tools**:
-  - Email service providers
-  - SMS services
-  - Slack/Discord integration
-- **Data Sources**:
-  - Google Search Console
-  - Social media analytics
-  - Website analytics
-  - CRM systems
+##### **Analytics & Research Agents**
+- **Domain Researcher:** Find available domains and pricing
+- **Competitor Analyzer:** Research competitors and market trends
+- **Data Analyst:** Analyze website and social media performance
+- **Market Researcher:** Gather market insights and opportunities
+- **Trend Spotter:** Identify emerging trends and opportunities
 
-## Technical Requirements
+##### **Customer Service Agents**
+- **Chatbot Manager:** Handle customer inquiries and support
+- **Lead Qualifier:** Qualify leads and gather information
+- **Appointment Scheduler:** Schedule meetings and consultations
+- **Feedback Collector:** Gather and analyze customer feedback
+- **FAQ Generator:** Create and update FAQ content
 
-### Frontend
-- **Framework**: React with TypeScript
-- **UI Library**: Tailwind CSS + shadcn/ui components
-- **State Management**: React Query + Zustand
-- **Real-time Updates**: WebSocket connections
-- **Charts**: Recharts or Chart.js
-- **Code Editor**: Monaco Editor for agent configuration
-- **File Upload**: React Dropzone
-- **Notifications**: Real-time toast notifications
+##### **Business Operations Agents**
+- **Invoice Generator:** Create and send invoices
+- **Report Creator:** Generate business reports and analytics
+- **Task Scheduler:** Manage and schedule business tasks
+- **Document Processor:** Process and organize documents
+- **Data Entry Specialist:** Handle routine data entry tasks
 
-### Backend
-- **Framework**: Node.js with Express
-- **Database**: PostgreSQL with Drizzle ORM
-- **AI/ML Integration**: 
-  - OpenAI GPT-4 API
-  - Anthropic Claude API
-  - Custom fine-tuned models
-- **Queue System**: Bull/BullMQ for task processing
-- **Caching**: Redis for performance
-- **File Storage**: AWS S3 for content assets
-- **Monitoring**: Prometheus + Grafana
+#### **3. Task Management & Automation**
+- **Task Queue:** Manage and prioritize agent tasks
+- **Workflow Builder:** Create automated workflows with multiple agents
+- **Scheduling System:** Schedule tasks and agent deployments
+- **Conditional Logic:** Set up if/then scenarios for task automation
+- **Integration Hooks:** Connect agents to external services and APIs
 
-### AI/ML Infrastructure
-- **Model Management**:
-  - Model versioning and deployment
-  - A/B testing for different models
-  - Performance monitoring
-  - Cost tracking and optimization
-- **Prompt Engineering**:
-  - Dynamic prompt generation
-  - Context-aware prompts
-  - Multi-step reasoning chains
-  - Safety and compliance checks
-- **Fine-tuning Pipeline**:
-  - Custom model training
-  - Domain-specific optimization
-  - Continuous learning
-  - Model evaluation metrics
+#### **4. Performance Monitoring**
+- **Agent Analytics:** Track agent performance and success rates
+- **Task Metrics:** Monitor task completion times and quality
+- **Cost Tracking:** Track API usage and costs per agent
+- **Quality Assurance:** Monitor output quality and accuracy
+- **Performance Optimization:** Suggest improvements based on data
 
-### Database Schema (Key Tables)
+#### **5. Client Integration**
+- **Portal Integration:** Seamless connection with Admin/Client Portal
+- **Client-Specific Agents:** Customize agents for individual clients
+- **Usage Tracking:** Monitor agent usage per client
+- **Billing Integration:** Track costs and bill clients accordingly
+- **Access Control:** Manage client access to specific agents
+
+#### **6. Training & Learning**
+- **Training Data Management:** Upload and manage training datasets
+- **Model Fine-tuning:** Customize models for specific use cases
+- **Feedback Loop:** Collect feedback to improve agent performance
+- **A/B Testing:** Test different agent configurations
+- **Continuous Learning:** Agents learn and improve over time
+
+## 🔄 **User Flows**
+
+### **Agent Creation Flow**
+1. **Select Template** → Choose from pre-built agent templates
+2. **Configure Settings** → Set parameters, capabilities, and limits
+3. **Upload Training Data** → Provide custom training data if needed
+4. **Test Agent** → Test agent with sample inputs
+5. **Deploy Agent** → Make agent available for use
+
+### **Task Execution Flow**
+1. **Task Request** → Admin Portal requests agent task
+2. **Agent Selection** → System selects appropriate agent
+3. **Task Processing** → Agent executes task with given parameters
+4. **Quality Check** → System validates output quality
+5. **Result Delivery** → Send results back to Admin Portal
+6. **Performance Logging** → Log performance metrics for improvement
+
+### **Client Request Flow**
+1. **Client Request** → Client requests service through Admin Portal
+2. **Agent Assignment** → System assigns appropriate agent
+3. **Task Execution** → Agent performs requested service
+4. **Result Review** → Client reviews and approves results
+5. **Iteration** → Agent makes revisions if needed
+6. **Completion** → Task marked complete and billed
+
+## 🎨 **UI/UX Design**
+
+### **Design Principles**
+- **Intuitive:** Easy to understand and navigate
+- **Efficient:** Quick access to common functions
+- **Informative:** Clear status and performance indicators
+- **Scalable:** Interface grows with agent count
+- **Professional:** Matches business brand standards
+
+### **Key Components**
+- **Agent Dashboard:** Overview of all agents and their status
+- **Task Monitor:** Real-time view of active tasks
+- **Performance Charts:** Visual representation of agent metrics
+- **Agent Builder:** Drag-and-drop interface for creating agents
+- **Log Viewer:** Detailed logs of agent activities
+- **Settings Panel:** Configuration options for each agent
+
+## 🔧 **Technical Requirements**
+
+### **Database Schema**
 ```sql
--- AI Agents
-agents (id, name, type, client_id, configuration, status, created_at)
-agent_versions (id, agent_id, version, changes, performance_metrics)
-agent_tasks (id, agent_id, task_type, status, result, created_at)
+-- Agent management
+agents (id, name, type, description, status, version, created_at)
+agent_templates (id, name, type, description, config, created_at)
+agent_versions (id, agent_id, version, config, performance_metrics, created_at)
 
--- Content Management
-content_items (id, agent_id, type, title, content, status, performance)
-content_approvals (id, content_id, approver_id, status, feedback)
-content_schedules (id, content_id, platform, scheduled_time, published_at)
+-- Task management
+tasks (id, agent_id, client_id, type, parameters, status, priority, created_at)
+task_results (id, task_id, result_data, quality_score, processing_time, created_at)
+task_queue (id, task_id, priority, scheduled_at, status)
 
--- Task Automation
-automation_rules (id, client_id, trigger_type, conditions, actions)
-automation_logs (id, rule_id, trigger_data, execution_result, timestamp)
-scheduled_tasks (id, agent_id, task_type, schedule, last_run, next_run)
+-- Performance tracking
+agent_performance (id, agent_id, task_count, success_rate, avg_processing_time, cost_per_task)
+task_metrics (id, task_id, start_time, end_time, api_calls, tokens_used, cost)
 
--- Performance Tracking
-agent_metrics (id, agent_id, metric_type, value, date)
-content_performance (id, content_id, platform, engagement, reach, clicks)
-campaign_results (id, client_id, campaign_type, metrics, date_range)
+-- Training and learning
+training_data (id, agent_id, data_type, content, quality_score, created_at)
+feedback (id, task_id, rating, comments, improvement_suggestions, created_at)
 
--- Integration Data
-api_connections (id, client_id, platform, credentials, status)
-data_syncs (id, connection_id, data_type, last_sync, status)
+-- Client integration
+client_agents (id, client_id, agent_id, permissions, usage_limits, created_at)
+agent_usage (id, client_id, agent_id, task_count, total_cost, period)
 ```
 
-### Key Features to Implement
+### **API Endpoints**
+```
+# Agent Management
+GET /api/agents
+POST /api/agents
+GET /api/agents/:id
+PUT /api/agents/:id
+DELETE /api/agents/:id
+POST /api/agents/:id/train
+POST /api/agents/:id/deploy
 
-#### Phase 1: Foundation (8-10 weeks)
-1. **Basic Agent System**
-   - Agent creation and configuration
-   - Simple task automation
-   - Basic content generation
-   - Performance tracking
+# Task Management
+GET /api/tasks
+POST /api/tasks
+GET /api/tasks/:id
+PUT /api/tasks/:id
+POST /api/tasks/:id/execute
+GET /api/tasks/:id/result
 
-2. **Dashboard Interface**
-   - Agent overview dashboard
-   - Task management interface
-   - Basic analytics
-   - Content approval workflow
+# Performance Monitoring
+GET /api/analytics/agents
+GET /api/analytics/tasks
+GET /api/analytics/costs
+GET /api/analytics/performance
 
-3. **Core Integrations**
-   - OpenAI API integration
-   - Basic social media APIs
-   - Google Analytics integration
-   - Email service integration
+# Training & Learning
+POST /api/training/data
+GET /api/training/data/:agentId
+POST /api/feedback
+GET /api/feedback/:agentId
 
-#### Phase 2: Advanced Automation (10-12 weeks)
-1. **Intelligent Content Generation**
-   - Multi-platform content creation
-   - Brand voice consistency
-   - Content optimization
-   - A/B testing automation
+# Client Integration
+GET /api/clients/:clientId/agents
+POST /api/clients/:clientId/agents
+GET /api/clients/:clientId/usage
+```
 
-2. **Campaign Management**
-   - Automated PPC optimization
-   - SEO task automation
-   - Social media scheduling
-   - Performance monitoring
+### **AI/ML Integration**
+- **OpenAI API:** GPT-4 for content generation and analysis
+- **Anthropic Claude:** Alternative AI model for specific tasks
+- **Custom Models:** Fine-tuned models for specialized tasks
+- **Vector Databases:** Store and retrieve relevant context
+- **Embedding Models:** Convert text to vectors for similarity search
 
-3. **Client-Specific Agents**
-   - Industry-specific templates
-   - Custom training data
-   - Specialized workflows
-   - Advanced personalization
+### **Security Requirements**
+- **API Security:** Secure API keys and rate limiting
+- **Data Privacy:** Encrypt sensitive training data
+- **Access Control:** Role-based permissions for agent access
+- **Audit Logging:** Track all agent activities and changes
+- **Output Validation:** Validate agent outputs for safety
 
-#### Phase 3: AI Enhancement (6-8 weeks)
-1. **Advanced AI Features**
-   - Custom model fine-tuning
-   - Predictive analytics
-   - Intelligent recommendations
-   - Automated optimization
+## 🚀 **Development Phases**
 
-2. **Advanced Analytics**
-   - ROI calculation
-   - Competitive analysis
-   - Trend prediction
-   - Performance forecasting
+### **Phase 1: Foundation**
+- Basic agent management system
+- Simple task execution framework
+- Database schema implementation
+- Basic UI for agent overview
 
-## Security & Compliance
-- **Data Privacy**: GDPR compliance for client data
-- **API Security**: Secure credential storage and rotation
-- **Content Safety**: AI content filtering and moderation
-- **Access Control**: Role-based permissions and audit logging
-- **Backup**: Automated data backup and recovery
+### **Phase 2: Core Agents**
+- Implement content creation agents
+- Basic analytics and research agents
+- Task queue and scheduling system
+- Performance monitoring dashboard
 
-## Performance Requirements
-- **Response Time**: < 3 seconds for AI content generation
-- **Scalability**: Support for 50+ concurrent AI agents
-- **Reliability**: 99.5% uptime for critical automation tasks
-- **Cost Efficiency**: Optimize API usage and model costs
+### **Phase 3: Advanced Features**
+- Agent training and fine-tuning
+- Workflow automation
+- Advanced analytics and reporting
+- Client integration with Admin Portal
 
-## Integration Architecture
-- **API Gateway**: Centralized API management
-- **Webhook System**: Real-time event notifications
-- **Data Pipeline**: ETL processes for analytics
-- **Monitoring**: Comprehensive logging and alerting
-- **Backup**: Automated data and model backups
+### **Phase 4: Intelligence**
+- Machine learning for agent optimization
+- Predictive analytics
+- Automated agent improvement
+- Advanced quality assurance
 
-## Success Metrics
-- **Efficiency**: 70% reduction in manual content creation time
-- **Quality**: 90%+ content approval rate
-- **Performance**: 25% improvement in campaign results
-- **Cost Savings**: 40% reduction in operational costs
-- **Client Satisfaction**: Improved campaign performance and results
+### **Phase 5: Scale & Optimize**
+- High-performance task processing
+- Advanced monitoring and alerting
+- Cost optimization
+- Enterprise features
 
-## Future Roadmap
-- **Multi-language Support**: International client support
-- **Voice AI**: Podcast and video content automation
-- **Predictive Analytics**: Advanced forecasting and recommendations
-- **Marketplace**: AI agent templates for different industries
-- **API Platform**: Public API for third-party integrations
+## 📊 **Success Metrics**
+- **Agent Accuracy:** >95% task completion rate
+- **Processing Speed:** <30 seconds for most tasks
+- **Cost Efficiency:** <$0.10 per task on average
+- **Client Satisfaction:** >90% satisfaction with agent outputs
+- **System Uptime:** >99.9% availability
 
-## Development Considerations
-- **AI Ethics**: Ensure responsible AI usage and transparency
-- **Cost Management**: Monitor and optimize AI API costs
-- **Scalability**: Design for growth from startup to enterprise
-- **User Experience**: Intuitive interface for non-technical users
-- **Compliance**: Stay updated with AI regulations and best practices
+## 🔗 **Integration Points**
+- **Admin Portal:** Seamless agent assignment and task management
+- **External APIs:** OpenAI, social media platforms, analytics services
+- **Payment Systems:** Track and bill for agent usage
+- **File Storage:** Store training data and generated content
+- **Communication:** Email, SMS, and in-app notifications
+- **Analytics:** Google Analytics, social media APIs, custom tracking
 
-## Risk Mitigation
-- **AI Hallucination**: Implement content verification systems
-- **API Dependencies**: Build fallback mechanisms for API failures
-- **Cost Control**: Implement usage limits and cost monitoring
-- **Quality Assurance**: Human oversight and approval workflows
-- **Data Security**: Comprehensive data protection measures
+## 📝 **Development Notes**
+- Start with simple, reliable agents before adding complexity
+- Implement comprehensive error handling and fallback mechanisms
+- Build with scalability in mind from day one
+- Focus on cost optimization and monitoring
+- Create extensive testing for agent outputs
+- Plan for regulatory compliance and ethical AI use
+- Document all agent capabilities and limitations
 
-This AI agent dashboard should be designed as a competitive advantage for the agency, providing automation that allows the team to focus on strategy and client relationships while AI handles routine tasks. The system should be flexible enough to adapt to different client needs and scalable to support agency growth. 
+This system will be the intelligent backbone of our business operations, automating routine tasks and providing valuable insights to both our team and clients. 
