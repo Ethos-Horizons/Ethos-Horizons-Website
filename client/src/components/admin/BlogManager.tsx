@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Plus, X, Save, Edit, Trash2, Eye, EyeOff, Upload, FileText, RefreshCw } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { convertBlogPostToJson, extractContentFromBlogPost, extractContentAndRemoveField } from '@/lib/jsonConverter';
+import { OptimizedImageUpload } from '@/components/ui/optimized-image-upload';
 
 interface BlogPost {
   id: string;
@@ -48,6 +49,7 @@ export const BlogManager = () => {
   const [showJsonImport, setShowJsonImport] = useState(false);
   const [jsonInput, setJsonInput] = useState('');
   const [jsonError, setJsonError] = useState('');
+  const [imageError, setImageError] = useState('');
 
   // Form state
   const [formData, setFormData] = useState({
@@ -495,15 +497,30 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="imageUrl">Featured Image URL</Label>
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={(e) => handleInputChange('imageUrl', e.target.value)}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
+                                     <div className="space-y-2">
+          <OptimizedImageUpload
+            value={formData.imageUrl}
+            onChange={(url, optimizedUrls) => {
+              handleInputChange('imageUrl', url);
+              // Store optimized URLs in form data for future use
+              if (optimizedUrls) {
+                setFormData(prev => ({
+                  ...prev,
+                  imageUrl: url,
+                  optimizedImageUrls: optimizedUrls
+                }));
+              }
+            }}
+            onError={(error) => setImageError(error)}
+            label="Featured Image"
+            placeholder="Upload a featured image for your blog post"
+            folder="blog-images"
+            showProgress={true}
+          />
+          {imageError && (
+            <p className="text-red-500 text-sm">{imageError}</p>
+          )}
+        </div>
 
               {/* Tags */}
               <div className="space-y-2">

@@ -18,4 +18,9 @@ export { ContactSection } from './sections/ContactSection';
 export { Chatbot } from './features/Chatbot';
 
 // Form components
-export { ContactForm } from './forms/ContactForm'; 
+export { ContactForm } from './forms/ContactForm';
+
+// UI components
+export { ImageUpload } from './ui/image-upload';
+export { OptimizedImageUpload } from './ui/optimized-image-upload';
+export { OptimizedImage } from './ui/optimized-image'; 

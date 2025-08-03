@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Plus, X, Save, Edit, Trash2, Star } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
+import { OptimizedImageUpload } from '@/components/ui/optimized-image-upload';
 
 interface PortfolioProject {
   id: string;
@@ -28,6 +29,7 @@ export const PortfolioManager = () => {
   const [editingProject, setEditingProject] = useState<PortfolioProject | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState('');
 
   // Form state
   const [formData, setFormData] = useState({
@@ -215,15 +217,30 @@ export const PortfolioManager = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="imageUrl">Project Image URL</Label>
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={(e) => handleInputChange('imageUrl', e.target.value)}
-                  placeholder="https://example.com/project-image.jpg"
-                />
-              </div>
+                      <div className="space-y-2">
+          <OptimizedImageUpload
+            value={formData.imageUrl}
+            onChange={(url, optimizedUrls) => {
+              handleInputChange('imageUrl', url);
+              // Store optimized URLs in form data for future use
+              if (optimizedUrls) {
+                setFormData(prev => ({
+                  ...prev,
+                  imageUrl: url,
+                  optimizedImageUrls: optimizedUrls
+                }));
+              }
+            }}
+            onError={(error) => setImageError(error)}
+            label="Project Image"
+            placeholder="Upload a project image"
+            folder="portfolio-images"
+            showProgress={true}
+          />
+          {imageError && (
+            <p className="text-red-500 text-sm">{imageError}</p>
+          )}
+        </div>
 
               {/* Technologies */}
               <div className="space-y-2">

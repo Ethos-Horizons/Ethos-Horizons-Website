@@ -99,6 +99,9 @@ export const convertBlogPostToJson = (blogPostString: string): string => {
     // Additional fix for the specific case we're seeing
     cleaned = cleaned.replace(/""https"([^"]*)"/g, '"https$1"');
     
+    // Fix image_url field specifically
+    cleaned = cleaned.replace(/"image_url":\s*""([^"]*)""/g, '"image_url": "$1"');
+    
     // Remove trailing commas
     cleaned = cleaned.replace(/,(\s*[}\]])/g, '$1');
     

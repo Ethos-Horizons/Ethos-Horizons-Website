@@ -329,7 +329,7 @@ export const BlogSection = () => {
                  {/* Blog Posts Grid */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
           {blogPosts.slice(1).map((post) => (
-            <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300">
+            <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 flex flex-col h-full">
               <div className="h-48 overflow-hidden relative">
                 <img 
                   src={post.image_url || "https://picsum.photos/400/250?random=1"} 
@@ -338,7 +338,7 @@ export const BlogSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 mb-3">
                   <div className="flex items-center text-gray-400 text-sm">
                     <Calendar className="w-4 h-4 mr-1" />
@@ -350,7 +350,7 @@ export const BlogSection = () => {
                   </div>
                 </div>
                 <h4 className="text-xl font-bold text-white mb-3">{post.title}</h4>
-                <p className="text-gray-300 mb-4 leading-relaxed">{post.excerpt}</p>
+                <p className="text-gray-300 mb-4 leading-relaxed flex-grow">{post.excerpt}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {post.tags.slice(0, 2).map((tag, index) => (
                     <span 
@@ -361,14 +361,16 @@ export const BlogSection = () => {
                     </span>
                   ))}
                 </div>
-                <Button 
-                  onClick={() => handleBlogClick(post)}
-                  variant="outline" 
-                  className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white"
-                >
-                  Read More
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <div className="mt-auto">
+                  <Button 
+                    onClick={() => handleBlogClick(post)}
+                    variant="outline" 
+                    className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white"
+                  >
+                    Read More
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </article>
           ))}
@@ -379,16 +381,18 @@ export const BlogSection = () => {
           <h3 className="text-2xl font-bold text-white mb-8 text-center">Free Resources & Templates</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resources.map((resource) => (
-              <div key={resource.id} className="bg-gray-700 rounded-lg p-6 text-center hover:bg-gray-600 transition-all duration-300">
+              <div key={resource.id} className="bg-gray-700 rounded-lg p-6 text-center hover:bg-gray-600 transition-all duration-300 flex flex-col h-full">
                 <div className="mb-4">
                   {resource.icon}
                 </div>
                 <h4 className="text-lg font-semibold text-white mb-2">{resource.title}</h4>
-                <p className="text-gray-300 text-sm mb-4">{resource.description}</p>
-                <Button variant="outline" className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white">
-                  Download
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <p className="text-gray-300 text-sm mb-4 flex-grow">{resource.description}</p>
+                <div className="mt-auto">
+                  <Button variant="outline" className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white">
+                    Download
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>

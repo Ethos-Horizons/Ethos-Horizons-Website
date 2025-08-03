@@ -88,7 +88,7 @@ export const PricingSection = () => {
           {plans.map((plan, index) => (
             <div 
               key={index}
-              className={`relative rounded-xl p-8 transition-all duration-300 transform hover:scale-105 ${
+              className={`relative rounded-xl p-8 transition-all duration-300 transform hover:scale-105 flex flex-col h-full ${
                 plan.popular 
                   ? 'bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border-2 border-cyan-400/50' 
                   : 'bg-gray-800 border border-gray-700 hover:border-cyan-400/50'
@@ -119,7 +119,7 @@ export const PricingSection = () => {
                 )}
               </div>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center text-gray-300">
                     <Check className="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0" />
@@ -128,15 +128,17 @@ export const PricingSection = () => {
                 ))}
               </ul>
 
-              <Button 
-                className={`w-full py-3 font-semibold transition-all duration-300 ${
-                  plan.popular
-                    ? 'bg-cyan-500 hover:bg-cyan-600 text-white'
-                    : 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600'
-                }`}
-              >
-                {plan.type === "setup" ? "Get Started" : "Start Retainer"}
-              </Button>
+              <div className="mt-auto">
+                <Button 
+                  className={`w-full py-3 font-semibold transition-all duration-300 ${
+                    plan.popular
+                      ? 'bg-cyan-500 hover:bg-cyan-600 text-white'
+                      : 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600'
+                  }`}
+                >
+                  {plan.type === "setup" ? "Get Started" : "Start Retainer"}
+                </Button>
+              </div>
             </div>
           ))}
         </div>
