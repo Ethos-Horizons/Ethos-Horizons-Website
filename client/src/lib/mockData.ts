@@ -1,3 +1,5 @@
+import { ListOrdered } from "lucide-react";
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -6,7 +8,6 @@ export interface BlogPost {
   author: string;
   category: string;
   tags: string[];
-  image_url?: string;
   published?: boolean;
   created_at?: string;
   updated_at?: string;
@@ -16,12 +17,18 @@ export interface PortfolioProject {
   id: string;
   title: string;
   description: string;
-  image_url?: string;
   technologies: string[];
   results: string;
+  journey?: string;
+  visitSiteUrl?: string;
+  socialMediaLinks?: Array<{
+    platform: string;
+    url: string;
+  }>;
   featured: boolean;
-  created_at: string;
-  updated_at: string;
+  slug?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const mockBlogPosts: BlogPost[] = [
@@ -79,8 +86,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "seo",
-    tags: ["Local SEO", "Google Business Profile", "Keyword Research"],
-    image_url: "https://source.unsplash.com/800x500/?local-store"
+    tags: ["Local SEO", "Google Business Profile", "Keyword Research"]
   },
   {
     id: "2",
@@ -127,8 +133,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "ai-marketing",
-    tags: ["AI Marketing", "Automation", "Small Business"],
-    image_url: "https://source.unsplash.com/800x500/?artificial-intelligence"
+    tags: ["AI Marketing", "Automation", "Small Business"]
   },
   {
     id: "3",
@@ -188,8 +193,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "web-development",
-    tags: ["Podcast", "Web Development", "Content Strategy"],
-    image_url: "https://source.unsplash.com/800x500/?podcast-microphone"
+    tags: ["Podcast", "Web Development", "Content Strategy"]
   },
   {
     id: "4",
@@ -251,8 +255,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "local-marketing",
-    tags: ["Google Business Profile", "Local Marketing", "SEO"],
-    image_url: "https://source.unsplash.com/800x500/?business-map"
+    tags: ["Google Business Profile", "Local Marketing", "SEO"]
   },
   {
     id: "5",
@@ -309,8 +312,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "content-marketing",
-    tags: ["Content Marketing", "Strategy", "ROI"],
-    image_url: "https://source.unsplash.com/800x500/?content-strategy"
+    tags: ["Content Marketing", "Strategy", "ROI"]
   },
   {
     id: "6",
@@ -357,8 +359,7 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "social-media",
-    tags: ["Social Media", "Local Business", "Community"],
-    image_url: "https://source.unsplash.com/800x500/?social-media-feed"
+    tags: ["Social Media", "Local Business", "Community"]
   },
   {
     id: "7",
@@ -413,21 +414,19 @@ export const mockBlogPosts: BlogPost[] = [
     `,
     author: "Ethos Digital Team",
     category: "video-marketing",
-    tags: ["Video Marketing", "Content Creation", "Engagement"],
-    image_url: "https://source.unsplash.com/800x500/?video-creation"
+    tags: ["Video Marketing", "Content Creation", "Engagement"]
   }
 ];
 
 export const mockPortfolioProjects: PortfolioProject[] = [
   {
     id: "1",
-    title: "TechTalk Podcast Website",
+    title: "The Days Grimm Podcast Website",
     description: "Complete website redesign and development for a long-running technology podcast, featuring modern design, improved SEO, and enhanced user experience.",
-    image_url: "https://picsum.photos/600/400?random=1",
     technologies: ["React", "Next.js", "Tailwind CSS", "SEO Optimization", "Podcast Integration"],
     results: `
       <h3>Project Results</h3>
-      <p>The TechTalk Podcast website redesign delivered exceptional results across all key metrics:</p>
+      <p>The Days Grimm Podcast website redesign delivered exceptional results across all key metrics:</p>
       
       <h4>Traffic and Engagement</h4>
       <ul>
@@ -469,17 +468,56 @@ export const mockPortfolioProjects: PortfolioProject[] = [
         <li><strong>Enhanced brand credibility</strong> in the tech industry</li>
       </ul>
       
-      <p>The new website has positioned TechTalk as a leading technology podcast platform, providing an exceptional user experience while driving significant business growth.</p>
+      <p>The new website has positioned Days Grimm as a leading technology podcast platform, providing an exceptional user experience while driving significant business growth.</p>
     `,
+    journey: `
+      <h3>Project Journey & Process</h3>
+      <p>The Days Grimm Podcast website redesign was a comprehensive project that required deep understanding of both podcasting workflows and modern web development practices.</p>
+      
+      <h4>Discovery & Planning Phase</h4>
+      <p>We began with extensive research into the podcast's current audience, content strategy, and technical requirements. The existing website was built on an outdated platform that couldn't handle the growing traffic and lacked modern SEO capabilities.</p>
+      
+      <h4>Design & Development Challenges</h4>
+      <p>The biggest challenge was creating a seamless podcast player integration that worked across all devices while maintaining fast load times. We also needed to implement advanced SEO features specifically for podcast content, including structured data markup for episodes.</p>
+      
+      <h4>Technical Implementation</h4>
+      <p>We chose Next.js for its excellent SEO capabilities and React for the interactive components. The podcast player was custom-built to handle various audio formats and provide analytics tracking. We implemented lazy loading for episode content and optimized images for different screen sizes.</p>
+      
+      <h4>Content Migration & SEO</h4>
+      <p>Migrating 200+ episodes required careful planning to preserve SEO value. We implemented 301 redirects, updated all meta descriptions, and created individual episode pages with optimized content structure. The new site structure improved crawlability and user navigation.</p>
+      
+      <h4>Testing & Launch</h4>
+      <p>Rigorous testing across devices and browsers ensured a smooth launch. We implemented A/B testing for key conversion elements and monitored performance metrics closely during the transition period.</p>
+      
+      <h4>Post-Launch Optimization</h4>
+      <p>After launch, we continued to optimize based on user behavior data. This included improving the mobile experience, enhancing the search functionality, and adding new features based on listener feedback.</p>
+    `,
+    visitSiteUrl: "https://Days Grimm-podcast.com",
+    socialMediaLinks: [
+      {
+        platform: "Instagram",
+        url: "https://instagram.com/Days Grimmpodcast"
+      },
+      {
+        platform: "Twitter",
+        url: "https://twitter.com/Days Grimmpodcast"
+      },
+      {
+        platform: "LinkedIn",
+        url: "https://linkedin.com/company/DaysGrimmpodcast"
+      },
+      {
+        platform: "YouTube",
+        url: "https://youtube.com/DaysGrimmPodcast"
+      }
+    ],
     featured: true,
-    created_at: "2024-01-15T10:00:00Z",
-    updated_at: "2024-01-15T10:00:00Z"
+    slug: "Days Grimm-podcast-website"
   },
   {
     id: "2",
     title: "Local Restaurant Digital Presence",
     description: "Complete digital transformation for a local restaurant, including website, Google Business Profile optimization, and social media setup.",
-    image_url: "https://picsum.photos/600/400?random=2",
     technologies: ["WordPress", "Google Business Profile", "Social Media", "Local SEO", "Content Creation"],
     results: `
       <h3>Digital Transformation Results</h3>
@@ -535,15 +573,46 @@ export const mockPortfolioProjects: PortfolioProject[] = [
       
       <p>This digital transformation has positioned the restaurant as a leader in local digital marketing, demonstrating how small businesses can compete effectively in the digital age.</p>
     `,
+    journey: `
+      <h3>Project Journey & Process</h3>
+      <p>This local restaurant digital transformation project required a holistic approach to modernize their entire online presence and operations.</p>
+      
+      <h4>Initial Assessment & Strategy</h4>
+      <p>The restaurant had a basic website but no online ordering system, minimal social media presence, and an unoptimized Google Business Profile. We conducted a comprehensive audit of their current digital footprint and identified key opportunities for improvement.</p>
+      
+      <h4>Website Development & Online Ordering</h4>
+      <p>We built a custom WordPress website with integrated online ordering capabilities. The biggest challenge was integrating with their existing point-of-sale system and ensuring real-time menu updates. We also implemented a mobile-first design to accommodate the growing number of mobile orders.</p>
+      
+      <h4>Google Business Profile Optimization</h4>
+      <p>We completely overhauled their Google Business Profile, adding high-quality photos, detailed service descriptions, and regular posts about special events and menu updates. We also implemented a review management system to respond to customer feedback promptly.</p>
+      
+      <h4>Social Media Strategy & Content Creation</h4>
+      <p>We developed a comprehensive social media strategy focusing on Instagram and Facebook, where their target audience was most active. We created a content calendar featuring behind-the-scenes content, menu highlights, and community engagement posts.</p>
+      
+      <h4>Local SEO Implementation</h4>
+      <p>We optimized the website for local search terms, implemented structured data markup, and built local citations across relevant directories. We also created location-specific landing pages to target different neighborhoods they served.</p>
+      
+      <h4>Training & Ongoing Support</h4>
+      <p>We provided comprehensive training to the restaurant staff on managing the new systems and created detailed documentation for ongoing maintenance. We also established a monthly reporting system to track performance and identify opportunities for further optimization.</p>
+    `,
+    visitSiteUrl: "https://restaurant-website.com",
+    socialMediaLinks: [
+      {
+        platform: "Instagram",
+        url: "https://instagram.com/restaurantname"
+      },
+      {
+        platform: "Facebook",
+        url: "https://facebook.com/restaurantname"
+      }
+    ],
     featured: false,
-    created_at: "2024-01-10T10:00:00Z",
-    updated_at: "2024-01-10T10:00:00Z"
+    slug: "local-restaurant-digital-presence"
   },
   {
     id: "3",
     title: "E-commerce SEO Campaign",
     description: "Comprehensive SEO campaign for an e-commerce store, focusing on product page optimization and content marketing.",
-    image_url: "https://picsum.photos/600/400?random=3",
     technologies: ["Technical SEO", "Content Marketing", "Keyword Research", "Analytics", "A/B Testing"],
     results: `
       <h3>E-commerce SEO Campaign Results</h3>
@@ -607,9 +676,37 @@ export const mockPortfolioProjects: PortfolioProject[] = [
       
       <p>This SEO campaign demonstrates how strategic optimization can transform an e-commerce business, driving sustainable growth and establishing market leadership.</p>
     `,
+    journey: `
+      <h3>Project Journey & Process</h3>
+      <p>This e-commerce SEO campaign required a systematic approach to improve visibility across thousands of product pages while building authority in competitive markets.</p>
+      
+      <h4>Comprehensive Site Audit</h4>
+      <p>We began with a thorough technical and content audit of the entire e-commerce site. This revealed critical issues including duplicate content, poor site architecture, and missing schema markup. We prioritized fixes based on potential impact and implementation complexity.</p>
+      
+      <h4>Technical SEO Foundation</h4>
+      <p>We addressed core technical issues including site speed optimization, mobile responsiveness, and crawlability problems. We implemented proper canonical tags, fixed broken links, and optimized the site structure for better search engine understanding.</p>
+      
+      <h4>Product Page Optimization</h4>
+      <p>With 500+ product pages, we developed a systematic approach to optimization. We created unique, compelling product descriptions, implemented proper schema markup, and optimized images with descriptive alt text. We also improved the internal linking structure to distribute page authority effectively.</p>
+      
+      <h4>Content Strategy Development</h4>
+      <p>We developed a comprehensive content strategy targeting buyer intent keywords. This included creating buying guides, product comparison pages, and educational content that positioned the brand as an authority in their industry. We also implemented a content calendar for consistent publishing.</p>
+      
+      <h4>Competitive Analysis & Gap Identification</h4>
+      <p>We conducted extensive competitive analysis to identify keyword opportunities and content gaps. This revealed untapped markets and helped us prioritize content creation efforts. We also analyzed competitor backlink profiles to identify link building opportunities.</p>
+      
+      <h4>Ongoing Optimization & Monitoring</h4>
+      <p>We established regular monitoring and reporting systems to track performance and identify new opportunities. This included monthly performance reviews, competitor tracking, and continuous optimization based on data insights.</p>
+    `,
+    visitSiteUrl: "https://ecommerce-store.com",
+    socialMediaLinks: [
+      {
+        platform: "LinkedIn",
+        url: "https://linkedin.com/company/ecommercestore"
+      }
+    ],
     featured: false,
-    created_at: "2024-01-08T10:00:00Z",
-    updated_at: "2024-01-08T10:00:00Z"
+    slug: "ecommerce-seo-campaign"
   }
 ];
 
@@ -627,3 +724,4 @@ export const findBlogPostBySlug = (slug: string): BlogPost | undefined => {
 export const findPortfolioProjectBySlug = (slug: string): PortfolioProject | undefined => {
   return mockPortfolioProjects.find(project => generateSlug(project.title) === slug);
 }; 
+

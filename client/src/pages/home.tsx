@@ -6,7 +6,7 @@ import {
   AboutUsSection,
   CapabilitiesSection,
   WhyChooseUsSection,
-  // PortfolioSection, // Temporarily commented out to focus on blog section
+  PortfolioSection,
   BlogSection,
   PricingSection,
   ContactSection,
@@ -38,7 +38,7 @@ export default function Home() {
         <AboutUsSection />
         <CapabilitiesSection />
         <WhyChooseUsSection />
-        {/* <PortfolioSection /> */}
+        <PortfolioSection />
         <BlogSection />
         <PricingSection />
         <ContactSection />

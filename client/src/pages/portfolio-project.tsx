@@ -1,22 +1,42 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Calendar, ExternalLink, Code, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Calendar, ExternalLink, Code, TrendingUp, Globe, Share2, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/queryClient';
 
+interface PortfolioImage {
+  id: string;
+  url: string;
+  alt: string;
+  isHero: boolean;
+  order: number;
+}
+
+interface SocialMediaLink {
+  platform: string;
+  url: string;
+}
+
 interface PortfolioProject {
   id: string;
   title: string;
   description: string;
+  imageUrl?: string;
   image_url?: string;
+  images?: PortfolioImage[];
   technologies: string[];
   results: string;
+  journey?: string;
+  visitSiteUrl?: string;
+  socialMediaLinks?: SocialMediaLink[];
   featured: boolean;
   slug: string;
-  created_at: string;
-  updated_at: string;
+  createdAt?: string;
+  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export default function PortfolioProjectPage() {
@@ -24,6 +44,7 @@ export default function PortfolioProjectPage() {
   const [project, setProject] = useState<PortfolioProject | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Get slug from URL
   const slug = window.location.pathname.split('/portfolio/')[1];
@@ -39,7 +60,15 @@ export default function PortfolioProjectPage() {
         const foundProject = projects.find((p: PortfolioProject) => p.slug === slug);
 
         if (foundProject) {
+          console.log('Found project:', foundProject);
           setProject(foundProject);
+          // Set initial selected image
+          if (foundProject.images && foundProject.images.length > 0) {
+            const heroImage = foundProject.images.find(img => img.isHero);
+            setSelectedImage(heroImage ? heroImage.url : foundProject.images[0].url);
+          } else {
+            setSelectedImage(foundProject.imageUrl || foundProject.image_url || null);
+          }
         } else {
           setError('Portfolio project not found');
         }
@@ -64,6 +93,14 @@ export default function PortfolioProjectPage() {
     });
   };
 
+  const getHeroImage = (project: PortfolioProject) => {
+    if (project.images && project.images.length > 0) {
+      const heroImage = project.images.find(img => img.isHero);
+      return heroImage ? heroImage.url : project.images[0].url;
+    }
+    return project.imageUrl || project.image_url || null;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -86,6 +123,9 @@ export default function PortfolioProjectPage() {
       </div>
     );
   }
+
+  const createdDate = project.createdAt || project.created_at || '';
+  const updatedDate = project.updatedAt || project.updated_at || '';
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -113,7 +153,7 @@ export default function PortfolioProjectPage() {
               <div className="flex items-center space-x-4 text-sm text-gray-400">
                 <div className="flex items-center">
                   <Calendar className="w-4 h-4 mr-2" />
-                  {formatDate(project.created_at)}
+                  {createdDate && formatDate(createdDate)}
                 </div>
                 {project.featured && (
                   <Badge className="bg-cyan-500 text-white">
@@ -129,17 +169,87 @@ export default function PortfolioProjectPage() {
               <p className="text-xl text-gray-300 leading-relaxed">
                 {project.description}
               </p>
+
+              {/* Visit Site Button */}
+              {project.visitSiteUrl && (
+                <div className="pt-4">
+                  <Button 
+                    asChild
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white"
+                  >
+                    <a 
+                      href={project.visitSiteUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center"
+                    >
+                      <Globe className="w-4 h-4 mr-2" />
+                      Visit Live Site
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </Button>
+                </div>
+              )}
             </div>
 
-            {/* Project Image */}
-            {project.image_url && (
-              <div className="aspect-video rounded-lg overflow-hidden bg-gray-800">
-                <img
-                  src={project.image_url}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                />
+            {/* Project Images */}
+            {selectedImage && (
+              <div className="space-y-4">
+                <div className="aspect-video rounded-lg overflow-hidden bg-gray-800">
+                  <img
+                    src={selectedImage}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                {/* Image Gallery */}
+                {project.images && project.images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-4">
+                    {project.images.map((image) => (
+                      <button
+                        key={image.id}
+                        onClick={() => setSelectedImage(image.url)}
+                        className={`aspect-video rounded-lg overflow-hidden transition-all duration-200 ${
+                          selectedImage === image.url 
+                            ? 'ring-2 ring-cyan-400' 
+                            : 'hover:ring-2 hover:ring-gray-400'
+                        }`}
+                      >
+                        <img
+                          src={image.url}
+                          alt={image.alt || project.title}
+                          className="w-full h-full object-cover"
+                        />
+                        {image.isHero && (
+                          <div className="absolute top-2 left-2">
+                            <Badge className="bg-cyan-500 text-white text-xs">
+                              Hero
+                            </Badge>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
+            )}
+
+            {/* Project Journey */}
+            {project.journey && (
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <TrendingUp className="w-5 h-5 mr-2" />
+                    Project Journey & Process
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-invert max-w-none">
+                    <div dangerouslySetInnerHTML={{ __html: project.journey }} />
+                  </div>
+                </CardContent>
+              </Card>
             )}
 
             {/* Project Results */}
@@ -179,6 +289,34 @@ export default function PortfolioProjectPage() {
               </CardContent>
             </Card>
 
+            {/* Social Media Links */}
+            {project.socialMediaLinks && project.socialMediaLinks.length > 0 && (
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <Share2 className="w-5 h-5 mr-2" />
+                    Social Media
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {project.socialMediaLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                      >
+                        <span className="text-gray-300">{link.platform}</span>
+                        <ExternalLink className="w-4 h-4 text-gray-400" />
+                      </a>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Project Details */}
             <Card className="bg-gray-800 border-gray-700">
               <CardHeader>
@@ -189,14 +327,24 @@ export default function PortfolioProjectPage() {
                   <span className="text-gray-400">Status:</span>
                   <Badge className="bg-green-500 text-white">Completed</Badge>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Created:</span>
-                  <span className="text-white">{formatDate(project.created_at)}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Updated:</span>
-                  <span className="text-white">{formatDate(project.updated_at)}</span>
-                </div>
+                {createdDate && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">Created:</span>
+                    <span className="text-white">{formatDate(createdDate)}</span>
+                  </div>
+                )}
+                {updatedDate && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">Updated:</span>
+                    <span className="text-white">{formatDate(updatedDate)}</span>
+                  </div>
+                )}
+                {project.images && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">Images:</span>
+                    <span className="text-white">{project.images.length}</span>
+                  </div>
+                )}
               </CardContent>
             </Card>
 

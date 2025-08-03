@@ -10,7 +10,7 @@ export { AboutUsSection } from './sections/AboutUsSection';
 export { CapabilitiesSection } from './sections/CapabilitiesSection';
 export { WhyChooseUsSection } from './sections/WhyChooseUsSection';
 export { PricingSection } from './sections/PricingSection';
-// export { PortfolioSection } from './sections/PortfolioSection'; // Temporarily commented out to focus on blog section
+export { PortfolioSection } from './sections/PortfolioSection';
 export { BlogSection } from './sections/BlogSection';
 export { ContactSection } from './sections/ContactSection';
 

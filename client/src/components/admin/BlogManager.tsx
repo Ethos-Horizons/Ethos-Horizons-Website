@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Plus, X, Save, Edit, Trash2, Eye, EyeOff, Upload, FileText, RefreshCw } from 'lucide-react';
+import { Plus, X, Save, Edit, Trash2, Upload, FileText, RefreshCw } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { convertBlogPostToJson, extractContentFromBlogPost, extractContentAndRemoveField } from '@/lib/jsonConverter';
 import { OptimizedImageUpload } from '@/components/ui/optimized-image-upload';
@@ -43,12 +43,13 @@ const CATEGORIES = [
 
 export const BlogManager = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [showJsonImport, setShowJsonImport] = useState(false);
   const [jsonInput, setJsonInput] = useState('');
   const [jsonError, setJsonError] = useState('');
+  const [newTag, setNewTag] = useState('');
   const [imageError, setImageError] = useState('');
 
   // Form state
@@ -63,8 +64,6 @@ export const BlogManager = () => {
     published: false,
     slug: ''
   });
-
-  const [newTag, setNewTag] = useState('');
 
   useEffect(() => {
     fetchPosts();
@@ -552,21 +551,26 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="space-y-2">
-                <Label htmlFor="content">Content *</Label>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => handleInputChange('content', e.target.value)}
-                  placeholder="Write your blog post content (HTML supported)"
-                  rows={15}
-                  required
-                />
-                <p className="text-sm text-gray-500">
-                  You can use HTML tags for formatting (e.g., &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;)
-                </p>
-              </div>
+               {/* Content */}
+               <div className="space-y-2">
+                 <Label htmlFor="content">Content *</Label>
+                 <Textarea
+                   id="content"
+                   value={formData.content}
+                   onChange={(e) => handleInputChange('content', e.target.value)}
+                   placeholder="Write your blog post content using HTML tags. Examples:
+                   
+• <h2>Main Heading</h2>
+• <p>Paragraph text</p>
+• <ul><li>List item</li></ul>
+• <strong>Bold text</strong>"
+                   rows={15}
+                   required
+                 />
+                 <div className="text-sm text-gray-500">
+                   <p>Use HTML tags to format your content. You can paste HTML from external sources or write it manually.</p>
+                 </div>
+               </div>
 
               {/* Publish Status */}
               <div className="flex items-center space-x-2">

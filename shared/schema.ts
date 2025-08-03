@@ -51,8 +51,21 @@ export const portfolioProjects = pgTable("portfolio_items", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   imageUrl: text("image_url"),
+  images: jsonb("images").$type<Array<{
+    id: string;
+    url: string;
+    alt: string;
+    isHero: boolean;
+    order: number;
+  }>>().default([]),
   technologies: jsonb("technologies").$type<string[]>().notNull().default([]),
   results: text("results").notNull(),
+  journey: text("journey"),
+  visitSiteUrl: text("visit_site_url"),
+  socialMediaLinks: jsonb("social_media_links").$type<Array<{
+    platform: string;
+    url: string;
+  }>>().default([]),
   featured: boolean("featured").notNull().default(false),
   slug: text("slug").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow(),
@@ -99,8 +112,12 @@ export const insertPortfolioProjectSchema = createInsertSchema(portfolioProjects
   title: true,
   description: true,
   imageUrl: true,
+  images: true,
   technologies: true,
   results: true,
+  journey: true,
+  visitSiteUrl: true,
+  socialMediaLinks: true,
   featured: true,
   slug: true,
 });

@@ -196,7 +196,17 @@ router.get('/portfolio', async (req: AuthenticatedRequest, res) => {
 
     if (error) throw error;
     
-    res.json(data);
+    // Transform the data to match frontend expectations
+    const transformedData = data.map(item => ({
+      ...item,
+      imageUrl: item.image_url,
+      visitSiteUrl: item.visit_site_url,
+      socialMediaLinks: item.social_media_links,
+      createdAt: item.created_at,
+      updatedAt: item.updated_at
+    }));
+    
+    res.json(transformedData);
   } catch (error) {
     console.error('Error fetching portfolio items:', error);
     res.status(500).json({ error: 'Failed to fetch portfolio items' });
@@ -206,16 +216,33 @@ router.get('/portfolio', async (req: AuthenticatedRequest, res) => {
 // Create portfolio item
 router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
   try {
-    const { title, description, image_url, technologies, results, featured, slug } = req.body;
+    const { 
+      title, 
+      description, 
+      imageUrl, 
+      image_url, 
+      images, 
+      technologies, 
+      results, 
+      journey, 
+      visitSiteUrl, 
+      socialMediaLinks, 
+      featured, 
+      slug 
+    } = req.body;
     
     const { data, error } = await supabase
       .from('portfolio_items')
       .insert({
         title,
         description,
-        image_url,
+        image_url: imageUrl || image_url,
+        images,
         technologies,
         results,
+        journey,
+        visit_site_url: visitSiteUrl,
+        social_media_links: socialMediaLinks,
         featured,
         slug
       })
@@ -224,7 +251,17 @@ router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
 
     if (error) throw error;
     
-    res.status(201).json(data);
+    // Transform the data to match frontend expectations
+    const transformedData = {
+      ...data,
+      imageUrl: data.image_url,
+      visitSiteUrl: data.visit_site_url,
+      socialMediaLinks: data.social_media_links,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at
+    };
+    
+    res.status(201).json(transformedData);
   } catch (error) {
     console.error('Error creating portfolio item:', error);
     res.status(500).json({ error: 'Failed to create portfolio item' });
@@ -235,16 +272,33 @@ router.post('/portfolio', async (req: AuthenticatedRequest, res) => {
 router.put('/portfolio/:id', async (req: AuthenticatedRequest, res) => {
   try {
     const { id } = req.params;
-    const { title, description, image_url, technologies, results, featured, slug } = req.body;
+    const { 
+      title, 
+      description, 
+      imageUrl, 
+      image_url, 
+      images, 
+      technologies, 
+      results, 
+      journey, 
+      visitSiteUrl, 
+      socialMediaLinks, 
+      featured, 
+      slug 
+    } = req.body;
     
     const { data, error } = await supabase
       .from('portfolio_items')
       .update({
         title,
         description,
-        image_url,
+        image_url: imageUrl || image_url,
+        images,
         technologies,
         results,
+        journey,
+        visit_site_url: visitSiteUrl,
+        social_media_links: socialMediaLinks,
         featured,
         slug,
         updated_at: new Date().toISOString()
@@ -255,7 +309,17 @@ router.put('/portfolio/:id', async (req: AuthenticatedRequest, res) => {
 
     if (error) throw error;
     
-    res.json(data);
+    // Transform the data to match frontend expectations
+    const transformedData = {
+      ...data,
+      imageUrl: data.image_url,
+      visitSiteUrl: data.visit_site_url,
+      socialMediaLinks: data.social_media_links,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at
+    };
+    
+    res.json(transformedData);
   } catch (error) {
     console.error('Error updating portfolio item:', error);
     res.status(500).json({ error: 'Failed to update portfolio item' });
