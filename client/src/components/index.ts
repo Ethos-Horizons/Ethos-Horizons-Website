@@ -16,6 +16,7 @@ export { ContactSection } from './sections/ContactSection';
 
 // Feature components
 export { Chatbot } from './features/Chatbot';
+export { ChatMessage } from './features/ChatMessage';
 
 // Form components
 export { ContactForm } from './forms/ContactForm';
