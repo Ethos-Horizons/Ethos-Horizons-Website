@@ -35,12 +35,7 @@ export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps =
   // Auto-start conversation and manage notification
   const { hasNotification, clearNotification, conversationStarted } = useAutoStartChatbot(20);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('Chatbot messages:', messages);
-    console.log('Chatbot conversationId:', conversationId);
-    console.log('Chatbot isLoading:', isLoading);
-  }, [messages, conversationId, isLoading]);
+
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {

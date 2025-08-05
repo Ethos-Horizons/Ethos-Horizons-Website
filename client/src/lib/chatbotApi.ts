@@ -26,9 +26,6 @@ class ChatbotApiService {
   private async makeRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
     const url = `${this.baseUrl}${endpoint}`;
     
-    console.log('Making request to:', url);
-    console.log('Request options:', options);
-    
     const defaultOptions: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -40,12 +37,8 @@ class ChatbotApiService {
     try {
       const response = await fetch(url, defaultOptions);
       
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-      
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Response error text:', errorText);
         
         // Check for rate limiting specifically
         if (response.status === 429) {
@@ -57,11 +50,8 @@ class ChatbotApiService {
       }
       
       const data = await response.json();
-      console.log('Response data:', data);
       return data;
     } catch (error) {
-      console.error('Chatbot API request failed:', error);
-      console.error('Request URL was:', url);
       throw error;
     }
   }

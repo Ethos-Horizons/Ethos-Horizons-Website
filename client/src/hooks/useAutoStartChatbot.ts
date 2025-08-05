@@ -27,11 +27,9 @@ export const useAutoStartChatbot = (notificationDelaySeconds: number = 20): UseA
       
       globalConversationStarted = true;
       try {
-        console.log('Starting conversation immediately...');
         await startConversation();
         setConversationStarted(true);
       } catch (error) {
-        console.error('Failed to start conversation:', error);
         globalConversationStarted = false; // Reset on error
       }
     };
@@ -47,7 +45,6 @@ export const useAutoStartChatbot = (notificationDelaySeconds: number = 20): UseA
       if (globalNotificationShown || isOpen) return;
       
       globalNotificationShown = true;
-      console.log(`Showing notification after ${notificationDelaySeconds} seconds...`);
       setHasNotification(true);
     }, notificationDelaySeconds * 1000);
 

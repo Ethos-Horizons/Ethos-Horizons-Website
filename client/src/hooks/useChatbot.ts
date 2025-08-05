@@ -67,10 +67,7 @@ export const useChatbot = (): UseChatbotReturn => {
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Debug logging for messages state changes
-  useEffect(() => {
-    console.log('useChatbot messages state changed:', messages);
-  }, [messages]);
+
 
   // Listen to global state changes
   useEffect(() => {
@@ -110,9 +107,7 @@ export const useChatbot = (): UseChatbotReturn => {
     setGlobalIsLoading(true);
 
     try {
-      console.log('Starting conversation...');
       const response = await chatbotApi.startConversation();
-      console.log('Start conversation response:', response);
       
       if (response.success) {
         // Handle both response formats: with data property or direct response
@@ -122,7 +117,6 @@ export const useChatbot = (): UseChatbotReturn => {
         if (conversationId) {
           setConversationId(conversationId);
           setGlobalConversationId(conversationId);
-          console.log('Conversation started with ID:', conversationId);
           
           // Add initial greeting message if provided
           if (greeting) {
@@ -132,22 +126,18 @@ export const useChatbot = (): UseChatbotReturn => {
               sender: 'bot',
               timestamp: new Date(),
             };
-            console.log('Setting greeting message:', greetingMessage);
             setMessages([greetingMessage]);
             setGlobalMessages([greetingMessage]);
           }
         } else {
-          console.error('No conversation ID in response:', response);
           setError('Invalid response from chatbot service');
           setGlobalError('Invalid response from chatbot service');
         }
       } else {
-        console.error('Failed to start conversation:', response.error);
         setError(response.error || 'Failed to start conversation');
         setGlobalError(response.error || 'Failed to start conversation');
       }
     } catch (err) {
-      console.error('Error starting conversation:', err);
       setError(`Failed to connect to chatbot service: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setGlobalError(`Failed to connect to chatbot service: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
@@ -204,7 +194,6 @@ export const useChatbot = (): UseChatbotReturn => {
           setMessages(updatedMessages);
           setGlobalMessages(updatedMessages);
         } else {
-          console.error('No message content found in response:', response);
           setError('No message content in response');
           setGlobalError('No message content in response');
         }
