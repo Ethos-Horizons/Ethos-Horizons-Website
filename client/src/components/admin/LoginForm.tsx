@@ -33,7 +33,7 @@ export const LoginForm = ({ onGoogleLogin }: LoginFormProps) => {
              </svg>
            </div>
           <CardTitle className="text-2xl font-bold text-white">
-            Ethos Digital CMS
+            Ethos Horizons CMS
           </CardTitle>
           <p className="text-gray-400">Sign in to manage your content</p>
         </CardHeader>

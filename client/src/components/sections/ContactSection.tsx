@@ -1,7 +1,14 @@
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Phone, Clock, MessageSquare } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
+import { useChatbotState } from '@/hooks/useChatbotState';
 
 export const ContactSection = () => {
+  const { setIsOpen } = useChatbotState();
+
+  const handleOpenChat = () => {
+    setIsOpen(true);
+  };
+
   return (
     <section id="contact" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
@@ -35,35 +42,12 @@ export const ContactSection = () => {
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="bg-cyan-500/20 p-3 rounded-lg">
-                  <Mail className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Email</h4>
-                  <p className="text-gray-300">hello@ethosdigitalpartners.com</p>
-                  <p className="text-sm text-gray-400">We'll respond within 24 hours</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-cyan-500/20 p-3 rounded-lg">
                   <Phone className="w-6 h-6 text-cyan-400" />
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold text-white mb-2">Phone</h4>
                   <p className="text-gray-300">+1 (812) 555-0123</p>
                   <p className="text-sm text-gray-400">Mon-Fri, 9AM-6PM EST</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-cyan-500/20 p-3 rounded-lg">
-                  <MapPin className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-2">Office</h4>
-                  <p className="text-gray-300">401 Main Street</p>
-                  <p className="text-gray-300">Evansville, IN 47708</p>
-                  <p className="text-sm text-gray-400">United States</p>
                 </div>
               </div>
 
@@ -83,16 +67,19 @@ export const ContactSection = () => {
             <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-8 border border-cyan-400/30">
               <h4 className="text-xl font-bold text-white mb-4">Need Immediate Help?</h4>
               <p className="text-gray-300 mb-6">
-                For urgent inquiries or to schedule a consultation, give us a call or send us an email.
+                For urgent inquiries or to schedule a consultation, give us a call or chat with our AI assistant.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Now
                 </button>
-                <button className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Send Email
+                <button 
+                  onClick={handleOpenChat}
+                  className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Chat with Live AI Assistant
                 </button>
               </div>
             </div>

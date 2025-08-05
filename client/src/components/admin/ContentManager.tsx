@@ -25,7 +25,7 @@ export const ContentManager = () => {
   // Hero form state
   const [hero, setHero] = useState({
     title: 'Transform Your Business with AI-Powered Digital Marketing',
-    subtitle: 'We help businesses grow through integrity, innovation, and measurable results.',
+          subtitle: 'Ethically Driven. Growth Beyond Limits. We help businesses grow through integrity, innovation, and measurable results.',
     cta: 'Get Started Today'
   });
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { Calendar, Clock, User, ArrowRight, BookOpen, Video, FileText, TrendingUp } from 'lucide-react';
+import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { apiRequest } from '@/lib/queryClient';
 
@@ -172,40 +172,7 @@ export const BlogSection = () => {
     setLocation(`/blog/${slug}`);
   };
 
-  const resources = [
-    {
-      id: 1,
-      title: "Digital Marketing Checklist for Local Businesses",
-      type: "guide",
-      description: "A comprehensive checklist to help local businesses establish and maintain their digital presence.",
-      icon: <FileText className="w-8 h-8 text-cyan-400" />,
-      downloadUrl: "#"
-    },
-    {
-      id: 2,
-      title: "SEO Audit Template",
-      type: "template",
-      description: "Professional SEO audit template to evaluate and improve your website's search performance.",
-      icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
-      downloadUrl: "#"
-    },
-    {
-      id: 3,
-      title: "Content Calendar Template",
-      type: "template",
-      description: "Monthly content calendar template to plan and organize your content marketing efforts.",
-      icon: <Calendar className="w-8 h-8 text-cyan-400" />,
-      downloadUrl: "#"
-    },
-    {
-      id: 4,
-      title: "Social Media Strategy Guide",
-      type: "guide",
-      description: "Complete guide to developing an effective social media strategy for your business.",
-      icon: <BookOpen className="w-8 h-8 text-cyan-400" />,
-      downloadUrl: "#"
-    }
-  ];
+
 
      const categories = [
      { id: 'all', label: 'All Articles' },
@@ -376,27 +343,7 @@ export const BlogSection = () => {
           ))}
         </div>
 
-                 {/* Free Resources */}
-         <div className="bg-gray-800 rounded-xl p-8 max-w-6xl mx-auto">
-          <h3 className="text-2xl font-bold text-white mb-8 text-center">Free Resources & Templates</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {resources.map((resource) => (
-              <div key={resource.id} className="bg-gray-700 rounded-lg p-6 text-center hover:bg-gray-600 transition-all duration-300 flex flex-col h-full">
-                <div className="mb-4">
-                  {resource.icon}
-                </div>
-                <h4 className="text-lg font-semibold text-white mb-2">{resource.title}</h4>
-                <p className="text-gray-300 text-sm mb-4 flex-grow">{resource.description}</p>
-                <div className="mt-auto">
-                  <Button variant="outline" className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white">
-                    Download
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
 
         {/* Newsletter Signup */}
         <div className="text-center mt-16">

@@ -10,10 +10,10 @@ export const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Handshake className="w-6 h-6 text-cyan-400" />
-              <span className="text-lg font-bold text-white">Ethos Digital</span>
+              <span className="text-lg font-bold text-white">Ethos Horizons</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Professional digital marketing agency specializing in SEO, PPC, web development, and AI-powered strategies for sustainable business growth.
+              Ethically Driven. Growth Beyond Limits. Professional digital marketing agency specializing in SEO, PPC, web development, and AI-powered strategies for sustainable business growth.
             </p>
           </div>
 
@@ -28,14 +28,9 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact & Social */}
+          {/* Social */}
           <div>
             <h3 className="text-white font-semibold mb-4">Connect</h3>
-            <div className="space-y-2 text-sm mb-4">
-              <p className="text-gray-400">support@ethosdigital.com</p>
-              <p className="text-gray-400">+1 (812) 555-0123</p>
-              <p className="text-gray-400">Evansville, IN</p>
-            </div>
             <div className="flex space-x-4">
               <a 
                 href="https://linkedin.com/company/ethos-digital" 
@@ -88,7 +83,7 @@ export const Footer = () => {
 
         <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2025 Ethos Digital. All rights reserved.
+            © 2025 Ethos Horizons. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-cyan-400 text-sm transition-colors">Privacy Policy</a>

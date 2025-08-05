@@ -36,10 +36,10 @@ export const Header = ({ onNavigate }: HeaderProps) => {
           onClick={(e) => handleLinkClick(e, '#home')} 
           className="flex items-center space-x-2"
           data-testid="logo-link"
-          aria-label="Ethos Digital - Go to homepage"
+          aria-label="Ethos Horizons - Go to homepage"
         >
           <Handshake className="w-8 h-8 text-cyan-400" aria-hidden="true" />
-          <span className="text-xl font-bold text-white tracking-wider">Ethos Digital</span>
+          <span className="text-xl font-bold text-white tracking-wider">Ethos Horizons</span>
         </a>
         <div>
           <Button 

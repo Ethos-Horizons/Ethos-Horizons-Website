@@ -26,8 +26,8 @@ export const AboutUsSection = () => {
   ];
 
   const companyStory = {
-    mission: "To help businesses grow through integrity, innovation, and measurable results.",
-    vision: "To become the leading digital marketing agency that combines cutting-edge AI technology with creative content creation.",
+    mission: "To help businesses grow through integrity, innovation, and measurable results - ethically driven, with growth beyond limits.",
+    vision: "To become the leading digital marketing agency that combines cutting-edge AI technology with creative content creation, setting new standards for ethical business growth.",
     approach: "We believe in the power of complementary skills and continuous learning. Our technical expertise combined with creative abilities creates comprehensive digital marketing solutions."
   };
 
@@ -50,9 +50,9 @@ export const AboutUsSection = () => {
     <section id="about" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
+          <div className="text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              About <span className="text-cyan-400">Ethos Digital</span>
+              About <span className="text-cyan-400">Ethos Horizons</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
               We're a forward-thinking digital marketing agency that believes in the power of integrity, 
@@ -61,11 +61,11 @@ export const AboutUsSection = () => {
             </p>
             
             <div className="space-y-6">
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
                 <div className="bg-cyan-500/20 p-3 rounded-lg">
                   <Handshake className="w-6 h-6 text-cyan-400" />
                 </div>
-                <div>
+                <div className="text-center lg:text-left">
                   <h3 className="text-xl font-semibold text-white mb-2">Our Mission</h3>
                   <p className="text-gray-300">
                     To deliver exceptional digital marketing results while maintaining the highest standards 
@@ -74,11 +74,11 @@ export const AboutUsSection = () => {
                 </div>
               </div>
               
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
                 <div className="bg-cyan-500/20 p-3 rounded-lg">
                   <Target className="w-6 h-6 text-cyan-400" />
                 </div>
-                <div>
+                <div className="text-center lg:text-left">
                   <h3 className="text-xl font-semibold text-white mb-2">Our Approach</h3>
                   <p className="text-gray-300">
                     Data-driven strategies combined with creative thinking and cutting-edge technology 
@@ -87,11 +87,11 @@ export const AboutUsSection = () => {
                 </div>
               </div>
               
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
                 <div className="bg-cyan-500/20 p-3 rounded-lg">
                   <Users className="w-6 h-6 text-cyan-400" />
                 </div>
-                <div>
+                <div className="text-center lg:text-left">
                   <h3 className="text-xl font-semibold text-white mb-2">Our Team</h3>
                   <p className="text-gray-300">
                     A partnership built on complementary skills and shared values of integrity, 
@@ -103,7 +103,7 @@ export const AboutUsSection = () => {
               {/* Learn More Button */}
               <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white mt-6">
+                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white mt-6 w-full lg:w-auto">
                     Learn More About Our Team
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -111,10 +111,10 @@ export const AboutUsSection = () => {
                 <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-800 border-gray-700" aria-describedby="about-dialog-description">
                   <DialogHeader>
                     <DialogTitle className="text-3xl font-bold text-white text-center">
-                      Meet the <span className="text-cyan-400">Ethos Digital</span> Team
+                      Meet the <span className="text-cyan-400">Ethos Horizons</span> Team
                     </DialogTitle>
                     <div id="about-dialog-description" className="sr-only">
-                      Detailed information about the Ethos Digital team, their expertise, and company values
+                      Detailed information about the Ethos Horizons team, their expertise, and company values
                     </div>
                   </DialogHeader>
                   

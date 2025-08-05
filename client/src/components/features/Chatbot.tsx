@@ -4,10 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useChatbot } from '@/hooks/useChatbot';
+import { useAutoStartChatbot } from '@/hooks/useAutoStartChatbot';
 import { ChatMessage } from './ChatMessage';
 
-export const Chatbot = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatbotProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps = {}) => {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  
+  // Use external state if provided, otherwise use internal state
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = onOpenChange || setInternalIsOpen;
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -19,9 +29,18 @@ export const Chatbot = () => {
     isTyping,
     error,
     sendMessage,
-    startConversation,
     clearError
   } = useChatbot();
+
+  // Auto-start conversation and manage notification
+  const { hasNotification, clearNotification, conversationStarted } = useAutoStartChatbot(20);
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Chatbot messages:', messages);
+    console.log('Chatbot conversationId:', conversationId);
+    console.log('Chatbot isLoading:', isLoading);
+  }, [messages, conversationId, isLoading]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -50,22 +69,34 @@ export const Chatbot = () => {
     }
   };
 
-  const handleOpenChat = async () => {
+  const handleOpenChat = () => {
     setIsOpen(true);
     clearError();
-    
-    // Start conversation only when user opens the chat
-    if (!conversationId && !isLoading) {
-      await startConversation();
-    }
+    clearNotification(); // Clear notification when chat is opened
   };
 
   const handleCloseChat = () => {
     setIsOpen(false);
   };
 
+  // Handle click outside to close
+  const handleClickOutside = (e: React.MouseEvent) => {
+    // Only close if clicking on the backdrop, not the chat window itself
+    if (e.target === e.currentTarget) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
+      {/* Backdrop for click outside to close */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 z-[50]"
+          onClick={handleClickOutside}
+        />
+      )}
+      
       {/* Chat Window */}
       <div className={cn(
         "fixed bottom-[160px] right-6 sm:right-10 w-80 sm:w-96 h-[28rem] bg-gray-800 rounded-xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out z-[60]",
@@ -75,7 +106,7 @@ export const Chatbot = () => {
         <div className="bg-gray-900 p-4 rounded-t-xl flex justify-between items-center flex-shrink-0">
           <h3 className="text-white font-bold flex items-center">
             <Bot className="w-5 h-5 mr-2 text-cyan-400" /> 
-            Ethos Digital Assistant
+            Ethos Horizons Assistant
           </h3>
           <Button 
             variant="ghost" 
@@ -165,20 +196,29 @@ export const Chatbot = () => {
           
           {/* Connection status */}
           <div className="mt-2 text-xs text-gray-500 text-center">
-            {isLoading ? 'Connecting...' : error ? 'Connection failed' : 'Connected to Ethos Digital Assistant'}
+            {isLoading ? 'Connecting...' : error ? 'Connection failed' : 'Connected to Ethos Horizons Assistant'}
           </div>
         </div>
       </div>
 
       {/* Chat Toggle Button */}
-      <Button
-        onClick={handleOpenChat}
-        disabled={isLoading}
-        className="fixed bottom-16 right-6 sm:right-10 bg-cyan-500 hover:bg-cyan-600 text-white p-6 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110 z-50 disabled:opacity-50 disabled:cursor-not-allowed"
-        data-testid="button-open-chat"
-      >
-        <MessageSquare size={36} />
-      </Button>
+      <div className="fixed bottom-16 right-6 sm:right-10 z-50">
+        <Button
+          onClick={handleOpenChat}
+          disabled={isLoading}
+          className="bg-cyan-500 hover:bg-cyan-600 text-white p-6 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed relative"
+          data-testid="button-open-chat"
+        >
+          <MessageSquare size={36} />
+          
+          {/* Notification Badge */}
+          {hasNotification && (
+            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+              1
+            </div>
+          )}
+        </Button>
+      </div>
     </>
   );
 }; 

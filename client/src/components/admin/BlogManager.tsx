@@ -239,7 +239,7 @@ export const BlogManager = () => {
         title: dataToUse.title || '',
         excerpt: dataToUse.excerpt || '',
         content: dataToUse.content || '',
-        author: dataToUse.author || 'Ethos Digital Team',
+        author: dataToUse.author || 'Ethos Horizons Team',
         category: dataToUse.category || '',
         tags: dataToUse.tags || [],
         imageUrl: dataToUse.imageUrl || dataToUse.image_url || '',

@@ -64,10 +64,10 @@ export const HeroSection = ({ onNavigate }: HeroSectionProps) => {
       <div className="relative z-20 text-center max-w-4xl mx-auto px-6">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-            Digital Marketing
+            Ethically Driven
           </span>
           <br />
-          <span className="text-white">with Integrity</span>
+          <span className="text-white">Growth Beyond Limits</span>
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">

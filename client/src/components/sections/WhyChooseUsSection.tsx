@@ -39,7 +39,7 @@ export const WhyChooseUsSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Why Choose <span className="text-cyan-400">Ethos Digital</span>
+            Why Choose <span className="text-cyan-400">Ethos Horizons</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             In a crowded digital marketing landscape, we stand out by combining innovation, 
@@ -77,7 +77,7 @@ export const WhyChooseUsSection = () => {
               </ul>
             </div>
             <div className="text-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg p-6 border border-cyan-400/30">
-              <h4 className="text-lg font-semibold text-cyan-400 mb-4">Ethos Digital</h4>
+              <h4 className="text-lg font-semibold text-cyan-400 mb-4">Ethos Horizons</h4>
               <ul className="space-y-2 text-sm text-white">
                 <li>• Transparent pricing</li>
                 <li>• Quick response</li>
