@@ -3,10 +3,9 @@ import { ENV_CONFIG } from './env';
 // Chatbot API Configuration
 export const CHAT_API_CONFIG = {
   baseUrl: ENV_CONFIG.getChatbotApiUrl(),
-  
   endpoints: {
     startConversation: '/chatbot/conversation/start',
-    sendMessage: '/chatbot/message',
+    sendMessage: '/chatbot/conversation/message',
     getConversation: '/chatbot/conversation'
   }
 };
@@ -34,4 +33,6 @@ export interface ChatbotResponse {
   data?: any;
   error?: string;
   message?: string;
+  conversationId?: string;
+  greeting?: string;
 } 

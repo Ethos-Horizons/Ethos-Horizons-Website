@@ -50,10 +50,20 @@ class ChatbotApiService {
       }
       
       const data = await response.json();
+      console.log('n8n response:', data); // Debug log - remove this later
       return data;
     } catch (error) {
       throw error;
     }
+  }
+
+  private coerceToPlainJson(data: any) {
+    if (data && typeof data.output === 'string') {
+      const fenced = data.output.match(/```json\s*([\s\S]*?)\s*```/i);
+      const raw = fenced ? fenced[1] : data.output;
+      try { return JSON.parse(raw); } catch { /* fall through */ }
+    }
+    return data;
   }
 
   async startConversation(): Promise<ChatbotResponse> {
@@ -61,6 +71,7 @@ class ChatbotApiService {
       const response = await this.makeRequest(CHAT_API_CONFIG.endpoints.startConversation, {
         method: 'POST',
         body: JSON.stringify({
+          type: 'start_conversation',
           visitorId: this.visitorId,
           timestamp: new Date().toISOString(),
           userAgent: navigator.userAgent,
@@ -68,7 +79,7 @@ class ChatbotApiService {
         }),
       });
       
-      return response;
+      return this.coerceToPlainJson(response);
     } catch (error) {
       return {
         success: false,
@@ -79,18 +90,24 @@ class ChatbotApiService {
 
   async sendMessage(conversationId: string, message: string): Promise<ChatbotResponse> {
     try {
+      console.log('Sending message to:', `${this.baseUrl}${CHAT_API_CONFIG.endpoints.sendMessage}`);
+      console.log('Message payload:', { conversationId, visitorId: this.visitorId, message });
+      
       const response = await this.makeRequest(CHAT_API_CONFIG.endpoints.sendMessage, {
         method: 'POST',
         body: JSON.stringify({
-          conversationId,
+          type: 'send_message',
+          conversationId,        // Now this gets sent to the webhook!
           visitorId: this.visitorId,
           message,
           timestamp: new Date().toISOString(),
         }),
       });
       
-      return response;
+      console.log('Message response:', response);
+      return this.coerceToPlainJson(response);
     } catch (error) {
+      console.error('Send message error:', error);
       return {
         success: false,
         error: 'Failed to send message',
@@ -104,7 +121,7 @@ class ChatbotApiService {
         method: 'GET',
       });
       
-      return response;
+      return this.coerceToPlainJson(response);
     } catch (error) {
       return {
         success: false,
