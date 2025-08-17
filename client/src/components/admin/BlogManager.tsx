@@ -623,7 +623,7 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
                       <span>Created: {new Date(post.createdAt || post.created_at || '').toLocaleDateString()}</span>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {post.tags.map((tag, index) => (
+                      {(post.tags || []).map((tag, index) => (
                         <Badge key={index} variant="outline" className="text-xs">
                           {tag}
                         </Badge>

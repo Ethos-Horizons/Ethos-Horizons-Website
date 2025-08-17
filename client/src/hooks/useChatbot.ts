@@ -110,9 +110,9 @@ export const useChatbot = (): UseChatbotReturn => {
       const response = await chatbotApi.startConversation();
       
       if (response.success) {
-        // Handle both response formats: with data property or direct response
-        const conversationId = response.data?.conversationId || response.conversationId;
-        const greeting = response.data?.greeting || response.greeting || response.message;
+        // Handle AgentHub response format
+        const conversationId = response.id || response.conversationId;
+        const greeting = response.message || response.greeting;
         
         if (conversationId) {
           setConversationId(conversationId);
@@ -169,10 +169,8 @@ export const useChatbot = (): UseChatbotReturn => {
       const response = await chatbotApi.sendMessage(conversationId, message.trim());
       
       if (response.success) {
-        // Handle multiple response formats from n8n
-        const messageContent = response.message || 
-                              response.data?.message ||
-                              (response as any).response;
+        // Handle AgentHub response format
+        const messageContent = response.message;
         
         if (messageContent) {
           const botMessage: ChatMessage = {

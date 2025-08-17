@@ -1,69 +1,40 @@
-import { CHAT_API_CONFIG, ChatMessage, Conversation, ChatbotResponse } from './chatbotConfig';
+import { CHAT_API_CONFIG, ChatbotResponse } from './chatbotConfig';
 
 class ChatbotApiService {
-  private baseUrl: string;
-  private visitorId: string;
+  private sessionId: string;
 
   constructor() {
-    this.baseUrl = CHAT_API_CONFIG.baseUrl;
-    // Generate a unique visitor ID for this session
-    this.visitorId = this.getOrCreateVisitorId();
+    this.sessionId = this.getSessionId();
   }
 
-  private getOrCreateVisitorId(): string {
-    // Try to get existing visitor ID from localStorage
-    let visitorId = localStorage.getItem('chatbot_visitor_id');
-    
-    if (!visitorId) {
-      // Generate a new visitor ID
-      visitorId = `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem('chatbot_visitor_id', visitorId);
+  private getSessionId(): string {
+    let sessionId = localStorage.getItem('chat_session_id');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem('chat_session_id', sessionId);
     }
-    
-    return visitorId;
+    return sessionId;
   }
 
   private async makeRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
-    const url = `${this.baseUrl}${endpoint}`;
-    
-    const defaultOptions: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
+    const url = `${CHAT_API_CONFIG.baseUrl}${endpoint}`;
+    const defaultHeaders = {
+      'Content-Type': 'application/json',
     };
 
-    try {
-      const response = await fetch(url, defaultOptions);
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        
-        // Check for rate limiting specifically
-        if (response.status === 429) {
-          const retryAfter = response.headers.get('Retry-After');
-          throw new Error(`Rate limit exceeded. Please wait ${retryAfter || 'a moment'} before trying again.`);
-        }
-        
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-      }
-      
-      const data = await response.json();
-      console.log('n8n response:', data); // Debug log - remove this later
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    });
 
-  private coerceToPlainJson(data: any) {
-    if (data && typeof data.output === 'string') {
-      const fenced = data.output.match(/```json\s*([\s\S]*?)\s*```/i);
-      const raw = fenced ? fenced[1] : data.output;
-      try { return JSON.parse(raw); } catch { /* fall through */ }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    return data;
+
+    return response.json();
   }
 
   async startConversation(): Promise<ChatbotResponse> {
@@ -71,64 +42,143 @@ class ChatbotApiService {
       const response = await this.makeRequest(CHAT_API_CONFIG.endpoints.startConversation, {
         method: 'POST',
         body: JSON.stringify({
-          type: 'start_conversation',
-          visitorId: this.visitorId,
-          timestamp: new Date().toISOString(),
-          userAgent: navigator.userAgent,
-          referrer: document.referrer,
+          message: '', // Empty message to start conversation
+          session_id: this.sessionId,
+          context: {
+            page: window.location.pathname,
+            user_agent: navigator.userAgent,
+            referrer: document.referrer,
+          }
         }),
       });
-      
-      return this.coerceToPlainJson(response);
+
+      console.log('AgentHub start response:', response);
+
+      // Return standardized response
+      return {
+        success: true,
+        id: response.id,
+        session_id: response.session_id || this.sessionId,
+        status: response.status,
+        message: response.message || "Hi! I'm Ethos Horizon's assistant. How can I help today?",
+        conversationId: response.id, // For legacy compatibility
+        greeting: response.message || "Hi! I'm Ethos Horizon's assistant. How can I help today?",
+      };
     } catch (error) {
+      console.error('Failed to start conversation:', error);
       return {
         success: false,
-        error: 'Failed to start conversation',
+        error: `Failed to connect: ${error instanceof Error ? error.message : 'Unknown error'}`,
       };
     }
   }
 
   async sendMessage(conversationId: string, message: string): Promise<ChatbotResponse> {
     try {
-      console.log('Sending message to:', `${this.baseUrl}${CHAT_API_CONFIG.endpoints.sendMessage}`);
-      console.log('Message payload:', { conversationId, visitorId: this.visitorId, message });
-      
+      console.log('Sending message to AgentHub:', { conversationId, message });
+
       const response = await this.makeRequest(CHAT_API_CONFIG.endpoints.sendMessage, {
         method: 'POST',
         body: JSON.stringify({
-          type: 'send_message',
-          conversationId,        // Now this gets sent to the webhook!
-          visitorId: this.visitorId,
-          message,
-          timestamp: new Date().toISOString(),
+          message: message.trim(),
+          session_id: this.sessionId,
+          context: {
+            page: window.location.pathname,
+            user_agent: navigator.userAgent,
+          }
         }),
       });
-      
-      console.log('Message response:', response);
-      return this.coerceToPlainJson(response);
+
+      console.log('AgentHub message response:', response);
+
+      // If processing, poll for completion
+      if (response.status === 'processing') {
+        return this.pollForCompletion(response.id);
+      }
+
+      // Return immediate response
+      return {
+        success: true,
+        id: response.id,
+        session_id: response.session_id || this.sessionId,
+        status: response.status,
+        message: response.message,
+      };
     } catch (error) {
-      console.error('Send message error:', error);
+      console.error('Failed to send message:', error);
       return {
         success: false,
-        error: 'Failed to send message',
+        error: `Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`,
       };
     }
   }
 
+  private async pollForCompletion(conversationId: string): Promise<ChatbotResponse> {
+    const maxAttempts = 30; // 30 seconds max
+    let attempts = 0;
+
+    const poll = async (): Promise<ChatbotResponse> => {
+      try {
+        const response = await this.makeRequest(`${CHAT_API_CONFIG.endpoints.getConversation}/${conversationId}`);
+        
+        if (response.status === 'completed') {
+          return {
+            success: true,
+            id: response.id,
+            session_id: response.session_id || this.sessionId,
+            status: response.status,
+            message: response.message,
+          };
+        }
+        
+        if (response.status === 'error') {
+          return {
+            success: false,
+            error: response.error || 'Processing failed',
+          };
+        }
+        
+        // Still processing, poll again
+        attempts++;
+        if (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+          return poll();
+        } else {
+          return {
+            success: false,
+            error: 'Response timeout. Please try again.',
+          };
+        }
+      } catch (error) {
+        return {
+          success: false,
+          error: 'Network error during polling',
+        };
+      }
+    };
+
+    return poll();
+  }
+
   async getConversation(conversationId: string): Promise<ChatbotResponse> {
     try {
-      const response = await this.makeRequest(`${CHAT_API_CONFIG.endpoints.getConversation}/${conversationId}`, {
-        method: 'GET',
-      });
+      const response = await this.makeRequest(`${CHAT_API_CONFIG.endpoints.getConversation}/${conversationId}`);
       
-      return this.coerceToPlainJson(response);
+      return {
+        success: true,
+        id: response.id,
+        session_id: response.session_id || this.sessionId,
+        status: response.status,
+        message: response.message,
+      };
     } catch (error) {
+      console.error('Failed to get conversation:', error);
       return {
         success: false,
-        error: 'Failed to get conversation',
+        error: `Failed to get conversation: ${error instanceof Error ? error.message : 'Unknown error'}`,
       };
     }
   }
 }
 
-export const chatbotApi = new ChatbotApiService(); 
+export const chatbotApi = new ChatbotApiService();

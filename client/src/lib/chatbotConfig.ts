@@ -1,12 +1,12 @@
 import { ENV_CONFIG } from './env';
 
-// Chatbot API Configuration
+// AgentHub API Configuration
 export const CHAT_API_CONFIG = {
   baseUrl: ENV_CONFIG.getChatbotApiUrl(),
   endpoints: {
-    startConversation: '/chatbot/conversation/start',
-    sendMessage: '/chatbot/conversation/message',
-    getConversation: '/chatbot/conversation'
+    startConversation: '/conversation',        // AgentHub endpoint
+    sendMessage: '/conversation',              // Same endpoint for new messages  
+    getConversation: '/conversation'           // Get conversation status
   }
 };
 
@@ -33,6 +33,16 @@ export interface ChatbotResponse {
   data?: any;
   error?: string;
   message?: string;
+  // AgentHub response structure
+  id?: string;                        // Conversation/run ID
+  session_id?: string;               // Session ID for tracking
+  status?: "processing" | "completed" | "error";
+  metadata?: {
+    response_time_ms?: number;
+    tokens_used?: number;
+    cost_usd?: number;
+  };
+  // Legacy support
   conversationId?: string;
   greeting?: string;
 } 

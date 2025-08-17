@@ -44,11 +44,9 @@ export const BlogSection = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await apiRequest('GET', '/api/cms/blog');
+      const response = await apiRequest('GET', '/api/public/blog');
       const data = await response.json();
-      // Only show published posts
-      const publishedPosts = data.filter((post: BlogPost) => post.published);
-      setBlogPosts(publishedPosts);
+      setBlogPosts(data);
     } catch (error) {
       console.error('Error fetching blog posts:', error);
       // Fallback to mock data if API fails

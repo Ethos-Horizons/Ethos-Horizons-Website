@@ -35,12 +35,11 @@ export default function BlogPostPage() {
       try {
         setLoading(true);
         
-        // Fetch all blog posts and find the one with matching slug
-        const response = await apiRequest('GET', '/api/cms/blog');
-        const posts = await response.json();
-        const foundPost = posts.find((p: BlogPost) => p.slug === slug && p.published);
+        // Fetch specific blog post by slug
+        const response = await apiRequest('GET', `/api/public/blog/${slug}`);
+        const foundPost = await response.json();
 
-        if (foundPost) {
+        if (foundPost && !foundPost.error) {
           setPost(foundPost);
         } else {
           setError('Blog post not found');

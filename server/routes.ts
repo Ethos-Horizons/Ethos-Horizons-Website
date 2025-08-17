@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 import cmsRoutes from "./routes/cms";
+import publicRoutes from "./routes/public";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission endpoint
@@ -51,7 +52,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // CMS Routes
+  // Public Routes (no authentication required)
+  app.use("/api/public", publicRoutes);
+
+  // CMS Routes (authentication required)
   app.use("/api/cms", cmsRoutes);
 
   const httpServer = createServer(app);

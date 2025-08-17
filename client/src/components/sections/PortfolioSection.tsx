@@ -50,7 +50,7 @@ export const PortfolioSection = () => {
 
   const fetchPortfolioItems = async () => {
     try {
-      const response = await apiRequest('GET', '/api/cms/portfolio');
+      const response = await apiRequest('GET', '/api/public/portfolio');
       const data = await response.json();
       setPortfolioItems(data);
     } catch (error) {

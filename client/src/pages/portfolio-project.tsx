@@ -54,12 +54,11 @@ export default function PortfolioProjectPage() {
       try {
         setLoading(true);
         
-        // Fetch all portfolio projects and find the one with matching slug
-        const response = await apiRequest('GET', '/api/cms/portfolio');
-        const projects = await response.json();
-        const foundProject = projects.find((p: PortfolioProject) => p.slug === slug);
+        // Fetch specific portfolio project by slug
+        const response = await apiRequest('GET', `/api/public/portfolio/${slug}`);
+        const foundProject = await response.json();
 
-        if (foundProject) {
+        if (foundProject && !foundProject.error) {
           console.log('Found project:', foundProject);
           setProject(foundProject);
           // Set initial selected image

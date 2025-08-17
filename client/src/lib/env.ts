@@ -1,11 +1,10 @@
 // Environment configuration for API endpoints
 export const ENV_CONFIG = {
-  // Chatbot API configuration
-      CHATBOT_API: {
-      // Point both dev and prod to n8n's webhook base. The chatbot app will append endpoint paths.
-      development: 'https://cmchorizions.app.n8n.cloud/webhook',
-      production: 'https://cmchorizions.app.n8n.cloud/webhook',
-    },
+  // AgentHub API configuration
+  CHATBOT_API: {
+    development: 'http://localhost:5000', // AgentHub API
+    production: 'http://localhost:5000',  // Will update when AgentHub is deployed
+  },
   
   // Get the appropriate base URL based on environment
   getChatbotApiUrl(): string {
