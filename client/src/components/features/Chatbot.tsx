@@ -10,9 +10,10 @@ import { ChatMessage } from './ChatMessage';
 interface ChatbotProps {
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  embedded?: boolean;
 }
 
-export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps = {}) => {
+export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange, embedded = false }: ChatbotProps = {}) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   
   // Use external state if provided, otherwise use internal state
@@ -82,10 +83,75 @@ export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps =
     }
   };
 
+  if (embedded) {
+    return (
+      <div className="w-full h-full bg-gray-800 rounded-xl flex flex-col">
+        {/* Chat Header for embedded mode */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+              <Bot className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <div className="text-white font-medium text-sm">Chat with our AI</div>
+              <div className="text-gray-400 text-xs">Get instant help</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 p-4 overflow-y-auto">
+          <div className="space-y-4">
+            {messages.map((message, index) => (
+              <ChatMessage key={index} message={message} />
+            ))}
+            
+            {isTyping && (
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                  <Bot className="w-3 h-3 text-white" />
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+
+        {/* Input */}
+        <div className="p-4 border-t border-gray-700">
+          <div className="flex gap-2">
+            <Input
+              ref={inputRef}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              className="flex-1 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              disabled={isTyping}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!inputValue.trim() || isTyping}
+              size="sm"
+              className="bg-purple-500 hover:bg-purple-600 text-white px-3"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Backdrop for click outside to close */}
-      {isOpen && (
+      {isOpen && !embedded && (
         <div 
           className="fixed inset-0 bg-black/20 z-[50]"
           onClick={handleClickOutside}
@@ -100,7 +166,7 @@ export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps =
         {/* Header */}
         <div className="bg-gray-900 p-4 rounded-t-xl flex justify-between items-center flex-shrink-0">
           <h3 className="text-white font-bold flex items-center">
-            <Bot className="w-5 h-5 mr-2 text-cyan-400" /> 
+            <Bot className="w-5 h-5 mr-2 text-purple-400" /> 
             Ethos Horizons Assistant
           </h3>
           <Button 
@@ -177,12 +243,12 @@ export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps =
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               disabled={isTyping || isLoading}
-              className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400"
+              className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
             />
             <Button 
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isTyping || isLoading}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white disabled:bg-gray-600 disabled:text-gray-400"
+              className="bg-purple-500 hover:bg-purple-600 text-white disabled:bg-gray-600 disabled:text-gray-400"
               size="sm"
             >
               <Send size={16} />
@@ -201,7 +267,7 @@ export const Chatbot = ({ isOpen: externalIsOpen, onOpenChange }: ChatbotProps =
         <Button
           onClick={handleOpenChat}
           disabled={isLoading}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white p-6 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed relative"
+          className="bg-purple-500 hover:bg-purple-600 text-white p-6 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed relative"
           data-testid="button-open-chat"
         >
           <MessageSquare size={36} />

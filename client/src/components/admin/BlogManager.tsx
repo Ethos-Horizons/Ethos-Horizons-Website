@@ -277,14 +277,14 @@ export const BlogManager = () => {
           <Button 
             onClick={() => setShowJsonImport(true)}
             variant="outline"
-            className="border-cyan-500 text-cyan-500 hover:bg-cyan-50"
+            className="border-purple-500 text-purple-500 hover:bg-purple-50"
           >
             <Upload className="w-4 h-4 mr-2" />
             Import JSON
           </Button>
           <Button 
             onClick={() => setIsCreating(true)}
-            className="bg-cyan-500 hover:bg-cyan-600"
+            className="bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="w-4 h-4 mr-2" />
             New Post
@@ -334,7 +334,7 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
                              <div className="flex gap-2">
                  <Button 
                    onClick={parseAndPopulateJson}
-                   className="bg-cyan-500 hover:bg-cyan-600"
+                   className="bg-purple-500 hover:bg-purple-600"
                  >
                    <Upload className="w-4 h-4 mr-2" />
                    Import & Populate Form
@@ -405,8 +405,8 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
                   <li><strong>imageUrl/image_url:</strong> Featured image URL</li>
                   <li><strong>slug:</strong> URL-friendly slug (auto-generated if not provided)</li>
                 </ul>
-                <div className="mt-3 p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-3 p-2 bg-purple-50 rounded border-l-4 border-purple-400">
+                  <p className="text-xs text-purple-800">
                     <strong>Note:</strong> The <code>published</code>, <code>created_at</code>, and <code>updated_at</code> fields are handled automatically by the CMS. 
                     Imported posts default to draft status for safety.
                   </p>
@@ -584,7 +584,7 @@ Click "Convert to JSON" to automatically convert JavaScript format to JSON.`}
 
               {/* Form Actions */}
               <div className="flex gap-2">
-                <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600">
+                <Button type="submit" className="bg-purple-500 hover:bg-purple-600">
                   <Save className="w-4 h-4 mr-2" />
                   {editingPost ? 'Update Post' : 'Create Post'}
                 </Button>

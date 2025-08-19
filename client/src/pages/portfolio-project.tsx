@@ -114,7 +114,7 @@ export default function PortfolioProjectPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
           <p className="text-gray-400 mb-6">The portfolio project you're looking for doesn't exist.</p>
-          <Button onClick={() => setLocation('/')} className="bg-cyan-500 hover:bg-cyan-600">
+          <Button onClick={() => setLocation('/')} className="bg-purple-500 hover:bg-purple-600">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
@@ -155,7 +155,7 @@ export default function PortfolioProjectPage() {
                   {createdDate && formatDate(createdDate)}
                 </div>
                 {project.featured && (
-                  <Badge className="bg-cyan-500 text-white">
+                  <Badge className="bg-purple-500 text-white">
                     Featured Project
                   </Badge>
                 )}
@@ -174,7 +174,7 @@ export default function PortfolioProjectPage() {
                 <div className="pt-4">
                   <Button 
                     asChild
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white"
+                    className="bg-purple-500 hover:bg-purple-600 text-white"
                   >
                     <a 
                       href={project.visitSiteUrl} 
@@ -211,7 +211,7 @@ export default function PortfolioProjectPage() {
                         onClick={() => setSelectedImage(image.url)}
                         className={`aspect-video rounded-lg overflow-hidden transition-all duration-200 ${
                           selectedImage === image.url 
-                            ? 'ring-2 ring-cyan-400' 
+                            ? 'ring-2 ring-purple-400' 
                             : 'hover:ring-2 hover:ring-gray-400'
                         }`}
                       >
@@ -222,7 +222,7 @@ export default function PortfolioProjectPage() {
                         />
                         {image.isHero && (
                           <div className="absolute top-2 left-2">
-                            <Badge className="bg-cyan-500 text-white text-xs">
+                            <Badge className="bg-purple-500 text-white text-xs">
                               Hero
                             </Badge>
                           </div>
@@ -358,7 +358,7 @@ export default function PortfolioProjectPage() {
                 </p>
                 <Button 
                   onClick={() => setLocation('/#contact')} 
-                  className="w-full bg-cyan-500 hover:bg-cyan-600"
+                  className="w-full bg-purple-500 hover:bg-purple-600"
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Get Started

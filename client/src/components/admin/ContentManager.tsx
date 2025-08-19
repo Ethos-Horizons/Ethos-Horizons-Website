@@ -107,7 +107,7 @@ export const ContentManager = () => {
          <TabsList className="grid w-full grid-cols-1 bg-gray-700 border border-gray-600">
            <TabsTrigger 
              value="hero" 
-             className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
+             className="data-[state=active]:bg-purple-500 data-[state=active]:text-white"
            >
              <Home className="w-4 h-4 mr-2" />
              Hero Section
@@ -154,7 +154,7 @@ export const ContentManager = () => {
               <Button
                 onClick={handleHeroSave}
                 disabled={saving}
-                className="bg-cyan-500 hover:bg-cyan-600"
+                className="bg-purple-500 hover:bg-purple-600"
               >
                 <Save className="w-4 h-4 mr-2" />
                 {saving ? 'Saving...' : 'Save Hero Content'}

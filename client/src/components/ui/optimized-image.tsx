@@ -119,7 +119,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       {/* Loading placeholder */}
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-2 border-gray-300 border-t-purple-500 rounded-full animate-spin"></div>
         </div>
       )}
 

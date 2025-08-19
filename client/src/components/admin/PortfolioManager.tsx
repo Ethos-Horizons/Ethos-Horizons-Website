@@ -446,7 +446,7 @@ export const PortfolioManager = () => {
           </Button>
           <Button 
             onClick={() => setIsCreating(true)}
-            className="bg-cyan-500 hover:bg-cyan-600"
+            className="bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="w-4 h-4 mr-2" />
             New Project
@@ -456,7 +456,7 @@ export const PortfolioManager = () => {
 
       {/* JSON Import Section */}
       {showJsonImport && (
-        <Card className="border-2 border-blue-500">
+        <Card className="border-2 border-purple-500">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -495,7 +495,7 @@ export const PortfolioManager = () => {
               <div className="flex gap-2 flex-wrap">
                 <Button 
                   onClick={parseAndPopulateJson}
-                  className="bg-blue-500 hover:bg-blue-600"
+                  className="bg-purple-500 hover:bg-purple-600"
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   Import & Populate Form
@@ -694,7 +694,7 @@ export const PortfolioManager = () => {
 
               {/* Additional Image Upload Modal */}
               {showAdditionalImageUpload && (
-                <Card className="border-2 border-cyan-500">
+                <Card className="border-2 border-purple-500">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Image className="w-5 h-5" />
@@ -846,7 +846,7 @@ export const PortfolioManager = () => {
 
               {/* Form Actions */}
               <div className="flex gap-2">
-                <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600">
+                <Button type="submit" className="bg-purple-500 hover:bg-purple-600">
                   <Save className="w-4 h-4 mr-2" />
                   {editingProject ? 'Update Project' : 'Create Project'}
                 </Button>
@@ -873,7 +873,7 @@ export const PortfolioManager = () => {
                     <div className="flex items-center gap-2 mb-2">
                       <h4 className="font-semibold">{project.title}</h4>
                       {project.featured && (
-                        <Badge className="bg-cyan-500 flex items-center gap-1">
+                        <Badge className="bg-purple-500 flex items-center gap-1">
                           <Star className="w-3 h-3" />
                           Featured
                         </Badge>

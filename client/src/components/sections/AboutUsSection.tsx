@@ -1,260 +1,192 @@
-import { Handshake, Award, Users, Target, X, Calendar, Code, Camera, Mic, Zap, ArrowRight, CheckCircle } from 'lucide-react';
-import { useState } from 'react';
+import { Shield, Heart, TrendingUp, Users, CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useState, useEffect, useRef } from 'react';
 
 export const AboutUsSection = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const teamMembers = [
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const values = [
     {
-      name: "Christopher McElwain",
-      role: "Technical Lead & AI Specialist",
-      image: "https://picsum.photos/300/300?random=11",
-      bio: "With 6+ years of coding experience, Christopher has shifted focus to AI and backend systems, specializing in leveraging artificial intelligence to build powerful web applications and automate marketing processes.",
-      expertise: ["Full-Stack Development", "AI/ML Integration", "Backend Systems", "Web Application Development", "Process Automation"],
-      icon: <Code className="w-6 h-6 text-cyan-400" />
+      icon: <Shield className="w-6 h-6 text-purple-400" />,
+      title: "Transparent & Ethical",
+      description: "No black-hat tactics. No invasive tracking. Just honest marketing that builds real relationships."
     },
     {
-      name: "Thomas Grimm",
-      role: "Content Creation & Media Specialist",
-      image: "https://picsum.photos/300/300?random=12",
-      bio: "A 6-year podcast veteran with extensive experience in videography, photography, and social media management. Thomas brings deep expertise in content creation and audience engagement strategies.",
-      expertise: ["Podcast Production", "Video/Photo Editing", "Social Media Management", "Content Strategy", "Event Videography"],
-      icon: <Camera className="w-6 h-6 text-cyan-400" />
+      icon: <Heart className="w-6 h-6 text-pink-400" />,
+      title: "Human-Centered",
+      description: "We believe in marketing that respects your customers' privacy and treats them like humans, not data points."
+    },
+    {
+      icon: <TrendingUp className="w-6 h-6 text-indigo-400" />,
+      title: "Results-Driven",
+      description: "Every strategy is designed to drive real business growth, not just vanity metrics."
     }
   ];
 
-  const companyStory = {
-    mission: "To help businesses grow through integrity, innovation, and measurable results - ethically driven, with growth beyond limits.",
-    vision: "To become the leading digital marketing agency that combines cutting-edge AI technology with creative content creation, setting new standards for ethical business growth.",
-    approach: "We believe in the power of complementary skills and continuous learning. Our technical expertise combined with creative abilities creates comprehensive digital marketing solutions."
-  };
-
-  const capabilities = [
-    {
-      category: "Technical Capabilities",
-      items: ["AI-Powered Marketing Automation", "Custom Web Development", "SEO & Technical Optimization", "Backend System Integration", "Data Analytics & Reporting"]
-    },
-    {
-      category: "Creative Capabilities", 
-      items: ["Professional Video Production", "Photography & Editing", "Podcast Development", "Social Media Content", "Brand Storytelling"]
-    },
-    {
-      category: "Marketing Expertise",
-      items: ["Local SEO Strategy", "Content Marketing", "Social Media Management", "Google Business Profile", "Growth Strategy"]
-    }
+  const achievements = [
+    { number: "98%", label: "Client Retention Rate" },
+    { number: "3.2x", label: "Average ROI" },
+    { number: "24/7", label: "Support & Monitoring" }
   ];
 
   return (
-    <section id="about" className="py-20 bg-gray-800">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="text-center lg:text-left">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              About <span className="text-cyan-400">Ethos Horizons</span>
+    <section ref={sectionRef} id="about" className="py-24 bg-gradient-to-b from-black to-gray-900 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Content */}
+          <div className={`transition-all duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`}>
+            <span className="inline-block text-purple-400 font-semibold text-sm uppercase tracking-wider mb-4">
+              Our Story
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              Marketing That <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
+                Actually Matters
+              </span>
             </h2>
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              We're a forward-thinking digital marketing agency that believes in the power of integrity, 
-              innovation, and results. Our team brings fresh perspectives and cutting-edge technology 
-              to deliver exceptional digital marketing solutions.
-            </p>
             
-            <div className="space-y-6">
-              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
-                <div className="bg-cyan-500/20 p-3 rounded-lg">
-                  <Handshake className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div className="text-center lg:text-left">
-                  <h3 className="text-xl font-semibold text-white mb-2">Our Mission</h3>
-                  <p className="text-gray-300">
-                    To deliver exceptional digital marketing results while maintaining the highest standards 
-                    of integrity and transparency in everything we do.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
-                <div className="bg-cyan-500/20 p-3 rounded-lg">
-                  <Target className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div className="text-center lg:text-left">
-                  <h3 className="text-xl font-semibold text-white mb-2">Our Approach</h3>
-                  <p className="text-gray-300">
-                    Data-driven strategies combined with creative thinking and cutting-edge technology 
-                    to create campaigns that not only perform but also build lasting brand value.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-4 lg:space-y-0 lg:space-x-4">
-                <div className="bg-cyan-500/20 p-3 rounded-lg">
-                  <Users className="w-6 h-6 text-cyan-400" />
-                </div>
-                <div className="text-center lg:text-left">
-                  <h3 className="text-xl font-semibold text-white mb-2">Our Team</h3>
-                  <p className="text-gray-300">
-                    A partnership built on complementary skills and shared values of integrity, 
-                    continuous learning, and service to others through business growth.
-                  </p>
-                </div>
-              </div>
+            <div className="space-y-6 text-gray-300 text-lg leading-relaxed mb-8">
+              <p>
+                We started Ethos Horizons because we saw small to mid-sized businesses struggling to keep up with rapidly advancing technology while competing against larger companies with bigger budgets and resources.
+              </p>
+              <p>
+                <strong className="text-white">Technology moves fast.</strong> What worked yesterday might not work tomorrow. We believe every business, regardless of size, deserves access to cutting-edge digital solutions that can level the playing field.
+              </p>
+              <p>
+                That's why we're embracing AI and automation - not to replace human expertise, but to amplify it. Our technology makes your marketing smarter, your workflows more efficient, and your growth more sustainable.
+              </p>
+            </div>
 
-              {/* Learn More Button */}
-              <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white mt-6 w-full lg:w-auto">
-                    Learn More About Our Team
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-800 border-gray-700" aria-describedby="about-dialog-description">
-                  <DialogHeader>
-                    <DialogTitle className="text-3xl font-bold text-white text-center">
-                      Meet the <span className="text-cyan-400">Ethos Horizons</span> Team
-                    </DialogTitle>
-                    <div id="about-dialog-description" className="sr-only">
-                      Detailed information about the Ethos Horizons team, their expertise, and company values
+            <Button 
+              size="lg"
+              onClick={() => {
+                const element = document.querySelector('#contact');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/25"
+            >
+              Start Your Free Consultation
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
+
+          {/* Right Content */}
+          <div className={`transition-all duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}>
+            {/* Values Cards */}
+            <div className="space-y-6 mb-12">
+              {values.map((value, index) => (
+                <div 
+                  key={index}
+                  className={`bg-gradient-to-r from-gray-900/80 to-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-xl p-6 transition-all duration-700 hover:border-purple-500/50 hover:transform hover:scale-[1.02] ${
+                    isVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${index * 200}ms` }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-800 rounded-lg">
+                        {value.icon}
+                      </div>
                     </div>
-                  </DialogHeader>
-                  
-                                     {/* Company Story */}
-                   <div className="mb-8">
-                     <h3 className="text-2xl font-bold text-white mb-4">Our Approach</h3>
-                     <div className="bg-gray-700 rounded-lg p-6">
-                       <p className="text-gray-300 leading-relaxed">
-                         We believe in the power of complementary skills and continuous learning. 
-                         Our partnership combines technical expertise with creative abilities to deliver 
-                         comprehensive digital marketing solutions that help businesses grow and, 
-                         in turn, positively impact their communities.
-                       </p>
-                     </div>
-                   </div>
-
-                  {/* Team Members */}
-                  <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-white mb-6">Our Team</h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                      {teamMembers.map((member, index) => (
-                        <div key={index} className="bg-gray-700 rounded-xl p-6 border border-gray-600">
-                          <div className="flex items-start space-x-4 mb-4">
-                            <img 
-                              src={member.image} 
-                              alt={member.name}
-                              className="w-20 h-20 rounded-full object-cover"
-                            />
-                            <div>
-                              <h4 className="text-xl font-bold text-white">{member.name}</h4>
-                              <p className="text-cyan-400 font-semibold">{member.role}</p>
-                            </div>
-                          </div>
-                          <p className="text-gray-300 mb-4 text-sm leading-relaxed">{member.bio}</p>
-                          <div>
-                            <h5 className="text-white font-semibold mb-3">Expertise:</h5>
-                            <div className="flex flex-wrap gap-2">
-                              {member.expertise.map((skill, skillIndex) => (
-                                <span 
-                                  key={skillIndex}
-                                  className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-xs"
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{value.title}</h3>
+                      <p className="text-gray-300">{value.description}</p>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
 
-                  {/* Capabilities */}
-                  <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-white mb-6">Our Capabilities</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {capabilities.map((capability, index) => (
-                        <div key={index} className="bg-gray-700 rounded-lg p-6">
-                          <h4 className="text-lg font-semibold text-cyan-400 mb-4">{capability.category}</h4>
-                          <ul className="space-y-2">
-                            {capability.items.map((item, itemIndex) => (
-                              <li key={itemIndex} className="flex items-center text-gray-300 text-sm">
-                                <CheckCircle className="w-4 h-4 text-cyan-400 mr-2 flex-shrink-0" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                                     {/* Why Choose Us */}
-                   <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-6 border border-cyan-400/30">
-                     <h3 className="text-xl font-bold text-white mb-4">Our Values</h3>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                       <div className="flex items-start space-x-3">
-                         <Zap className="w-6 h-6 text-cyan-400 mt-1 flex-shrink-0" />
-                         <div>
-                           <h4 className="text-white font-semibold mb-2">Integrity & Service</h4>
-                           <p className="text-gray-300 text-sm">We take our work seriously, grounded in values that extend through history and ancient wisdom, believing that helping businesses grow positively affects many others.</p>
-                         </div>
-                       </div>
-                       <div className="flex items-start space-x-3">
-                         <Target className="w-6 h-6 text-cyan-400 mt-1 flex-shrink-0" />
-                         <div>
-                           <h4 className="text-white font-semibold mb-2">Continuous Learning</h4>
-                           <p className="text-gray-300 text-sm">Our love for learning and contemplation drives us to always be better, remaining resilient and competent while engaging with the world with integrity and courage.</p>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                </DialogContent>
-              </Dialog>
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6">
+              {achievements.map((achievement, index) => (
+                <div 
+                  key={index}
+                  className={`text-center transition-all duration-700 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${600 + index * 100}ms` }}
+                >
+                  <div className="text-3xl font-bold text-purple-400 mb-2">{achievement.number}</div>
+                  <div className="text-sm text-gray-400">{achievement.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-          
-          <div className="space-y-8">
-            <div className="bg-gray-700 rounded-xl p-8 border border-gray-600">
-              <div className="flex items-center mb-4">
-                <Award className="w-8 h-8 text-cyan-400 mr-3" />
-                <h3 className="text-2xl font-bold text-white">Our Values</h3>
+        </div>
+
+        {/* Bottom Section - What We Don't Do */}
+        <div className={`mt-24 text-center transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '1000ms' }}>
+          <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 backdrop-blur-lg border border-red-500/20 rounded-2xl p-12 max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold text-white mb-6">
+              What We <span className="text-red-400">Don't</span> Do
+            </h3>
+            
+            <div className="grid md:grid-cols-2 gap-6 text-left">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Invasive location tracking (geofencing)</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Surveillance marketing tactics</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Black-hat SEO techniques</span>
+                </div>
               </div>
-              <ul className="space-y-3">
-                <li className="flex items-center text-gray-300">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                  <span>Integrity in all our relationships</span>
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                  <span>Innovation through technology</span>
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                  <span>Results-driven strategies</span>
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                  <span>Transparent communication</span>
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                  <span>Continuous learning and service</span>
-                </li>
-              </ul>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Misleading advertising claims</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Cookie tracking without consent</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  <span className="text-gray-300">Lock you into long-term contracts</span>
+                </div>
+              </div>
             </div>
             
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center bg-gray-700 rounded-xl p-6 border border-gray-600">
-                <div className="text-3xl font-bold text-cyan-400 mb-2">Expert</div>
-                <p className="text-white font-semibold">Team</p>
-              </div>
-              <div className="text-center bg-gray-700 rounded-xl p-6 border border-gray-600">
-                <div className="text-3xl font-bold text-cyan-400 mb-2">Modern</div>
-                <p className="text-white font-semibold">Approach</p>
-              </div>
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <p className="text-gray-300 text-lg">
+                <strong className="text-white">Our Promise:</strong> We build your business through trust, not tricks.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-}; 
+};

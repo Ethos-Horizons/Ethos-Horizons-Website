@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, User, ArrowRight, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { apiRequest } from '@/lib/queryClient';
 
@@ -17,19 +17,6 @@ interface BlogPost {
   slug: string;
   created_at: string;
   updated_at: string;
-}
-
-interface MockBlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  category: string;
-  author: string;
-  date: string;
-  readTime: string;
-  image: string;
-  tags: string[];
-  featured: boolean;
 }
 
 export const BlogSection = () => {
@@ -49,14 +36,12 @@ export const BlogSection = () => {
       setBlogPosts(data);
     } catch (error) {
       console.error('Error fetching blog posts:', error);
-      // Fallback to mock data if API fails
       setBlogPosts([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Helper function to format date
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -65,7 +50,6 @@ export const BlogSection = () => {
     });
   };
 
-  // Helper function to estimate read time
   const estimateReadTime = (content: string) => {
     const wordsPerMinute = 200;
     const wordCount = content.split(' ').length;
@@ -73,217 +57,77 @@ export const BlogSection = () => {
     return `${minutes} min read`;
   };
 
-  // Fallback mock data if no posts are available
-  const fallbackPosts: MockBlogPost[] = [
-    {
-      id: 1,
-      title: "5 Essential SEO Strategies for Local Businesses in 2024",
-      excerpt: "Discover the most effective SEO techniques that local businesses can implement to improve their search rankings and attract more customers.",
-      category: "seo",
-      author: "Ethos Digital Team",
-      date: "January 15, 2024",
-      readTime: "8 min read",
-      image: "https://picsum.photos/400/250?random=4",
-      tags: ["Local SEO", "Google Business Profile", "Keyword Research"],
-      featured: true
-    },
-    {
-      id: 2,
-      title: "How AI is Revolutionizing Digital Marketing for Small Businesses",
-      excerpt: "Explore how artificial intelligence is making digital marketing more accessible and effective for businesses of all sizes.",
-      category: "ai-marketing",
-      author: "Ethos Digital Team",
-      date: "January 10, 2024",
-      readTime: "12 min read",
-      image: "https://picsum.photos/400/250?random=5",
-      tags: ["AI Marketing", "Automation", "Small Business"],
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Building a Successful Podcast Website: A Complete Guide",
-      excerpt: "Learn the essential elements and best practices for creating a professional podcast website that engages listeners and drives growth.",
-      category: "web-development",
-      author: "Ethos Digital Team",
-      date: "January 8, 2024",
-      readTime: "15 min read",
-      image: "https://picsum.photos/400/250?random=6",
-      tags: ["Podcast", "Web Development", "Content Strategy"],
-      featured: false
-    },
-    {
-      id: 4,
-      title: "The Ultimate Guide to Google Business Profile Optimization",
-      excerpt: "Step-by-step guide to optimizing your Google Business Profile to increase local visibility and attract more customers.",
-      category: "local-marketing",
-      author: "Ethos Digital Team",
-      date: "January 5, 2024",
-      readTime: "10 min read",
-      image: "https://picsum.photos/400/250?random=7",
-      tags: ["Google Business Profile", "Local Marketing", "SEO"],
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Content Marketing Strategies That Actually Drive Results",
-      excerpt: "Proven content marketing strategies that help businesses build authority, attract customers, and drive conversions.",
-      category: "content-marketing",
-      author: "Ethos Digital Team",
-      date: "January 3, 2024",
-      readTime: "11 min read",
-      image: "https://picsum.photos/400/250?random=8",
-      tags: ["Content Marketing", "Strategy", "ROI"],
-      featured: false
-    },
-         {
-       id: 6,
-       title: "Social Media Marketing for Local Businesses: Best Practices",
-       excerpt: "Effective social media strategies specifically designed for local businesses to build community and drive foot traffic.",
-       category: "social-media",
-       author: "Ethos Digital Team",
-       date: "December 28, 2023",
-       readTime: "9 min read",
-       image: "https://picsum.photos/400/250?random=9",
-       tags: ["Social Media", "Local Business", "Community"],
-       featured: false
-     },
-     {
-       id: 7,
-       title: "Video Marketing Strategies for Small Business Growth",
-       excerpt: "Learn how to leverage video content to increase engagement, build trust, and drive conversions for your business.",
-       category: "video-marketing",
-       author: "Ethos Digital Team",
-       date: "December 25, 2023",
-       readTime: "14 min read",
-       image: "https://picsum.photos/400/250?random=10",
-       tags: ["Video Marketing", "Content Creation", "Engagement"],
-       featured: false
-     }
-  ];
-
-  const generateSlug = (title: string) => {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  };
-
   const handleBlogClick = (post: BlogPost) => {
-    const slug = post.slug || generateSlug(post.title);
+    const slug = post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     setLocation(`/blog/${slug}`);
   };
 
-
-
-     const categories = [
-     { id: 'all', label: 'All Articles' },
-     { id: 'seo', label: 'SEO' },
-     { id: 'ai-marketing', label: 'AI Marketing' },
-     { id: 'web-development', label: 'Web Development' },
-     { id: 'local-marketing', label: 'Local Marketing' },
-     { id: 'content-marketing', label: 'Content Marketing' },
-     { id: 'social-media', label: 'Social Media' },
-     { id: 'video-marketing', label: 'Video Marketing' }
-   ];
+  const categories = [
+    { id: 'all', label: 'All Articles' },
+    { id: 'seo', label: 'SEO' },
+    { id: 'ai-marketing', label: 'AI Marketing' },
+    { id: 'web-development', label: 'Web Development' },
+    { id: 'local-marketing', label: 'Local Marketing' },
+    { id: 'content-marketing', label: 'Content Marketing' },
+    { id: 'social-media', label: 'Social Media' },
+    { id: 'video-marketing', label: 'Video Marketing' }
+  ];
 
   const filteredPosts = activeCategory === 'all' 
     ? blogPosts 
     : blogPosts.filter(post => post.category === activeCategory);
 
-
-
-  return (
-    <section id="blog" className="py-20 bg-gradient-to-br from-gray-900 via-slate-900 to-blue-900 relative overflow-hidden">
-      {/* Animated Blog Background */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="blog-background">
-          <div className="blog-particles">
-            <div className="blog-particle particle-1"></div>
-            <div className="blog-particle particle-2"></div>
-            <div className="blog-particle particle-3"></div>
-            <div className="blog-particle particle-4"></div>
-            <div className="blog-particle particle-5"></div>
-            <div className="blog-particle particle-6"></div>
-          </div>
-          <div className="blog-lines">
-            <div className="blog-line line-1"></div>
-            <div className="blog-line line-2"></div>
-            <div className="blog-line line-3"></div>
+  if (loading) {
+    return (
+      <section id="blog" className="py-20 bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900">
+        <div className="container mx-auto px-6">
+          <div className="text-center">
+            <div className="animate-pulse text-white">Loading articles...</div>
           </div>
         </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="blog" className="py-20 bg-black relative overflow-hidden">
+      {/* Subtle Wave Pattern Background */}
+      <div className="absolute inset-0">
+        <svg className="w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{stopColor: 'rgba(168, 85, 247, 0.1)', stopOpacity: 0}} />
+              <stop offset="50%" style={{stopColor: 'rgba(168, 85, 247, 0.3)', stopOpacity: 1}} />
+              <stop offset="100%" style={{stopColor: 'rgba(168, 85, 247, 0.1)', stopOpacity: 0}} />
+            </linearGradient>
+          </defs>
+          <path d="M0,30 Q25,20 50,30 T100,30" stroke="url(#waveGradient)" fill="none" strokeWidth="1" className="wave-path wave-1" />
+          <path d="M0,60 Q25,70 50,60 T100,60" stroke="url(#waveGradient)" fill="none" strokeWidth="1" className="wave-path wave-2" />
+        </svg>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="relative z-10">
+        {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Resources & <span className="text-cyan-400">Insights</span>
+            Resources & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">Insights</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto px-6">
             Stay updated with the latest digital marketing trends, tips, and strategies. 
             Our resources help businesses navigate the digital landscape effectively.
           </p>
         </div>
 
-        {/* Featured Post */}
-        {blogPosts.length > 0 && (
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Latest Articles</h3>
-            <div className="bg-gray-800 rounded-xl overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="h-64 lg:h-full overflow-hidden relative">
-                  <img 
-                    src={blogPosts[0].image_url || "https://picsum.photos/400/250?random=1"} 
-                    alt={`${blogPosts[0].title} featured image`}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
-                      Latest
-                    </span>
-                    <div className="flex items-center text-gray-400 text-sm">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(blogPosts[0].created_at)}
-                    </div>
-                    <div className="flex items-center text-gray-400 text-sm">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {estimateReadTime(blogPosts[0].content)}
-                    </div>
-                  </div>
-                  <h4 className="text-2xl font-bold text-white mb-4">{blogPosts[0].title}</h4>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{blogPosts[0].excerpt}</p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {blogPosts[0].tags.map((tag, index) => (
-                      <span 
-                        key={index}
-                        className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <Button 
-                    onClick={() => handleBlogClick(blogPosts[0])}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white"
-                  >
-                    Read Full Article
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-16 px-6">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
                 activeCategory === category.id
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
+                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
               }`}
             >
               {category.label}
@@ -291,72 +135,111 @@ export const BlogSection = () => {
           ))}
         </div>
 
-                 {/* Blog Posts Grid */}
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
-          {blogPosts.slice(1).map((post) => (
-            <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 flex flex-col h-full">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src={post.image_url || "https://picsum.photos/400/250?random=1"} 
-                  alt={`${post.title} article image`}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="flex items-center text-gray-400 text-sm">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {formatDate(post.created_at)}
+        {/* Blog Posts - Full Width Layout */}
+        {filteredPosts.length > 0 ? (
+          <div className="space-y-0">
+            {filteredPosts.map((post, index) => (
+              <div 
+                key={post.id} 
+                className="relative bg-black/60 backdrop-blur-sm border-b border-gray-800/30 hover:bg-black/80 transition-all duration-500 group"
+              >
+                <div className="container mx-auto px-6 py-16">
+                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                  }`}>
+                    {/* Content */}
+                    <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                      <div className="mb-4">
+                        <span className="inline-block bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-semibold mb-4">
+                          {post.category}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
+                        {post.title}
+                      </h3>
+                      
+                      <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                      
+                      <div className="flex items-center gap-6 text-sm text-gray-400 mb-6">
+                        <div className="flex items-center gap-2">
+                          <User className="w-4 h-4" />
+                          <span>{post.author}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          <span>{formatDate(post.created_at)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4" />
+                          <span>{estimateReadTime(post.content)}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Tags */}
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-8">
+                          {post.tags.slice(0, 3).map((tag, tagIndex) => (
+                            <span 
+                              key={tagIndex}
+                              className="flex items-center gap-1 bg-gray-700/50 text-gray-300 px-3 py-1 rounded-full text-sm"
+                            >
+                              <Tag className="w-3 h-3" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <Button 
+                        onClick={() => handleBlogClick(post)}
+                        className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/25"
+                      >
+                        Read Full Article
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </div>
+                    
+                    {/* Image */}
+                    <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                      <div className="relative overflow-hidden rounded-2xl shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-500">
+                        <img 
+                          src={post.image_url || `https://picsum.photos/600/400?random=${index + 1}`}
+                          alt={`${post.title} featured image`}
+                          className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-purple-900/20 transition-all duration-500"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center text-gray-400 text-sm">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {estimateReadTime(post.content)}
-                  </div>
                 </div>
-                <h4 className="text-xl font-bold text-white mb-3">{post.title}</h4>
-                <p className="text-gray-300 mb-4 leading-relaxed flex-grow">{post.excerpt}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {post.tags.slice(0, 2).map((tag, index) => (
-                    <span 
-                      key={index}
-                      className="bg-gray-700 text-gray-300 px-2 py-1 rounded-full text-xs"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-auto">
-                  <Button 
-                    onClick={() => handleBlogClick(post)}
-                    variant="outline" 
-                    className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white"
-                  >
-                    Read More
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </div>
+                
+
               </div>
-            </article>
-          ))}
-        </div>
-
-
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-gray-400 text-lg">No articles found for the selected category.</p>
+          </div>
+        )}
 
         {/* Newsletter Signup */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-8 border border-cyan-400/30 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">Stay Updated</h3>
-            <p className="text-gray-300 mb-6">
+        <div className="text-center mt-20 px-6">
+          <div className="bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-2xl p-12 border border-purple-400/30 max-w-2xl mx-auto backdrop-blur-sm">
+            <h3 className="text-3xl font-bold text-white mb-4">Stay Updated</h3>
+            <p className="text-gray-300 mb-8 text-lg">
               Get the latest digital marketing insights, tips, and strategies delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400"
+                className="flex-1 px-6 py-4 rounded-lg bg-gray-800/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-colors"
               />
-              <Button className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3">
+              <Button className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105">
                 Subscribe
               </Button>
             </div>
@@ -366,96 +249,30 @@ export const BlogSection = () => {
       
       <style dangerouslySetInnerHTML={{
         __html: `
-          .blog-background {
-            position: relative;
-            width: 100%;
-            height: 100%;
+          .wave-path {
+            stroke-dasharray: 10 5;
+            stroke-dashoffset: 15;
+            animation: waveFlow 12s ease-in-out infinite;
           }
           
-          .blog-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-          }
+          .wave-1 { animation-delay: 0s; }
+          .wave-2 { animation-delay: -6s; }
           
-          .blog-particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #06b6d4;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
-            animation: blogParticleFloat 15s ease-in-out infinite;
-          }
-          
-          .particle-1 { top: 20%; left: 20%; animation-delay: 0s; }
-          .particle-2 { top: 40%; left: 80%; animation-delay: -2s; }
-          .particle-3 { top: 60%; left: 15%; animation-delay: -4s; }
-          .particle-4 { top: 80%; left: 70%; animation-delay: -6s; }
-          .particle-5 { top: 30%; left: 60%; animation-delay: -8s; }
-          .particle-6 { top: 70%; left: 40%; animation-delay: -10s; }
-          
-          .blog-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-          }
-          
-          .blog-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
-            animation: blogLineFlow 20s linear infinite;
-          }
-          
-          .line-1 { 
-            top: 25%; 
-            left: 0; 
-            width: 30%; 
-            animation-delay: 0s; 
-          }
-          .line-2 { 
-            top: 50%; 
-            right: 0; 
-            width: 25%; 
-            animation-delay: -7s; 
-          }
-          .line-3 { 
-            top: 75%; 
-            left: 20%; 
-            width: 35%; 
-            animation-delay: -14s; 
-          }
-          
-          @keyframes blogParticleFloat {
-            0%, 100% { 
-              transform: translateY(0px) translateX(0px);
+          @keyframes waveFlow {
+            0% { 
+              stroke-dashoffset: 15;
               opacity: 0.3;
             }
-            33% { 
-              transform: translateY(-20px) translateX(10px);
-              opacity: 0.6;
+            50% { 
+              opacity: 0.8;
             }
-            66% { 
-              transform: translateY(-10px) translateX(-15px);
-              opacity: 0.4;
-            }
-          }
-          
-          @keyframes blogLineFlow {
-            0% { 
-              transform: translateX(-100%);
-              opacity: 0;
-            }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
             100% { 
-              transform: translateX(100%);
-              opacity: 0;
+              stroke-dashoffset: -15;
+              opacity: 0.3;
             }
           }
         `
       }} />
     </section>
   );
-}; 
+};

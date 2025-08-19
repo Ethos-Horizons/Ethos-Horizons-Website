@@ -14,32 +14,32 @@ export const AiAdvantageSection = () => {
 
   const aiFeatures = [
     {
-      icon: <BrainCircuit className="w-8 h-8 text-cyan-400" />,
+      icon: <BrainCircuit className="w-8 h-8 text-purple-400" />,
       title: "Predictive Analytics",
       description: "AI-powered insights that predict market trends and customer behavior to optimize your campaigns."
     },
     {
-      icon: <LineChart className="w-8 h-8 text-cyan-400" />,
+      icon: <LineChart className="w-8 h-8 text-purple-400" />,
       title: "Automated Optimization",
       description: "Machine learning algorithms that continuously optimize your campaigns for maximum performance."
     },
     {
-      icon: <MessageSquare className="w-8 h-8 text-cyan-400" />,
+      icon: <MessageSquare className="w-8 h-8 text-purple-400" />,
       title: "Customer Sentiment Analysis",
       description: "Advanced AI that analyzes customer feedback and sentiment to improve your marketing strategies."
     },
     {
-      icon: <TestTube className="w-8 h-8 text-cyan-400" />,
+      icon: <TestTube className="w-8 h-8 text-purple-400" />,
       title: "A/B Testing Automation",
       description: "Intelligent testing that automatically identifies and implements the best performing variations."
     },
     {
-      icon: <Target className="w-8 h-8 text-cyan-400" />,
+      icon: <Target className="w-8 h-8 text-purple-400" />,
       title: "Smart Audience Targeting",
       description: "AI-driven audience segmentation that finds your most valuable customers across platforms."
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
+      icon: <TrendingUp className="w-8 h-8 text-purple-400" />,
       title: "Performance Forecasting",
       description: "Predictive models that forecast campaign performance and ROI before launch."
     }
@@ -90,9 +90,9 @@ export const AiAdvantageSection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
-            <Bot className="w-12 h-12 text-cyan-400 mr-4" />
+            <Bot className="w-12 h-12 text-purple-400 mr-4" />
             <h2 className="text-4xl md:text-5xl font-bold text-white">
-              AI-Powered <span className="text-cyan-400">Advantage</span>
+              AI-Powered <span className="text-purple-400">Advantage</span>
             </h2>
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -105,7 +105,7 @@ export const AiAdvantageSection = () => {
           {aiFeatures.map((feature, index) => (
             <div 
               key={index}
-              className="bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105"
+              className="bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105"
             >
               <div className="mb-6">
                 {feature.icon}
@@ -118,18 +118,18 @@ export const AiAdvantageSection = () => {
 
         {/* AI Benefits */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl p-8 border border-cyan-400/30">
-            <div className="text-4xl font-bold text-cyan-400 mb-2">Smart</div>
+          <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-xl p-8 border border-purple-400/30">
+            <div className="text-4xl font-bold text-purple-400 mb-2">Smart</div>
             <p className="text-white font-semibold">Optimization</p>
             <p className="text-gray-400 text-sm mt-2">AI-driven campaign improvements</p>
           </div>
-          <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl p-8 border border-cyan-400/30">
-            <div className="text-4xl font-bold text-cyan-400 mb-2">Fast</div>
+          <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-xl p-8 border border-purple-400/30">
+            <div className="text-4xl font-bold text-purple-400 mb-2">Fast</div>
             <p className="text-white font-semibold">Results</p>
             <p className="text-gray-400 text-sm mt-2">Efficient campaign execution</p>
           </div>
-          <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl p-8 border border-cyan-400/30">
-            <div className="text-4xl font-bold text-cyan-400 mb-2">24/7</div>
+          <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-xl p-8 border border-purple-400/30">
+            <div className="text-4xl font-bold text-purple-400 mb-2">24/7</div>
             <p className="text-white font-semibold">Monitoring</p>
             <p className="text-gray-400 text-sm mt-2">Continuous performance tracking</p>
           </div>
@@ -148,9 +148,9 @@ export const AiAdvantageSection = () => {
             position: absolute;
             width: 16px;
             height: 16px;
-            background: linear-gradient(45deg, #06b6d4, #3b82f6);
+            background: linear-gradient(45deg, #a855f7, #6366f1);
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.8);
             animation: nodePulse 3s ease-in-out infinite;
           }
           
@@ -179,9 +179,9 @@ export const AiAdvantageSection = () => {
             position: absolute;
             width: 6px;
             height: 6px;
-            background: #06b6d4;
+            background: #a855f7;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.9);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.9);
             animation: particleFlow 4s linear infinite;
           }
           
@@ -195,12 +195,12 @@ export const AiAdvantageSection = () => {
             0%, 100% { 
               transform: scale(1); 
               opacity: 0.7; 
-              box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+              box-shadow: 0 0 30px rgba(168, 85, 247, 0.8);
             }
             50% { 
               transform: scale(1.4); 
               opacity: 1; 
-              box-shadow: 0 0 40px rgba(6, 182, 212, 1);
+              box-shadow: 0 0 40px rgba(168, 85, 247, 1);
             }
           }
           

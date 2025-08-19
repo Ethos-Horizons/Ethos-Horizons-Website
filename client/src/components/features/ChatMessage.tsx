@@ -17,14 +17,14 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         "max-w-xs sm:max-w-sm p-3 rounded-lg",
         isBot 
           ? "bg-gray-700 text-gray-300" 
-          : "bg-cyan-500 text-white"
+          : "bg-purple-500 text-white"
       )}>
         <p className="text-sm leading-relaxed whitespace-pre-wrap">
           {message.content}
         </p>
         <div className={cn(
           "text-xs mt-2 opacity-70",
-          isBot ? "text-gray-400" : "text-cyan-100"
+          isBot ? "text-gray-400" : "text-purple-100"
         )}>
           {message.timestamp.toLocaleTimeString([], { 
             hour: '2-digit', 

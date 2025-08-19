@@ -79,7 +79,7 @@ export default function BlogPostPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Blog Post Not Found</h1>
           <p className="text-gray-400 mb-6">The blog post you're looking for doesn't exist.</p>
-          <Button onClick={() => setLocation('/')} className="bg-cyan-500 hover:bg-cyan-600">
+          <Button onClick={() => setLocation('/')} className="bg-purple-500 hover:bg-purple-600">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>

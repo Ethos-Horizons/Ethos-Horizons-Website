@@ -45,14 +45,14 @@ export const AdminDashboard = ({ user, onLogout }: AdminDashboardProps) => {
           <TabsList className="grid w-full grid-cols-2 bg-gray-800 border border-gray-700">
             <TabsTrigger 
               value="blog" 
-              className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
+              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white"
             >
               <FileText className="w-4 h-4 mr-2" />
               Blog
             </TabsTrigger>
             <TabsTrigger 
               value="portfolio" 
-              className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white"
+              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white"
             >
               <Image className="w-4 h-4 mr-2" />
               Portfolio

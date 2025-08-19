@@ -1,17 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { ExternalLink, Github, TrendingUp, Users, Clock, Code, Camera, Mic, ArrowRight, Globe, Share2 } from 'lucide-react';
+import { ExternalLink, TrendingUp, Code, ArrowRight, Globe, Layers, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/queryClient';
-
-interface PortfolioImage {
-  id: string;
-  url: string;
-  alt: string;
-  isHero: boolean;
-  order: number;
-}
 
 interface SocialMediaLink {
   platform: string;
@@ -24,7 +15,6 @@ interface PortfolioProject {
   description: string;
   imageUrl?: string;
   image_url?: string;
-  images?: PortfolioImage[];
   technologies: string[];
   results: string;
   journey?: string;
@@ -61,57 +51,45 @@ export const PortfolioSection = () => {
     }
   };
 
-  const generateSlug = (title: string) => {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  };
-
-  const handlePortfolioClick = (item: PortfolioProject) => {
-    const slug = item.slug || generateSlug(item.title);
+  const handleProjectClick = (project: PortfolioProject) => {
+    const slug = project.slug || project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     setLocation(`/portfolio/${slug}`);
   };
 
-  const getHeroImage = (item: PortfolioProject) => {
-    // First try to get hero image from images array
-    if (item.images && item.images.length > 0) {
-      const heroImage = item.images.find(img => img.isHero);
-      if (heroImage) return heroImage.url;
-      // If no hero image, use first image
-      return item.images[0].url;
-    }
-    // Fallback to imageUrl or image_url
-    return item.imageUrl || item.image_url || 'https://picsum.photos/600/400?random=1';
-  };
-
   const filters = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'web-development', label: 'Web Development' },
-    { id: 'digital-marketing', label: 'Digital Marketing' },
-    { id: 'seo', label: 'SEO' }
+    { id: 'all', label: 'All Projects', icon: Layers },
+    { id: 'web-development', label: 'Web Development', icon: Code },
+    { id: 'seo', label: 'SEO & Marketing', icon: TrendingUp },
+    { id: 'ai-tools', label: 'AI Solutions', icon: Zap }
   ];
 
-  const filteredItems = activeFilter === 'all' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => {
-        // For now, we'll use technologies to determine category
-        const techString = item.technologies.join(' ').toLowerCase();
-        if (activeFilter === 'web-development' && (techString.includes('react') || techString.includes('next') || techString.includes('javascript'))) {
+  const getFilteredProjects = () => {
+    if (activeFilter === 'all') return portfolioItems;
+    return portfolioItems.filter(project => {
+      const tech = project.technologies?.join(' ').toLowerCase() || '';
+      const desc = project.description.toLowerCase();
+      
+      switch (activeFilter) {
+        case 'web-development':
+          return tech.includes('react') || tech.includes('next') || tech.includes('web') || desc.includes('website') || desc.includes('web');
+        case 'seo':
+          return desc.includes('seo') || desc.includes('marketing') || desc.includes('traffic') || desc.includes('ranking');
+        case 'ai-tools':
+          return tech.includes('ai') || desc.includes('ai') || desc.includes('artificial intelligence') || desc.includes('automation');
+        default:
           return true;
-        }
-        if (activeFilter === 'seo' && (techString.includes('seo') || techString.includes('optimization'))) {
-          return true;
-        }
-        if (activeFilter === 'digital-marketing' && (techString.includes('marketing') || techString.includes('social'))) {
-          return true;
-        }
-        return false;
-      });
+      }
+    });
+  };
+
+  const filteredProjects = getFilteredProjects();
 
   if (loading) {
     return (
-      <section id="portfolio" className="py-20 bg-gradient-to-br from-slate-800 via-gray-800 to-slate-900">
+      <section id="portfolio" className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900">
         <div className="container mx-auto px-6">
           <div className="text-center">
-            <div className="text-white text-xl">Loading portfolio...</div>
+            <div className="animate-pulse text-white">Loading portfolio...</div>
           </div>
         </div>
       </section>
@@ -119,300 +97,235 @@ export const PortfolioSection = () => {
   }
 
   return (
-    <section id="portfolio" className="py-20 bg-gradient-to-br from-slate-800 via-gray-800 to-slate-900 relative overflow-hidden">
-      {/* Animated Portfolio Background */}
-      <div className="absolute inset-0 opacity-25">
-        <div className="portfolio-background">
-          <div className="portfolio-orbs">
-            <div className="portfolio-orb orb-1"></div>
-            <div className="portfolio-orb orb-2"></div>
-            <div className="portfolio-orb orb-3"></div>
-            <div className="portfolio-orb orb-4"></div>
-            <div className="portfolio-orb orb-5"></div>
-          </div>
-          <div className="portfolio-sparkles">
-            <div className="sparkle sparkle-1"></div>
-            <div className="sparkle sparkle-2"></div>
-            <div className="sparkle sparkle-3"></div>
-            <div className="sparkle sparkle-4"></div>
-            <div className="sparkle sparkle-5"></div>
-            <div className="sparkle sparkle-6"></div>
-            <div className="sparkle sparkle-7"></div>
-            <div className="sparkle sparkle-8"></div>
-          </div>
-        </div>
-      </div>
+    <section id="portfolio" className="py-20 bg-black relative overflow-hidden">
+      {/* Subtle Grid Pattern Background */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.1) 2px, transparent 2px),
+          radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.05) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px, 40px 40px',
+        backgroundPosition: '0 0, 30px 30px'
+      }}></div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16 px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Our <span className="text-cyan-400">Work</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">Portfolio</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Showcasing our expertise through real projects and measurable results. 
-            Each project demonstrates our commitment to delivering exceptional digital solutions.
+            Discover how we've helped businesses achieve remarkable growth through innovative digital solutions.
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {filters.map((filter) => (
-            <button
-              key={filter.id}
-              onClick={() => setActiveFilter(filter.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                activeFilter === filter.id
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-4 mb-16 px-6">
+          {filters.map((filter) => {
+            const IconComponent = filter.icon;
+            return (
+              <button
+                key={filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                className={`flex items-center gap-3 px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                  activeFilter === filter.id
+                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
+                }`}
+              >
+                <IconComponent className="w-4 h-4" />
+                {filter.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item) => (
-              <div key={item.id} className="bg-gray-700 rounded-xl overflow-hidden hover:bg-gray-600 transition-all duration-300 flex flex-col h-full">
-                {/* Project Image */}
-                <div className="relative h-64 overflow-hidden">
+        {/* Portfolio Projects - Hero-Style Layout */}
+        {filteredProjects.length > 0 ? (
+          <div className="space-y-0">
+            {filteredProjects.map((project, index) => (
+              <div 
+                key={project.id}
+                className="relative bg-black/60 backdrop-blur-sm border-b border-gray-800/30 hover:bg-black/80 transition-all duration-500 group"
+              >
+                {/* Hero Image Section - Full Width */}
+                <div className="w-full h-[60vh] min-h-[400px] relative overflow-hidden">
                   <img 
-                    src={getHeroImage(item)} 
-                    alt={`${item.title} project screenshot`}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    src={project.image_url || project.imageUrl || `https://picsum.photos/1920/800?random=${index + 10}`}
+                    alt={`${project.title} project showcase`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   
-                  {/* Featured Badge */}
-                  {item.featured && (
-                    <div className="absolute top-4 right-4">
-                      <Badge className="bg-cyan-500 text-white">
-                        Featured
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-
-                {/* Project Content */}
-                <div className="p-8 flex flex-col flex-grow">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-semibold text-cyan-400">
-                      {item.visitSiteUrl ? 'Live Project' : 'Portfolio Project'}
-                    </span>
-                    <div className="flex gap-2">
-                      {item.visitSiteUrl && (
-                        <a 
-                          href={item.visitSiteUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-cyan-400 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Globe className="w-5 h-5" />
-                        </a>
-                      )}
-                      {item.socialMediaLinks && item.socialMediaLinks.length > 0 && (
-                        <div className="flex gap-1">
-                          {item.socialMediaLinks.slice(0, 2).map((link, index) => (
-                            <a 
-                              key={index}
-                              href={link.url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-cyan-400 transition-colors"
-                              onClick={(e) => e.stopPropagation()}
-                              title={link.platform}
-                            >
-                              <Share2 className="w-4 h-4" />
-                            </a>
-                          ))}
+                  {/* Project Title Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                    <div className="container mx-auto">
+                      {project.featured && (
+                        <div className="mb-4">
+                          <span className="inline-block bg-indigo-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
+                            Featured Project
+                          </span>
                         </div>
                       )}
+                      
+                      <h3 className="text-4xl md:text-6xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
+                        {project.title}
+                      </h3>
+                      
+                      <p className="text-lg md:text-xl text-gray-200 max-w-3xl leading-relaxed">
+                        {project.description}
+                      </p>
                     </div>
                   </div>
+                </div>
 
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-gray-300 mb-6 leading-relaxed flex-grow">{item.description}</p>
-
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-white mb-3">Technologies Used</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {item.technologies.slice(0, 4).map((tech, index) => (
-                        <span 
-                          key={index}
-                          className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {item.technologies.length > 4 && (
-                        <span className="bg-gray-600 text-gray-300 px-3 py-1 rounded-full text-sm">
-                          +{item.technologies.length - 4} more
-                        </span>
+                {/* Project Details Section */}
+                <div className="container mx-auto px-6 py-16">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    {/* Main Content */}
+                    <div className="lg:col-span-2">
+                      {/* Technologies */}
+                      {project.technologies && project.technologies.length > 0 && (
+                        <div className="mb-8">
+                          <h4 className="text-sm font-semibold text-purple-400 mb-4 uppercase tracking-wider">
+                            Technologies Used
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            {project.technologies.map((tech, techIndex) => (
+                              <span 
+                                key={techIndex}
+                                className="bg-gray-700/70 text-gray-200 px-4 py-2 rounded-full text-sm border border-gray-600 backdrop-blur-sm"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       )}
+                      
+                      {/* Results */}
+                      {project.results && (
+                        <div className="mb-8">
+                          <h4 className="text-sm font-semibold text-indigo-400 mb-4 uppercase tracking-wider flex items-center gap-2">
+                            <TrendingUp className="w-4 h-4" />
+                            Results Achieved
+                          </h4>
+                          <div 
+                            className="text-gray-300 bg-gray-800/70 p-6 rounded-xl border-l-4 border-purple-500 prose prose-sm prose-invert max-w-none backdrop-blur-sm"
+                            dangerouslySetInnerHTML={{ __html: project.results }}
+                            style={{
+                              lineHeight: '1.7',
+                              fontSize: '15px'
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Action Buttons */}
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Button 
+                          onClick={() => handleProjectClick(project)}
+                          className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/25 text-lg"
+                        >
+                          View Case Study
+                          <ArrowRight className="ml-2 w-5 h-5" />
+                        </Button>
+                        
+                        {project.visitSiteUrl && (
+                          <Button 
+                            onClick={() => window.open(project.visitSiteUrl, '_blank')}
+                            variant="outline"
+                            className="border-indigo-400 text-indigo-400 hover:bg-indigo-400 hover:text-gray-900 px-8 py-4 rounded-xl transition-all duration-300 text-lg"
+                          >
+                            <Globe className="mr-2 w-5 h-5" />
+                            Visit Live Site
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-
-                  {/* View Details Button */}
-                  <div className="mt-auto">
-                    <Button 
-                      onClick={() => handlePortfolioClick(item)}
-                      className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
-                    >
-                      View Project Details
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
+                    
+                    {/* Sidebar */}
+                    <div className="lg:col-span-1">
+                      <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 sticky top-8">
+                        <h4 className="text-lg font-semibold text-white mb-4">Project Overview</h4>
+                        
+                        {/* Quick Stats */}
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-400 text-sm">Category</span>
+                            <span className="text-white font-medium">
+                              {activeFilter === 'all' ? 'Digital Solution' : filters.find(f => f.id === activeFilter)?.label}
+                            </span>
+                          </div>
+                          
+                          {project.created_at && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-400 text-sm">Completed</span>
+                              <span className="text-white font-medium">
+                                {new Date(project.created_at).toLocaleDateString()}
+                              </span>
+                            </div>
+                          )}
+                          
+                          {project.technologies && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-400 text-sm">Tech Stack</span>
+                              <span className="text-white font-medium">
+                                {project.technologies.length} technologies
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Social Links if available */}
+                        {project.socialMediaLinks && project.socialMediaLinks.length > 0 && (
+                          <div className="mt-6 pt-6 border-t border-gray-700">
+                            <h5 className="text-sm font-semibold text-gray-300 mb-3">Follow This Project</h5>
+                            <div className="flex gap-2">
+                              {project.socialMediaLinks.map((link, linkIndex) => (
+                                <a
+                                  key={linkIndex}
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="bg-gray-700/50 hover:bg-purple-500/20 text-gray-300 hover:text-purple-400 p-2 rounded-lg transition-all duration-300"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12">
-              <div className="text-gray-400 text-xl mb-4">No portfolio projects found</div>
-              <p className="text-gray-500">Check back soon for our latest work!</p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 px-6">
+            <p className="text-gray-400 text-lg">No projects found for the selected filter.</p>
+          </div>
+        )}
 
-        {/* Equipment Showcase */}
-        <div className="bg-gray-700 rounded-xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6 text-center">Professional Equipment & Capabilities</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <Camera className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-              <h4 className="text-lg font-semibold text-white mb-2">Video Production</h4>
-              <p className="text-gray-300 text-sm">Professional cameras, lighting, and editing software for high-quality video content.</p>
-            </div>
-            <div className="text-center">
-              <Mic className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-              <h4 className="text-lg font-semibold text-white mb-2">Audio Production</h4>
-              <p className="text-gray-300 text-sm">Studio-quality microphones and audio equipment for podcast and video production.</p>
-            </div>
-            <div className="text-center">
-              <Code className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-              <h4 className="text-lg font-semibold text-white mb-2">Technical Expertise</h4>
-              <p className="text-gray-300 text-sm">Full-stack development capabilities with modern technologies and best practices.</p>
-            </div>
+        {/* Call to Action */}
+        <div className="text-center mt-20 px-6">
+          <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-2xl p-12 border border-indigo-400/30 max-w-3xl mx-auto backdrop-blur-sm">
+            <h3 className="text-3xl font-bold text-white mb-4">Ready to Start Your Project?</h3>
+            <p className="text-gray-300 mb-8 text-lg">
+              Let's discuss how we can help transform your business with innovative digital solutions.
+            </p>
+            <Button 
+              onClick={() => setLocation('#contact')}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white px-10 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-indigo-500/25 text-lg"
+            >
+              Start Your Project
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </div>
         </div>
       </div>
-      
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          .portfolio-background {
-            position: relative;
-            width: 100%;
-            height: 100%;
-          }
-          
-          .portfolio-orbs {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-          }
-          
-          .portfolio-orb {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, rgba(59, 130, 246, 0.1) 70%, transparent 100%);
-            animation: orbFloat 20s ease-in-out infinite;
-          }
-          
-          .orb-1 { 
-            width: 120px; 
-            height: 120px; 
-            top: 15%; 
-            left: 10%; 
-            animation-delay: 0s; 
-          }
-          .orb-2 { 
-            width: 80px; 
-            height: 80px; 
-            top: 25%; 
-            right: 15%; 
-            animation-delay: -4s; 
-          }
-          .orb-3 { 
-            width: 100px; 
-            height: 100px; 
-            top: 60%; 
-            left: 20%; 
-            animation-delay: -8s; 
-          }
-          .orb-4 { 
-            width: 60px; 
-            height: 60px; 
-            top: 70%; 
-            right: 25%; 
-            animation-delay: -12s; 
-          }
-          .orb-5 { 
-            width: 90px; 
-            height: 90px; 
-            top: 45%; 
-            left: 60%; 
-            animation-delay: -16s; 
-          }
-          
-          .portfolio-sparkles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-          }
-          
-          .sparkle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #06b6d4;
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
-            animation: sparkleTwinkle 8s ease-in-out infinite;
-          }
-          
-          .sparkle-1 { top: 20%; left: 30%; animation-delay: 0s; }
-          .sparkle-2 { top: 35%; left: 75%; animation-delay: -1s; }
-          .sparkle-3 { top: 55%; left: 15%; animation-delay: -2s; }
-          .sparkle-4 { top: 65%; left: 80%; animation-delay: -3s; }
-          .sparkle-5 { top: 40%; left: 45%; animation-delay: -4s; }
-          .sparkle-6 { top: 75%; left: 60%; animation-delay: -5s; }
-          .sparkle-7 { top: 30%; left: 85%; animation-delay: -6s; }
-          .sparkle-8 { top: 80%; left: 35%; animation-delay: -7s; }
-          
-          @keyframes orbFloat {
-            0%, 100% { 
-              transform: translateY(0px) translateX(0px) scale(1);
-              opacity: 0.2;
-            }
-            25% { 
-              transform: translateY(-30px) translateX(15px) scale(1.1);
-              opacity: 0.4;
-            }
-            50% { 
-              transform: translateY(-50px) translateX(-10px) scale(1.2);
-              opacity: 0.6;
-            }
-            75% { 
-              transform: translateY(-20px) translateX(20px) scale(1.05);
-              opacity: 0.3;
-            }
-          }
-          
-          @keyframes sparkleTwinkle {
-            0%, 100% { 
-              transform: scale(1);
-              opacity: 0.3;
-            }
-            50% { 
-              transform: scale(1.5);
-              opacity: 1;
-            }
-          }
-        `
-      }} />
     </section>
   );
-}; 
+};

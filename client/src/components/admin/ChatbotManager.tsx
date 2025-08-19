@@ -6,7 +6,7 @@ export const ChatbotManager = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-white">Chatbot Responses</h3>
-        <Button className="bg-cyan-500 hover:bg-cyan-600">
+        <Button className="bg-purple-500 hover:bg-purple-600">
           <Plus className="w-4 h-4 mr-2" />
           Add New Response
         </Button>

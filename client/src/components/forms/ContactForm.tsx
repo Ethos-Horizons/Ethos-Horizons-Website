@@ -81,7 +81,7 @@ export const ContactForm = () => {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400"
+                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400"
                     placeholder="Your full name"
                   />
                 </FormControl>
@@ -100,7 +100,7 @@ export const ContactForm = () => {
                   <Input 
                     {...field} 
                     type="email"
-                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400"
+                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400"
                     placeholder="your.email@company.com"
                   />
                 </FormControl>
@@ -120,7 +120,7 @@ export const ContactForm = () => {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400"
+                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400"
                     placeholder="Your phone number"
                   />
                 </FormControl>
@@ -138,7 +138,7 @@ export const ContactForm = () => {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400"
+                    className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400"
                     placeholder="Your company name"
                   />
                 </FormControl>
@@ -157,7 +157,7 @@ export const ContactForm = () => {
                 <FormLabel className="text-white">Service Interest *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-cyan-400">
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-purple-400">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                   </FormControl>
@@ -187,7 +187,7 @@ export const ContactForm = () => {
                 <FormLabel className="text-white">Budget Range</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-cyan-400">
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-purple-400">
                       <SelectValue placeholder="Select budget range" />
                     </SelectTrigger>
                   </FormControl>
@@ -214,7 +214,7 @@ export const ContactForm = () => {
               <FormLabel className="text-white">Project Timeline</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-cyan-400">
+                  <SelectTrigger className="bg-gray-800 border-gray-600 text-white focus:border-purple-400">
                     <SelectValue placeholder="Select timeline" />
                   </SelectTrigger>
                 </FormControl>
@@ -240,7 +240,7 @@ export const ContactForm = () => {
               <FormControl>
                 <Textarea 
                   {...field} 
-                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 min-h-[120px]"
+                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-purple-400 min-h-[120px]"
                   placeholder="Tell us about your project, goals, or any questions you have..."
                 />
               </FormControl>
@@ -260,7 +260,7 @@ export const ContactForm = () => {
                     type="checkbox"
                     checked={field.value}
                     onChange={field.onChange}
-                    className="w-4 h-4 text-cyan-500 bg-gray-800 border-gray-600 rounded focus:ring-cyan-400 focus:ring-2"
+                    className="w-4 h-4 text-purple-500 bg-gray-800 border-gray-600 rounded focus:ring-purple-400 focus:ring-2"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -282,7 +282,7 @@ export const ContactForm = () => {
                     type="checkbox"
                     checked={field.value}
                     onChange={field.onChange}
-                    className="w-4 h-4 text-cyan-500 bg-gray-800 border-gray-600 rounded focus:ring-cyan-400 focus:ring-2"
+                    className="w-4 h-4 text-purple-500 bg-gray-800 border-gray-600 rounded focus:ring-purple-400 focus:ring-2"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -297,7 +297,7 @@ export const ContactForm = () => {
 
         <Button 
           type="submit" 
-          className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 text-lg font-semibold rounded-lg transition-all duration-300"
+          className="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 text-lg font-semibold rounded-lg transition-all duration-300"
           disabled={mutation.isPending}
         >
           {mutation.isPending ? 'Sending...' : 'Send Message'}

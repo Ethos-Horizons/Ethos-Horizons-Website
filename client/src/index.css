@@ -13,7 +13,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(187, 85%, 53%);
+  --primary: hsl(262, 83%, 58%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -24,10 +24,13 @@
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
   
-  /* Custom colors for Ethos Digital Partners */
-  --cyan-400: hsl(187, 85%, 53%);
-  --cyan-500: hsl(190, 88%, 40%);
-  --cyan-600: hsl(192, 91%, 36%);
+  /* Custom colors for Ethos Horizons - Purple Theme */
+  --purple-400: hsl(262, 83%, 58%);
+  --purple-500: hsl(262, 88%, 50%);
+  --purple-600: hsl(262, 91%, 45%);
+  --indigo-400: hsl(238, 84%, 67%);
+  --indigo-500: hsl(238, 88%, 60%);
+  --indigo-600: hsl(238, 91%, 55%);
   --gray-800: hsl(215, 28%, 17%);
   --gray-900: hsl(222, 84%, 5%);
 }
@@ -43,7 +46,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(187, 85%, 53%);
+  --primary: hsl(262, 83%, 58%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);

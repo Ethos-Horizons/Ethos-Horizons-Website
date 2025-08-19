@@ -2,21 +2,14 @@ import {
   Header, 
   HeroSection, 
   ServicesSection,
-  AiAdvantageSection,
   AboutUsSection,
-  CapabilitiesSection,
-  WhyChooseUsSection,
   PortfolioSection,
   BlogSection,
-  PricingSection,
   ContactSection,
-  Footer,
-  Chatbot 
+  Footer
 } from '@/components';
-import { useChatbotState } from '@/hooks/useChatbotState';
 
 export default function Home() {
-  const { isOpen, setIsOpen } = useChatbotState();
 
   const handleNavigate = (selector: string) => {
     const element = document.querySelector(selector);
@@ -37,17 +30,12 @@ export default function Home() {
       <main>
         <HeroSection onNavigate={handleNavigate} />
         <ServicesSection />
-        <AiAdvantageSection />
         <AboutUsSection />
-        <CapabilitiesSection />
-        <WhyChooseUsSection />
         <PortfolioSection />
         <BlogSection />
-        <PricingSection />
         <ContactSection />
       </main>
       <Footer />
-      <Chatbot isOpen={isOpen} onOpenChange={setIsOpen} />
     </div>
   );
 }

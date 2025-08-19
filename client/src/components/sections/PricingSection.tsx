@@ -76,7 +76,7 @@ export const PricingSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Flexible <span className="text-cyan-400">Pricing</span>
+            Flexible <span className="text-purple-400">Pricing</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Start with a complete online presence setup, then scale with ongoing marketing services. 
@@ -90,13 +90,13 @@ export const PricingSection = () => {
               key={index}
               className={`relative rounded-xl p-8 transition-all duration-300 transform hover:scale-105 flex flex-col h-full ${
                 plan.popular 
-                  ? 'bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border-2 border-cyan-400/50' 
-                  : 'bg-gray-800 border border-gray-700 hover:border-cyan-400/50'
+                  ? 'bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border-2 border-purple-400/50' 
+                  : 'bg-gray-800 border border-gray-700 hover:border-purple-400/50'
               }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-cyan-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold flex items-center">
+                  <div className="bg-purple-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold flex items-center">
                     <Star className="w-4 h-4 mr-2" />
                     Most Popular
                   </div>
@@ -106,13 +106,13 @@ export const PricingSection = () => {
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
                 <div className="flex items-baseline justify-center mb-4">
-                  <span className="text-4xl font-bold text-cyan-400">{plan.price}</span>
+                  <span className="text-4xl font-bold text-purple-400">{plan.price}</span>
                   <span className="text-gray-400 ml-1">{plan.period}</span>
                 </div>
                 <p className="text-gray-300">{plan.description}</p>
                 {plan.type === "setup" && (
                   <div className="mt-4">
-                    <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
+                    <span className="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-semibold">
                       One-Time Investment
                     </span>
                   </div>
@@ -122,7 +122,7 @@ export const PricingSection = () => {
               <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center text-gray-300">
-                    <Check className="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0" />
+                    <Check className="w-5 h-5 text-purple-400 mr-3 flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -132,7 +132,7 @@ export const PricingSection = () => {
                 <Button 
                   className={`w-full py-3 font-semibold transition-all duration-300 ${
                     plan.popular
-                      ? 'bg-cyan-500 hover:bg-cyan-600 text-white'
+                      ? 'bg-purple-500 hover:bg-purple-600 text-white'
                       : 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600'
                   }`}
                 >
@@ -150,7 +150,7 @@ export const PricingSection = () => {
               Whether you need a complete online presence or ongoing marketing support, 
               let's discuss how we can help your business thrive in the digital landscape.
             </p>
-            <Button className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 font-semibold">
+            <Button className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 font-semibold">
               Get Started Today
             </Button>
           </div>

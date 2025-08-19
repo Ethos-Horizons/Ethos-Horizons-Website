@@ -5,11 +5,8 @@ export { Footer } from './layout/Footer';
 // Section components
 export { HeroSection } from './sections/HeroSection';
 export { ServicesSection } from './sections/ServicesSection';
-export { AiAdvantageSection } from './sections/AiAdvantageSection';
 export { AboutUsSection } from './sections/AboutUsSection';
-export { CapabilitiesSection } from './sections/CapabilitiesSection';
-export { WhyChooseUsSection } from './sections/WhyChooseUsSection';
-export { PricingSection } from './sections/PricingSection';
+export { TestimonialSection } from './sections/TestimonialSection';
 export { PortfolioSection } from './sections/PortfolioSection';
 export { BlogSection } from './sections/BlogSection';
 export { ContactSection } from './sections/ContactSection';
