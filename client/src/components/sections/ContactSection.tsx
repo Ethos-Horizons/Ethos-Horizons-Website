@@ -204,32 +204,44 @@ export const ContactSection = () => {
           </div>
 
           {/* Alternative Contact Methods */}
-          <div className={`grid md:grid-cols-2 gap-6 transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '800ms' }}>
-            {contactMethods.map((method, index) => (
-              <div 
-                key={index}
-                className="group bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-lg border border-gray-700 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-500"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-800 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                      {method.icon}
+          <div className={`transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '800ms' }}>
+            {/* Reassuring Message */}
+            <div className="text-center mb-8">
+              <div className="bg-gradient-to-r from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-gray-600/30 rounded-2xl p-6 max-w-2xl mx-auto">
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  <span className="text-purple-300 font-medium">Prefer traditional contact methods?</span> No problem at all! 
+                  We understand that some people prefer to reach out directly. Feel free to use any of the methods below.
+                </p>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {contactMethods.map((method, index) => (
+                <div 
+                  key={index}
+                  className="group bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-lg border border-gray-700 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-500"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-800 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                        {method.icon}
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white mb-1">{method.title}</h3>
+                      <p className="text-gray-300 text-sm mb-3">{method.description}</p>
+                      <Button 
+                        variant="ghost"
+                        className="text-purple-400 hover:text-white hover:bg-purple-500/20 p-0 h-auto font-semibold"
+                      >
+                        {method.action}
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white mb-1">{method.title}</h3>
-                    <p className="text-gray-300 text-sm mb-3">{method.description}</p>
-                    <Button 
-                      variant="ghost"
-                      className="text-purple-400 hover:text-white hover:bg-purple-500/20 p-0 h-auto font-semibold"
-                    >
-                      {method.action}
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
